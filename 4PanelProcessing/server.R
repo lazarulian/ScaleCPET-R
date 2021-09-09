@@ -41,7 +41,7 @@ shinyServer(function(input, output) {
         
         convert_data1 <- rawdata
         
-        wbb1 <- convert_data1 %>% select(10:25)
+        wbb1 <- convert_data1 %>% select(11:36) # The Dataframe that includes all of the key variables required for data manipulation.
         
         
         # Graph Processing with Cleaned Data
@@ -69,7 +69,7 @@ shinyServer(function(input, output) {
         
         # Composition of Four Plots
         
-        p1 <- ggplot(wbb1, aes(x = t))+
+        p1 <- ggplot(wbb1, aes(x = Power))+
             geom_point( aes(y=VO2_5avg), color= "#D35400", size = 1) +
             geom_point( aes(y=VCO2_5avg), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
             scale_y_continuous("VO2 (L/min)",
@@ -77,7 +77,9 @@ shinyServer(function(input, output) {
                                limits=c(0, 5),
                                sec.axis = dup_axis(~ . , name="VCO2 (L/min)")) +
             theme_classic() + theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
-            scale_x_datetime(name = "Time")
+            scale_x_continuous(name = "Power (Watts)",
+                                breaks = seq(0, 270, 30),
+                                limits=c(0, 270))
         
         
         
