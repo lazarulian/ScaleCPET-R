@@ -58,20 +58,22 @@ shinyServer(function(input, output) {
         HR_5avg <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
 
         # Determining Watts Maximum
-        ordered_watts <- order(Watts_5avg)                   # Order Watts Column
-        length_watts <- length(ordered_watts)                # Find Length of Watts Column
-        potential_watts_max <- max(ordered_watts)            # Find Max Value
-        test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
+        watts_max <- max(wbb1$Power)
 
-        difference_watts_test <- (potential_watts_max-test_1high_watts)
+        # ordered_watts <- order(Watts_5avg)                   # Order Watts Column
+        # length_watts <- length(ordered_watts)                # Find Length of Watts Column
+        # potential_watts_max <- max(ordered_watts)            # Find Max Value
+        # test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
 
-        if(difference_watts_test < 10) {
-            watts_max <- potential_watts_max
-        }
+        # difference_watts_test <- (potential_watts_max-test_1high_watts)
 
-        else {
-            watts_max <- test_1high_watts
-        }
+        # if(difference_watts_test < 10) {
+        #     watts_max <- potential_watts_max
+        # }
+
+        # else {
+        #     watts_max <- test_1high_watts
+        # }
         
         
         # Graphing Color Palette
@@ -93,8 +95,8 @@ shinyServer(function(input, output) {
                                sec.axis = dup_axis(~ . , name="VCO2 (L/min)")) +
             theme_classic() + theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             scale_x_continuous(name = "Power (Watts)",
-                                breaks = seq(0, 330, 30),
-                                limits=c(0, 330))
+                                breaks = seq(0, 270, 30),
+                                limits=c(0, 270))
         
         
         
@@ -228,20 +230,23 @@ shinyServer(function(input, output) {
         HR_5avg <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
 
         # Determining Watts Maximum
-        ordered_watts <- order(Watts_5avg)                   # Order Watts Column
-        length_watts <- length(ordered_watts)                # Find Length of Watts Column
-        potential_watts_max <- max(ordered_watts)            # Find Max Value
-        test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
 
-        difference_watts_test <- (potential_watts_max-test_1high_watts)
+        watts_max <- max(wbb1$Power)
+        
+        # ordered_watts <- order(Watts_5avg)                   # Order Watts Column
+        # length_watts <- length(ordered_watts)                # Find Length of Watts Column
+        # potential_watts_max <- max(ordered_watts)            # Find Max Value
+        # test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
 
-        if(difference_watts_test < 10) {
-            watts_max <- potential_watts_max
-        }
+        # difference_watts_test <- (potential_watts_max-test_1high_watts)
 
-        else {
-            watts_max <- test_1high_watts
-        }
+        # if(difference_watts_test < 10) {
+        #     watts_max <- potential_watts_max
+        # }
+
+        # else {
+        #     watts_max <- test_1high_watts
+        # }
 
         watts_max
         
