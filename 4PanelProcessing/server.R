@@ -77,6 +77,12 @@ shinyServer(function(input, output) {
         
         
         # Graphing Color Palette
+
+        if(watts_max<300) {
+            VO2_range_start <- 0
+            VO2_range_end <- 6
+            minor_tick <- 1
+        }
         
         red.bold.10.text <- element_text(face = "bold", color = "#E74C3C", size = 10)
         purple.bold.10.text <- element_text(face = "bold", color = "#7D3C98", size = 10)
@@ -90,8 +96,8 @@ shinyServer(function(input, output) {
             geom_point( aes(y=VO2_5avg), color= "#D35400", size = 1) +
             geom_point( aes(y=VCO2_5avg), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
             scale_y_continuous("VO2 (L/min)",
-                               breaks = seq(0, 5, 0.5),
-                               limits=c(0, 5),
+                               breaks = seq(VO2_range_start, VO2_range_end, minor_tick),
+                               limits=c(VO2_range_start, VO2_range_end),
                                sec.axis = dup_axis(~ . , name="VCO2 (L/min)")) +
             theme_classic() + theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             scale_x_continuous(name = "Power (Watts)",
