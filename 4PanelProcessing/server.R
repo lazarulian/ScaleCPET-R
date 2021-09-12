@@ -42,9 +42,6 @@ shinyServer(function(input, output) {
         convert_data1 <- rawdata
         
         wbb1 <- convert_data1 %>% select(11:36) # The Dataframe that includes all of the key variables required for data manipulation.
-        
-        # Determine Watts Maximum
-
 
         # Graph Processing with Cleaned Data
         
@@ -59,6 +56,22 @@ shinyServer(function(input, output) {
         VCO2_5avg <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA)
         VE_5avg <- zoo::rollmean(wbb1$VE, k = 5, fill = NA)
         HR_5avg <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
+
+        # Determining Watts Maximum
+        ordered_watts <- order(Watts_5avg)                   # Order Watts Column
+        length_watts <- length(ordered_watts)                # Find Length of Watts Column
+        potential_watts_max <- max(ordered_watts)            # Find Max Value
+        test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
+
+        difference_watts_test <- (potential_watts_max-test_1high_watts)
+
+        if(difference_watts_test < 10) {
+            watts_max <- potential_watts max
+        }
+
+        else {
+            watts_max <- test_1high_watts
+        }
         
         
         # Graphing Color Palette
@@ -182,6 +195,55 @@ shinyServer(function(input, output) {
         
         # Finds Max Value
         max(wbb1$HR)
+        
+    }) #EndRenderText
+
+    ## Max Watts Text Output
+    output$output3 <- renderText({
+        
+        req(input$file1) 
+        inFile <- input$file1
+        
+        # Reads Excel File Input / Cleans Raw Data
+        col_names <- array(read_excel(inFile$datapath, sheet = 1, n_max = 1, col_names = FALSE))
+        rawdata <- data.frame(read_excel(inFile$datapath, sheet = 1, skip = 3, col_names = FALSE))
+        colnames(rawdata) <- col_names
+        
+        convert_data1 <- rawdata
+        
+        wbb1 <- convert_data1 %>% select(11:36) # The Dataframe that includes all of the key variables required for data manipulation.
+
+        # Graph Processing with Cleaned Data
+        
+        wbb1$VO2 <- (wbb1$VO2)/1000   #CONVERT TO LITERS
+        wbb1$VO2 <- as.numeric(wbb1$VO2)  
+        wbb1$VCO2 <- (wbb1$VCO2)/1000   #CONVERT TO LITERS
+        wbb1$VCO2 <- as.numeric(wbb1$VCO2)
+        
+        # Convert Content to Rolling Averages
+        Watts_5avg <- zoo::rollmean(wbb1$Power, k = 5, fill = NA)
+        VO2_5avg <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA)
+        VCO2_5avg <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA)
+        VE_5avg <- zoo::rollmean(wbb1$VE, k = 5, fill = NA)
+        HR_5avg <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
+
+        # Determining Watts Maximum
+        ordered_watts <- order(Watts_5avg)                   # Order Watts Column
+        length_watts <- length(ordered_watts)                # Find Length of Watts Column
+        potential_watts_max <- max(ordered_watts)            # Find Max Value
+        test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
+
+        difference_watts_test <- (potential_watts_max-test_1high_watts)
+
+        if(difference_watts_test < 10) {
+            watts_max <- potential_watts max
+        }
+
+        else {
+            watts_max <- test_1high_watts
+        }
+
+        watts_max
         
     }) #EndRenderText
     

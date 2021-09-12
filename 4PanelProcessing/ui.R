@@ -40,6 +40,7 @@ shinyUI(fluidPage(
             strong("VO2 Max(L/min): "),
             textOutput("output1"),
             strong("HR Max (BPM): "), textOutput("output2"),
+            strong("Power Max (Watts): "), textOutput("output3"),
             
         ), #EndSidebarPanel
         
