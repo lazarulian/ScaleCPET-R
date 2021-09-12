@@ -43,7 +43,9 @@ shinyServer(function(input, output) {
         
         wbb1 <- convert_data1 %>% select(11:36) # The Dataframe that includes all of the key variables required for data manipulation.
         
-        
+        # Determine Watts Maximum
+
+
         # Graph Processing with Cleaned Data
         
         wbb1$VO2 <- (wbb1$VO2)/1000   #CONVERT TO LITERS
@@ -52,7 +54,7 @@ shinyServer(function(input, output) {
         wbb1$VCO2 <- as.numeric(wbb1$VCO2)
         
         # Convert Content to Rolling Averages
-        
+        Watts_5avg <- zoo::rollmean(wbb1$Power, k = 5, fill = NA)
         VO2_5avg <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA)
         VCO2_5avg <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA)
         VE_5avg <- zoo::rollmean(wbb1$VE, k = 5, fill = NA)
@@ -69,7 +71,7 @@ shinyServer(function(input, output) {
         
         # Composition of Four Plots
         
-        p1 <- ggplot(wbb1, aes(x = Power))+
+        p1 <- ggplot(wbb1, aes(x = Watts_5avg))+
             geom_point( aes(y=VO2_5avg), color= "#D35400", size = 1) +
             geom_point( aes(y=VCO2_5avg), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
             scale_y_continuous("VO2 (L/min)",
