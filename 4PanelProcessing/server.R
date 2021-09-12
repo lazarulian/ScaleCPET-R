@@ -66,7 +66,7 @@ shinyServer(function(input, output) {
         difference_watts_test <- (potential_watts_max-test_1high_watts)
 
         if(difference_watts_test < 10) {
-            watts_max <- potential_watts max
+            watts_max <- potential_watts_max
         }
 
         else {
@@ -93,8 +93,8 @@ shinyServer(function(input, output) {
                                sec.axis = dup_axis(~ . , name="VCO2 (L/min)")) +
             theme_classic() + theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             scale_x_continuous(name = "Power (Watts)",
-                                breaks = seq(0, 270, 30),
-                                limits=c(0, 270))
+                                breaks = seq(0, 330, 30),
+                                limits=c(0, 330))
         
         
         
@@ -236,7 +236,7 @@ shinyServer(function(input, output) {
         difference_watts_test <- (potential_watts_max-test_1high_watts)
 
         if(difference_watts_test < 10) {
-            watts_max <- potential_watts max
+            watts_max <- potential_watts_max
         }
 
         else {
