@@ -57,32 +57,47 @@ shinyServer(function(input, output) {
         VE_5avg <- zoo::rollmean(wbb1$VE, k = 5, fill = NA)
         HR_5avg <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
 
-        # Determining Watts Maximum
-        watts_max <- max(wbb1$Power)
+        # Initializing Variables
+        watts_max <- 0
 
-        # ordered_watts <- order(Watts_5avg)                   # Order Watts Column
-        # length_watts <- length(ordered_watts)                # Find Length of Watts Column
-        # potential_watts_max <- max(ordered_watts)            # Find Max Value
-        # test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
+        # Test Function Declaration
+        watts_max_test <- function(watts_max_input) {
+          watts_distance_counter <- 0
+          for(i in 1:length(wbb1$Power)){
+            if (abs(wbb1$Power[i]-watts_max_input) < 10) {
+              watts_distance_counter <- watts_distance_counter + 1
+            } 
+            else {
+              next
+            }
+          } # End For Loop
+          return(watts_distance_counter)
+        } # End Function Declaration
 
-        # difference_watts_test <- (potential_watts_max-test_1high_watts)
+        # Determining Watts Max
 
-        # if(difference_watts_test < 10) {
-        #     watts_max <- potential_watts_max
-        # }
+        for(i in 1:length(wbb1$Power)){
+          if (watts_max_test(wbb1$Power[i]) > 1) {
+            if (wbb1$Power[i] > watts_max) {
+              watts_max <- wbb1$Power[i]
+            }
+            else {
+              next
+            }
+          } 
+          else {
+            next
+          }  
+        }
 
-        # else {
-        #     watts_max <- test_1high_watts
-        # }
-        
-        
-        # Graphing Color Palette
-
+        ## VO2 Scaling Options
         if(watts_max<300) {
             VO2_range_start <- 0
             VO2_range_end <- 6
             minor_tick <- 1
         }
+
+        # Graphing Color Palette
         
         red.bold.10.text <- element_text(face = "bold", color = "#E74C3C", size = 10)
         purple.bold.10.text <- element_text(face = "bold", color = "#7D3C98", size = 10)
@@ -221,38 +236,38 @@ shinyServer(function(input, output) {
         
         wbb1 <- convert_data1 %>% select(11:36) # The Dataframe that includes all of the key variables required for data manipulation.
 
-        # Graph Processing with Cleaned Data
-        
-        wbb1$VO2 <- (wbb1$VO2)/1000   #CONVERT TO LITERS
-        wbb1$VO2 <- as.numeric(wbb1$VO2)  
-        wbb1$VCO2 <- (wbb1$VCO2)/1000   #CONVERT TO LITERS
-        wbb1$VCO2 <- as.numeric(wbb1$VCO2)
-        
-        # Convert Content to Rolling Averages
-        Watts_5avg <- zoo::rollmean(wbb1$Power, k = 5, fill = NA)
-        VO2_5avg <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA)
-        VCO2_5avg <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA)
-        VE_5avg <- zoo::rollmean(wbb1$VE, k = 5, fill = NA)
-        HR_5avg <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
+        # Initializing Variables
+        watts_max <- 0
 
-        # Determining Watts Maximum
+        # Test-Case Declaration
+        watts_max_test <- function(watts_max_input) {
+          watts_distance_counter <- 0
+          for(i in 1:length(wbb1$Power)){
+            if (abs(wbb1$Power[i]-watts_max_input) < 10) {
+              watts_distance_counter <- watts_distance_counter + 1
+            } 
+            else {
+              next
+            }
+          } # End For Loop
+          return(watts_distance_counter)
+        } # End Function Declaration
 
-        watts_max <- max(wbb1$Power)
-        
-        # ordered_watts <- order(Watts_5avg)                   # Order Watts Column
-        # length_watts <- length(ordered_watts)                # Find Length of Watts Column
-        # potential_watts_max <- max(ordered_watts)            # Find Max Value
-        # test_1high_watts <- ordered_watts[length_watts-1]    # Find Second Highest Max
+        # Watts Max Determination
 
-        # difference_watts_test <- (potential_watts_max-test_1high_watts)
-
-        # if(difference_watts_test < 10) {
-        #     watts_max <- potential_watts_max
-        # }
-
-        # else {
-        #     watts_max <- test_1high_watts
-        # }
+        for(i in 1:length(wbb1$Power)){
+          if (watts_max_test(wbb1$Power[i]) > 1) {
+            if (wbb1$Power[i] > watts_max) {
+              watts_max <- wbb1$Power[i]
+            }
+            else {
+              next
+            }
+          } 
+          else {
+            next
+          }  
+        }
 
         watts_max
         
