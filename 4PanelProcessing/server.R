@@ -74,7 +74,7 @@ shinyServer(function(input, output) {
           return(watts_distance_counter)
         } # End Function Declaration
 
-        # Determining Watts Max
+        # Determining Watts Max (Conver to Function DNR)
 
         for(i in 1:length(wbb1$Power)){
           if (watts_max_test(wbb1$Power[i]) > 1) {
@@ -90,13 +90,20 @@ shinyServer(function(input, output) {
           }  
         }
 
+
+
+
+
+
+        ## All Scaling Options
+
         ## VO2/VCO2 Scaling Options
         
         if(watts_max>0 & 50>watts_max) {
             VO2_range_start <- 0
             VO2_range_end <- 1
             VO2_major_tick <- 0.2
-            VO2_minor_tick <- 0
+            VO2_minor_tick <- 0.2
         }
         else if(watts_max>49 & 100>watts_max) {
           VO2_range_start <- 0
@@ -132,6 +139,109 @@ shinyServer(function(input, output) {
           next
         }
 
+      ## Watts Scaling Options
+        
+        if(watts_max>0 & 50>watts_max) {
+            watts_range_start <- 0
+            watts_range_end <- 50
+            watts_major_tick <- 10
+            watts_minor_tick <- 10
+        }
+        else if(watts_max>49 & 100>watts_max) {
+          watts_range_start <- 0
+          watts_range_end <- 100
+          watts_major_tick <- 20
+          watts_minor_tick <- 10
+        }
+        else if(watts_max>99 & 150>watts_max) {
+          watts_range_start <- 0
+          watts_range_end <- 150
+          watts_major_tick <- 50
+          watts_minor_tick <- 25
+        }
+        else if(watts_max>149 & 200>watts_max) {
+          watts_range_start <- 0
+          watts_range_end <- 200
+          watts_major_tick <- 100
+          watts_minor_tick <- 50
+        }
+        else if(watts_max>199 & 300>watts_max) {
+          watts_range_start <- 0
+          watts_range_end <- 300
+          watts_major_tick <- 100
+          watts_minor_tick <- 50
+        }
+        else if(watts_max>299 & 400>watts_max) {
+          watts_range_start <- 0
+          watts_range_end <- 400
+          watts_major_tick <- 200
+          watts_minor_tick <- 100
+        }
+        else {
+          next
+        }
+
+        ## VE Scaling Options
+        
+        if(watts_max>0 & 50>watts_max) {
+            VE_range_start <- 0
+            VE_range_end <- 60
+            VE_major_tick <- 10
+            VE_minor_tick <- 10
+        }
+        else if(watts_max>49 & 100>watts_max) {
+          VE_range_start <- 0
+          VE_range_end <- 80
+          VE_major_tick <- 20
+          VE_minor_tick <- 10
+        }
+        else if(watts_max>99 & 150>watts_max) {
+          VE_range_start <- 0
+          VE_range_end <- 100
+          VE_major_tick <- 20
+          VE_minor_tick <- 10
+        }
+        else if(watts_max>149 & 200>watts_max) {
+          VE_range_start <- 0
+          VE_range_end <- 120
+          VE_major_tick <- 20
+          VE_minor_tick <- 10
+        }
+        else if(watts_max>199 & 300>watts_max) {
+          VE_range_start <- 0
+          VE_range_end <- 160
+          VE_major_tick <- 20
+          VE_minor_tick <- 10
+        }
+        else if(watts_max>299 & 400>watts_max) {
+          VE_range_start <- 0
+          VE_range_end <- 200
+          VE_major_tick <- 30
+          VE_minor_tick <- 15
+        }
+        else {
+          next
+        }
+
+        ## fC Scaling Options
+
+        fC_range_start <- 40
+        fC_range_end <- 240
+        fC_major_tick <- 40
+        fC_minor_tick <- 20
+
+        ## VT Scaling Options
+
+        VT_range_start <- 0
+        VT_range_end <- 4
+        VT_major_tick <- 1
+        VT_minor_tick <- 0.5
+
+
+
+        # Scaling Requires more variables, input when needed.
+
+
         # Graphing Color Palette
         
         red.bold.10.text <- element_text(face = "bold", color = "#E74C3C", size = 10)
@@ -154,8 +264,8 @@ shinyServer(function(input, output) {
             theme_classic() + # Classic Does not allow for minor_gridlines to work.
             theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             scale_x_continuous(name = "Power (Watts)",
-                                breaks = seq(0, 270, 30),
-                                limits=c(0, 270))
+                                breaks = seq(watts_range_start, watts_range_end, watts_minor_tick),
+                                limits=c(watts_range_start, watts_range_end))
 
         p2 <- ggplot(wbb1, aes(x=VO2_5avg, y=VCO2_5avg)) + 
             geom_point(color = "#3498DB", size = 1) + #BLUE COLOR
@@ -176,8 +286,8 @@ shinyServer(function(input, output) {
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
                                limits=c(VO2_range_start, VO2_range_end)) +
             scale_y_continuous(name = "VE (L/min)",
-                               breaks = seq(0, 150, 10),
-                               limits=c(0, 150)) +
+                               breaks = seq(VE_range_start, VE_range_end, VE_minor_tick),
+                               limits=c(VE_range_start, VE_range_end)) +
             theme_classic() +
             theme(axis.text.x = blue.bold.10.text, axis.text.y = green.bold.10.text)
         
