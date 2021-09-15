@@ -90,11 +90,46 @@ shinyServer(function(input, output) {
           }  
         }
 
-        ## VO2 Scaling Options
-        if(watts_max<300) {
+        ## VO2/VCO2 Scaling Options
+        
+        if(watts_max>0 & 50>watts_max) {
             VO2_range_start <- 0
-            VO2_range_end <- 6
-            minor_tick <- 1
+            VO2_range_end <- 1
+            VO2_major_tick <- 0.2
+            VO2_minor_tick <- 0
+        }
+        else if(watts_max>49 & 100>watts_max) {
+          VO2_range_start <- 0
+          VO2_range_end <- 2
+          VO2_major_tick <- 1
+          VO2_minor_tick <- 0.5
+        }
+        else if(watts_max>99 & 150>watts_max) {
+          VO2_range_start <- 0
+          VO2_range_end <- 3
+          VO2_major_tick <- 1
+          VO2_minor_tick <- 0.5
+        }
+        else if(watts_max>149 & 200>watts_max) {
+          VO2_range_start <- 0
+          VO2_range_end <- 4
+          VO2_major_tick <- 1
+          VO2_minor_tick <- 0.5
+        }
+        else if(watts_max>199 & 300>watts_max) {
+          VO2_range_start <- 0
+          VO2_range_end <- 6
+          VO2_major_tick <- 2
+          VO2_minor_tick <- 1
+        }
+        else if(watts_max>299 & 400>watts_max) {
+          VO2_range_start <- 0
+          VO2_range_end <- 8
+          VO2_major_tick <- 4
+          VO2_minor_tick <- 2
+        }
+        else {
+          next
         }
 
         # Graphing Color Palette
@@ -111,25 +146,26 @@ shinyServer(function(input, output) {
             geom_point( aes(y=VO2_5avg), color= "#D35400", size = 1) +
             geom_point( aes(y=VCO2_5avg), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
             scale_y_continuous("VO2 (L/min)",
-                               breaks = seq(VO2_range_start, VO2_range_end, minor_tick),
-                               limits=c(VO2_range_start, VO2_range_end),
-                               sec.axis = dup_axis(~ . , name="VCO2 (L/min)")) +
-            theme_classic() + theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
+                                # minor_breaks = seq(VO2_range_start, VO2_range_end, VO2_minor_tick),
+                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
+                                limits=c(VO2_range_start, VO2_range_end),
+                                sec.axis = dup_axis(~ . , name="VCO2 (L/min)")) +
+            # theme_bw() + 
+            theme_classic() + # Classic Does not allow for minor_gridlines to work.
+            theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             scale_x_continuous(name = "Power (Watts)",
                                 breaks = seq(0, 270, 30),
                                 limits=c(0, 270))
-        
-        
-        
+
         p2 <- ggplot(wbb1, aes(x=VO2_5avg, y=VCO2_5avg)) + 
             geom_point(color = "#3498DB", size = 1) + #BLUE COLOR
             #geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = "VO2 (L/min)",
-                               breaks = seq(0, 5, 0.5),
-                               limits=c(0, 5)) +
+                               breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
+                               limits=c(VO2_range_start, VO2_range_end)) +
             scale_y_continuous(name = "VCO2 (L/min)",
-                               breaks = seq(0, 5, 0.5),
-                               limits=c(0, 5)) +
+                               breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
+                               limits=c(VO2_range_start, VO2_range_end)) +
             theme_classic() +
             theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text)
         
@@ -137,8 +173,8 @@ shinyServer(function(input, output) {
             geom_point(color = "#239B56", size = 1) + #GREEN COLOR
             #geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = "VCO2 (L/min)",
-                               breaks = seq(0, 5, 0.5),
-                               limits=c(0, 5)) +
+                               breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
+                               limits=c(VO2_range_start, VO2_range_end)) +
             scale_y_continuous(name = "VE (L/min)",
                                breaks = seq(0, 150, 10),
                                limits=c(0, 150)) +
@@ -150,8 +186,8 @@ shinyServer(function(input, output) {
             geom_point(color = "#7D3C98", size = 1) + #PURPLE COLOR
             geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = "VO2 (L/min)",
-                               breaks = seq(0, 5, 0.5),
-                               limits=c(0, 5)) +
+                               breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
+                               limits=c(VO2_range_start, VO2_range_end)) +
             scale_y_continuous(name = "HR (bpm)",
                                breaks = seq(0, 220, 20),
                                limits=c(0, 220)) +
