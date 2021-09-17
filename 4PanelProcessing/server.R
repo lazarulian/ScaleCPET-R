@@ -125,13 +125,13 @@ shinyServer(function(input, output) {
         }
         else if(watts_max>199 & 300>watts_max) {
           VO2_range_start <- 0
-          VO2_range_end <- 6
+          VO2_range_end <- 5
           VO2_major_tick <- 2
           VO2_minor_tick <- 1
         }
         else if(watts_max>299 & 400>watts_max) {
           VO2_range_start <- 0
-          VO2_range_end <- 8
+          VO2_range_end <- 6
           VO2_major_tick <- 4
           VO2_minor_tick <- 2
         }
