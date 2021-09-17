@@ -263,6 +263,7 @@ shinyServer(function(input, output) {
             # theme_bw() + 
             theme_classic() + # Classic Does not allow for minor_gridlines to work.
             theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
+            theme(aspect.ratio=1) +
             scale_x_continuous(name = "Power (Watts)",
                                 breaks = seq(watts_range_start, watts_range_end, watts_minor_tick),
                                 limits=c(watts_range_start, watts_range_end))
@@ -277,6 +278,7 @@ shinyServer(function(input, output) {
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
                                limits=c(VO2_range_start, VO2_range_end)) +
             theme_classic() +
+            theme(aspect.ratio=1) +
             theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text)
         
         p3<-ggplot(wbb1, aes(x=VCO2_5avg, y=VE_5avg)) + 
@@ -289,6 +291,7 @@ shinyServer(function(input, output) {
                                breaks = seq(VE_range_start, VE_range_end, VE_minor_tick),
                                limits=c(VE_range_start, VE_range_end)) +
             theme_classic() +
+            theme(aspect.ratio=1) +
             theme(axis.text.x = blue.bold.10.text, axis.text.y = green.bold.10.text)
         
         ##PLOT 4: HR vs VO2
@@ -302,12 +305,13 @@ shinyServer(function(input, output) {
                                breaks = seq(0, 220, 20),
                                limits=c(0, 220)) +
             theme_classic() +
+            theme(aspect.ratio=1) +
             theme(axis.text.x = orange.bold.10.text, axis.text.y = purple.bold.10.text)
         
         plot.a<-plot_grid(p1, p3, ncol = 1, align = "v", nrow = 2)
         plot.b<-plot_grid(p2, p4, ncol = 1, align = "v", nrow = 2)
         
-        plot_grid(plot.a, plot.b, align = "h", axis = "b", nrow = 2, ncol = 2)
+        plot_grid(plot.a, NULL, plot.b, rel_widths = c(2, -1.2, 2), align = "h", axis = "b", nrow = 2, ncol = 3) # Combines Plots
         
     }) #Plot1 Output
     
