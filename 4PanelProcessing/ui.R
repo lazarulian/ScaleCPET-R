@@ -47,7 +47,7 @@ shinyUI(fluidPage(
         # Main Panel with Graph Output
         mainPanel(
             h1("Graph Output"),
-            plotOutput("plot1", width = "1000", height = "1000") # Outputs from server-side
+            plotOutput("plot1", width = "1300", height = "1300") # Outputs from server-side
             
             
         ),#EndMainPanel
