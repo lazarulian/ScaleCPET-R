@@ -1,0 +1,13 @@
+name: 4PanelProcessing
+title: 4PanelProcessing
+username:
+account: apurvashah
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4685575
+bundleId: 5049363
+url: https://apurvashah.shinyapps.io/4PanelProcessing/
+when: 1632075304.30475
+lastSyncTime: 1632075304.30476
+asMultiple: FALSE
+asStatic: FALSE

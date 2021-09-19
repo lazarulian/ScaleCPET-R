@@ -11,6 +11,7 @@ library(readxl)      ## Reads Excel Files
 library(cowplot)     ## Aligns Plot
 library(zoo)         ## Rolling Averages
 library(shiny)       ## Shiny
+library(broom)       ## Linear Regression?
 
 
 # Define server 
@@ -237,8 +238,6 @@ shinyServer(function(input, output) {
         VT_major_tick <- 1
         VT_minor_tick <- 0.5
 
-
-
         # Scaling Requires more variables, input when needed.
 
 
@@ -424,4 +423,28 @@ shinyServer(function(input, output) {
     }) #EndRenderText
     
 
+
+
+    # ## Linear Regression Modeling
+
+    # output$output4 <- renderText({
+        
+    #     req(input$file1) 
+    #     inFile <- input$file1
+        
+    #     # Reads Excel File Input / Cleans Raw Data
+    #     col_names <- array(read_excel(inFile$datapath, sheet = 1, n_max = 1, col_names = FALSE))
+    #     rawdata <- data.frame(read_excel(inFile$datapath, sheet = 1, skip = 3, col_names = FALSE))
+    #     colnames(rawdata) <- col_names
+        
+    #     convert_data1 <- rawdata
+        
+    #     wbb1 <- convert_data1 %>% select(11:36) # The Dataframe that includes all of the key variables required for data manipulation.
+
+
+    #     watts.vo2.lm <- lm(Power ~ VO2, data = wbb1)
+    #     summary(watts.vo2.lm)$r.squared
+
+        
+    # }) #EndRenderText
 })

@@ -10,7 +10,7 @@ library(ggplot2)     ## Grammar of Graphics
 library(readxl)      ## Reads Excel Files
 library(cowplot)     ## Aligns Plot
 library(zoo)         ## Rolling Averages
-
+library(rsconnect)   ## ServerPublication
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -21,34 +21,13 @@ shinyUI(fluidPage(
     
     sidebarLayout(
         sidebarPanel(
-            h2("File Input:"), #TitleSidebar
-            em("Currently only accepting raw xlsx output from Cosmed software."),
-            br(), 
-            br(),
-            
-            # File Input UI
-            fileInput("file1", "Choose xlsx File",
-                      multiple = FALSE,
-                      accept = c(".xlsx"), #Accept
-            ), #EndFileInput
-            
-            # Download Button for Graphs
-            downloadButton('downloadPlot', 'Download Plot'),
-            
-            # Maximum Value Output
-            h2("Data Values:"),
-            strong("VO2 Max(L/min): "),
-            textOutput("output1"),
-            strong("HR Max (BPM): "), textOutput("output2"),
-            strong("Power Max (Watts): "), textOutput("output3"),
-            
+            source("sidebar.R", local = TRUE)[1] # Reference Sidebar.R
         ), #EndSidebarPanel
         
         # Main Panel with Graph Output
         mainPanel(
             h1("Graph Output"),
             plotOutput("plot1", width = "1300", height = "1300") # Outputs from server-side
-            
             
         ),#EndMainPanel
         
