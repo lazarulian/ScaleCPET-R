@@ -10,9 +10,6 @@ list(
                       accept = c(".xlsx"), #Accept
             ), #EndFileInput
             
-            # Download Button for Graphs
-            downloadButton('downloadPlot', 'Download Plot'),
-            
             # Maximum Value Output
             h2("Data Values:"),
             strong("VO2 Max(L/min): "),
