@@ -46,8 +46,8 @@ shinyServer(function(input, output) {
 
     ## Linear Regression Modeling
     output$output4 <- renderText({
-        watts.vo2.lm <- lm(cleaned_data()$Power ~ cleaned_data()$VO2, data = cleaned_data())
-        summary(watts.vo2.lm)$r.squared
+        time.watts.lm <- lm(cleaned_data()$t ~ cleaned_data()$Power, data = cleaned_data())
+        summary(time.watts.lm)$r.squared
         
     }) #EndRenderText
 })

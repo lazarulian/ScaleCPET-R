@@ -6,9 +6,8 @@ list(
   rawdata <- data.frame(read_excel(input$file1$datapath, sheet = 1, skip = 3, col_names = FALSE)),
   colnames(rawdata) <- col_names,
   convert_data1 <- rawdata,
-  wbb1 <- convert_data1 %>% select(11:36), # The Dataframe that includes all of the key variables required for data manipulation.
-  
-  # Graph Processing with Cleaned Data
+  wbb1 <- convert_data1 %>% select(10:36), # The Dataframe that includes all of the key variables required for data manipulation.
+  wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
   
   wbb1$VO2 <- (wbb1$VO2)/1000,  #CONVERT TO LITERS
   wbb1$VO2 <- as.numeric(wbb1$VO2), 
