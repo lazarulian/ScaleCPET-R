@@ -11,6 +11,7 @@ library(cowplot)     ## Aligns Plot
 library(zoo)         ## Rolling Averages
 library(shiny)       ## Shiny
 library(broom)       ## Linear Regression?
+library(lubridate)
 
 # Define server 
 shinyServer(function(input, output) {
@@ -20,10 +21,21 @@ shinyServer(function(input, output) {
       wbb1
     }) # EndDataReactive
     
+    corrected_data <- reactive({
+      source("corrected_data.R", local = TRUE) # Reference data_cleaning.R
+      corrected_data
+    }) # EndDataReactive
+    
     # Plot Output (ServerSide)
     output$plot1 <- renderPlot({        
       source("raw_plot.R", local = TRUE)
       plot_grid(plot.a, NULL, plot.b, rel_widths = c(2, -1.2, 2), align = "h", axis = "b", nrow = 2, ncol = 3) # Combines Plots
+    }) #Plot1 Output
+    
+    # Plot Output (ServerSide)
+    output$plot2 <- renderPlot({        
+      source("corrected_work_time.R", local = TRUE)
+      plot_test_validity
     }) #Plot1 Output
     
     ## MaxVO2 Text Output
@@ -45,9 +57,27 @@ shinyServer(function(input, output) {
     }) #EndRenderText
 
     ## Linear Regression Modeling
+    
     output$output4 <- renderText({
-        time.watts.lm <- lm(cleaned_data()$t ~ cleaned_data()$Power, data = cleaned_data())
-        summary(time.watts.lm)$r.squared
-        
+      source("workcontroller_validity.R", local = TRUE)[1]
+      rawtimewatts_intercept
     }) #EndRenderText
+    
+    output$output5 <- renderText({
+      # Summary Slope
+      source("workcontroller_validity.R", local = TRUE)[1]
+      rawtimewatts_slope
+      
+    }) #EndRenderText
+    
+    output$output6 <- renderText({
+      source("workcontroller_validity.R", local = TRUE)[1]
+      rawtimewatts_rsquared
+    }) #EndRenderText
+    
+    output$raw_testcontroller_validity <- renderText({
+      source("workcontroller_validity.R", local = TRUE)[1]
+      raw_controller_validity
+    }) #EndRenderText
+    
 })
