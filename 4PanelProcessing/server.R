@@ -80,4 +80,35 @@ shinyServer(function(input, output) {
       raw_controller_validity
     }) #EndRenderText
     
+    # Patient Demographics
+    output$last_name <- renderText({
+      source("demographics_data.R", local = TRUE)[1]
+      last_name
+    }) #EndRenderText
+    
+    output$first_name <- renderText({
+      source("demographics_data.R", local = TRUE)[1]
+      first_name
+    }) #EndRenderText
+    
+    output$sex <- renderText({
+      source("demographics_data.R", local = TRUE)[1]
+      sex
+    }) #EndRenderText
+    
+    output$age <- renderText({
+      source("demographics_data.R", local = TRUE)[1]
+      age
+    }) #EndRenderText
+    
+    output$height <- renderText({
+      source("demographics_data.R", local = TRUE)[1]
+      height
+    }) #EndRenderText
+    
+    output$weight <- renderText({
+      source("demographics_data.R", local = TRUE)[1]
+      weight
+    }) #EndRenderText
+    
 })
