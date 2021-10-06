@@ -12,8 +12,8 @@ list(
   wbb1$VO2 <- (wbb1$VO2)/1000,  #CONVERT TO LITERS
   wbb1$VO2 <- as.numeric(wbb1$VO2), 
   wbb1$VCO2 <- (wbb1$VCO2)/1000,  #CONVERT TO LITERS
-  wbb1$VCO2 <- as.numeric(wbb1$VCO2)
-  # wbb1$t <- hms(wbb1$t),
-  # wbb1$t <- as.numeric(wbb1$t)/60
+  wbb1$VCO2 <- as.numeric(wbb1$VCO2),
+  wbb1$t <- (wbb1$t)*86400 # Converts from time format to seconds
+
   
 )

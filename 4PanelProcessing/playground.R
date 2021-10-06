@@ -18,17 +18,13 @@ colnames(rawdata) <- col_names
 convert_data1 <- rawdata
 wbb1 <- convert_data1 %>% select(10:36) # The Dataframe that includes all of the key variables required for data manipulation.
 
-name <- read_excel("/Users/apurvashah/Downloads/David-Gomez.xlsx", range = "B2", col_names = FALSE)
-name <- toString(name)
+wbb1$t <- (wbb1$t)*86400
 
 time.watts.lm <- lm(wbb1$t ~ wbb1$Power, data = wbb1)
 intercept <- summary(time.watts.lm)$coef[[1]]
 slope <- summary(time.watts.lm)$coef[[2]]
+summary(time.watts.lm)$coef[[1]]
 
 corrected_time_differential <- (0-intercept)/slope
 
-warmup_index <- c()
-for(i in 1:length(wbb1$Power)) {
-  warmup_index <- c(warmup_index, i)
-}
 

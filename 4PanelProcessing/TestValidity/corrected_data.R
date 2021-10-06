@@ -15,15 +15,17 @@ list(
   corrected_data$VO2 <- as.numeric(corrected_data$VO2), 
   corrected_data$VCO2 <- (corrected_data$VCO2)/1000,  #CONVERT TO LITERS
   corrected_data$VCO2 <- as.numeric(corrected_data$VCO2),
+  corrected_data$t <- (corrected_data$t)*86400,
   
-  time.watts.lm <- lm(corrected_data$t ~ corrected_data$Power, data = corrected_data),
+  time.watts.lm <- lm(corrected_data$Power ~ corrected_data$t, data = corrected_data),
   watts_t_intercept <- summary(time.watts.lm)$coef[[1]],
   watts_t_slope <- summary(time.watts.lm)$coef[[2]],
   
   corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope,
   
-  #corrected_data$t <- (corrected_data$t)-corrected_time_differential,
-  #corrected_data$t <- as.numeric(corrected_data$t),
+  # corrected_data$t <- (corrected_data$t)-corrected_time_differential,
+  # corrected_data$t <- as.numeric(corrected_data$t),
+  
   corrected_data$Power <- ((corrected_data$t)*watts_t_slope)+watts_t_intercept,
   corrected_data$Power <- as.numeric(corrected_data$Power)
   

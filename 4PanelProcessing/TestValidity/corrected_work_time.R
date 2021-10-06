@@ -1,5 +1,5 @@
 list(
-  source("raw_plot.R", local = TRUE),
+  source("Raw4PanelPlots/raw_plot.R", local = TRUE),
 
   watts_time_graph <- ggplot(cleaned_data(), aes(x = t))+
     geom_point( aes(y=Power), size = 1) +

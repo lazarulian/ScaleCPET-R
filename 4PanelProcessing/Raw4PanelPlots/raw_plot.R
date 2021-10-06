@@ -5,7 +5,7 @@ list(
         VE_5avg <- zoo::rollmean(cleaned_data()$VE, k = 5, fill = NA),
         HR_5avg <- zoo::rollmean(cleaned_data()$HR, k = 5, fill = NA),
         
-        source("axes_scaling.R", local = TRUE)[1],
+        source("Raw4PanelPlots/axes_scaling.R", local = TRUE)[1],
 
         # Graphing Color Palette
         

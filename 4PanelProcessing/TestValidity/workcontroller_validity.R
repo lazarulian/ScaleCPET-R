@@ -1,8 +1,8 @@
 list(
-  rawtimewatts_regression <- lm(cleaned_data()$t ~ cleaned_data()$Power, data = cleaned_data()),
+  rawtimewatts_regression <- lm(cleaned_data()$Power ~ cleaned_data()$t, data = cleaned_data()),
   rawtimewatts_rsquared <- summary(rawtimewatts_regression)$r.squared,
   rawtimewatts_slope <- summary(rawtimewatts_regression)$coef[[2]],
-  rawtimewatts_intercept <- summary(time.watts.lm)$coef[[1]],
+  rawtimewatts_intercept <- summary(rawtimewatts_regression)$coef[[1]],
   
   if(rawtimewatts_rsquared > 0.9) {
     raw_controller_validity <- "This study can be interpreted confidently because a constant rate of work increase was 

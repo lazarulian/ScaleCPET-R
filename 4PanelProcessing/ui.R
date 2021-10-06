@@ -7,6 +7,7 @@ shinyUI(navbarPage("UC-Fitness Lab Data Processing Application",
                                 ),
                                 mainPanel(
                                     h1("Graph Output"),
+                                    plotOutput("plot3", width = "400", height = "400")
                                     
                                 )
                             )
@@ -30,7 +31,7 @@ shinyUI(navbarPage("UC-Fitness Lab Data Processing Application",
     tabPanel("Test Validity",
         sidebarLayout(
             sidebarPanel(
-                source("sidebar2.R", local = TRUE)[1] # Reference Sidebar1.R
+                source("TestValidity/sidebar2.R", local = TRUE)[1] # Reference Sidebar1.R
             ),
             mainPanel(
                 h1("Graph Output"),
