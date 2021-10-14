@@ -17,14 +17,27 @@ list(
   corrected_data$VCO2 <- as.numeric(corrected_data$VCO2),
   corrected_data$t <- (corrected_data$t)*86400,
   
+  # Restructuring Time to Start at T=0
+  # Subtracting all time values by the first data value in the set
+  
+  validity_time_correction <- corrected_data$t[1],
+  corrected_data$t <- (corrected_data$t)-validity_time_correction,
+  corrected_data$t <- as.numeric(corrected_data$t),
+  
+  # Determining Slope/Intercept of the Linearly Regressed Data
+  
   time.watts.lm <- lm(corrected_data$Power ~ corrected_data$t, data = corrected_data),
   watts_t_intercept <- summary(time.watts.lm)$coef[[1]],
   watts_t_slope <- summary(time.watts.lm)$coef[[2]],
   
+  # Dr. Cooper's Actual Time of Commencement
+  
   corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope,
   
-  # corrected_data$t <- (corrected_data$t)-corrected_time_differential,
-  # corrected_data$t <- as.numeric(corrected_data$t),
+  corrected_data$t <- (corrected_data$t)-corrected_time_differential,
+  corrected_data$t <- as.numeric(corrected_data$t),
+  
+  # Making Watts Linear
   
   corrected_data$Power <- ((corrected_data$t)*watts_t_slope)+watts_t_intercept,
   corrected_data$Power <- as.numeric(corrected_data$Power)

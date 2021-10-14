@@ -1,6 +1,8 @@
 list(
   source("Raw4PanelPlots/raw_plot.R", local = TRUE),
 
+  # Raw Work vs. Time
+  
   watts_time_graph <- ggplot(cleaned_data(), aes(x = t))+
     geom_point( aes(y=Power), size = 1) +
     scale_y_continuous("Power (Watts)",

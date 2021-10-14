@@ -17,8 +17,13 @@ rawdata <- data.frame(read_excel("/Users/apurvashah/Downloads/David-Gomez.xlsx",
 colnames(rawdata) <- col_names
 convert_data1 <- rawdata
 wbb1 <- convert_data1 %>% select(10:36) # The Dataframe that includes all of the key variables required for data manipulation.
+wbb1 <- wbb1[!wbb1$Power < 10,]
 
 wbb1$t <- (wbb1$t)*86400
+validity_time_correction <- wbb1$t[1]
+wbb1$t <- (wbb1$t)-validity_time_correction
+wbb1$t <- as.numeric(wbb1$t)
+wbb1$t[1]
 
 time.watts.lm <- lm(wbb1$t ~ wbb1$Power, data = wbb1)
 intercept <- summary(time.watts.lm)$coef[[1]]
