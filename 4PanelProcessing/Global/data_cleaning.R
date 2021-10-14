@@ -7,13 +7,20 @@ list(
   colnames(rawdata) <- col_names,
   convert_data1 <- rawdata,
   wbb1 <- convert_data1 %>% select(10:36), # The Dataframe that includes all of the key variables required for data manipulation.
-  wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
-  
+
   wbb1$VO2 <- (wbb1$VO2)/1000,  #CONVERT TO LITERS
   wbb1$VO2 <- as.numeric(wbb1$VO2), 
   wbb1$VCO2 <- (wbb1$VCO2)/1000,  #CONVERT TO LITERS
   wbb1$VCO2 <- as.numeric(wbb1$VCO2),
   wbb1$t <- (wbb1$t)*86400, # Converts from time format to seconds
+  
+  # wbb1$Power <- zoo::rollmean(wbb1$Power, k = 5, fill = NA),
+  # wbb1$VO2 <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA),
+  # wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
+  # wbb1$VE <- zoo::rollmean(wbb1$VE, k = 5, fill = NA),
+  # wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA),
+  
+  wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
   
   # Corrects Time back to 0 after ramp removal
   time_correction <- wbb1$t[1],

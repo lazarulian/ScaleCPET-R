@@ -36,8 +36,27 @@ shinyUI(navbarPage("UC-Fitness Lab Data Processing Application",
                 source("TestValidity/sidebar2.R", local = TRUE)[1] # Reference Sidebar1.R
             ),
             mainPanel(
-                h1("Graph Output"),
+                h3("Time vs. Watts"),
                 plotOutput("plot2", width = "800", height = "400"),
+                plotOutput("workrate_variability_graph", width = "800", height = "400"),
+                h4("Watts vs. VO2"),
+                plotOutput("VO2_variability_graph", width = "800", height = "400"),
+                plotOutput("VO2_distribution_graph", width = "800", height = "400"),
+                h4("Watts vs. VCO2"),
+                plotOutput("VCO2_variability_graph", width = "800", height = "400"),
+                plotOutput("VCO2_distribution_graph", width = "800", height = "400"),
+                h4("VO2 vs. VCO2"),
+                plotOutput("VO2VCO2_variability_graph", width = "800", height = "400"),
+                plotOutput("VO2VCO2_distribution_graph", width = "800", height = "400"),
+                h4("VCO2 vs. VE"),
+                plotOutput("VCO2VE_variability_graph", width = "800", height = "400"),
+                plotOutput("VCO2VE_distribution_graph", width = "800", height = "400"),
+                h4("VO2 vs. HR"),
+                plotOutput("VO2HR_variability_graph", width = "800", height = "400"),
+                plotOutput("VO2HR_distribution_graph", width = "800", height = "400"),
+                
+                
+                
             )
         )
     )

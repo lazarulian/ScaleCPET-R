@@ -1,4 +1,6 @@
 list(
+  source("TestValidity/workrate_variability.R", local = TRUE)[1],
+  
   rawtimewatts_regression <- lm(cleaned_data()$Power ~ cleaned_data()$t, data = cleaned_data()),
   rawtimewatts_rsquared <- summary(rawtimewatts_regression)$r.squared,
   rawtimewatts_slope <- summary(rawtimewatts_regression)$coef[[2]],
@@ -15,6 +17,21 @@ list(
   else {
     raw_controller_validity <- "This study cannot be reliably interpreted because a constant rate of work increase was not maintained
   during the ramp phase of the test."
+  },
+  
+  if(workrate_variability_sd < 10 & workrate_variability_sd > 5) {
+    workrate_variability_validity <- "This test must be interpreted with caution because there was significant variability in work control
+      during the ramp."
+  }
+  
+  else if (workrate_variability_sd > 10) {
+    workrate_variability_validity <- "This test cannot be reliably interpreted because there was excessive variability in work control during
+    the ramp."
+  }
+  
+  else {
+    workrate_variability_validity <- "This test can be reliably interpreted because there was normal variability in work control during
+    the ramp."
   }
   
 )

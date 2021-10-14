@@ -44,6 +44,66 @@ shinyServer(function(input, output) {
       plot_test
     })
     
+    output$workrate_variability_graph <- renderPlot({
+      source("TestValidity/workrate_variability.R", local = TRUE)[1]
+      workrate_variability_graph
+    })
+    
+    output$VO2_variability_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      linearity_machine(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data())
+    })
+    
+    output$VO2_distribution_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      distribution_machine(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data())
+    })
+    
+    ## VCO2
+    output$VCO2_variability_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      linearity_machine(cleaned_data()$Power, cleaned_data()$VCO2, cleaned_data())
+    })
+    
+    output$VCO2_distribution_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      distribution_machine(cleaned_data()$Power, cleaned_data()$VCO2, cleaned_data())
+    })
+    
+    ## VO2 vs. VCO2
+    output$VO2VCO2_variability_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      linearity_machine(cleaned_data()$VO2, cleaned_data()$VCO2, cleaned_data())
+    })
+    
+    output$VO2VCO2_distribution_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      distribution_machine(cleaned_data()$VO2, cleaned_data()$VCO2, cleaned_data())
+    })
+    
+    ## VCO2 vs. VE
+    output$VCO2VE_variability_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      linearity_machine(cleaned_data()$VCO2, cleaned_data()$VE, cleaned_data())
+    })
+    
+    output$VCO2VE_distribution_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      distribution_machine(cleaned_data()$VCO2, cleaned_data()$VE, cleaned_data())
+    })
+    
+    ## VO2 vs. HR
+    output$VO2HR_variability_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      linearity_machine(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data())
+    })
+    
+    output$VO2HR_distribution_graph <- renderPlot({
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      distribution_machine(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data())
+    })
+    
+    
     ## MaxVO2 Text Output
     output$output1 <- renderText({
       source("Global/max_test.R", local = TRUE)[1]
@@ -87,6 +147,11 @@ shinyServer(function(input, output) {
     output$raw_testcontroller_validity <- renderText({
       source("TestValidity/workcontroller_validity.R", local = TRUE)[1]
       raw_controller_validity
+    }) #EndRenderText
+    
+    output$workrate_variability_validity <- renderText({
+      source("TestValidity/workcontroller_validity.R", local = TRUE)[1]
+      workrate_variability_validity
     }) #EndRenderText
     
     #======================#
