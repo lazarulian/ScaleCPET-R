@@ -20,9 +20,9 @@ list(
   # Restructuring Time to Start at T=0
   # Subtracting all time values by the first data value in the set
   
-  validity_time_correction <- corrected_data$t[1],
-  corrected_data$t <- (corrected_data$t)-validity_time_correction,
-  corrected_data$t <- as.numeric(corrected_data$t),
+  # validity_time_correction <- corrected_data$t[1],
+  # corrected_data$t <- (corrected_data$t)-validity_time_correction,
+  # corrected_data$t <- as.numeric(corrected_data$t),
   
   # Determining Slope/Intercept of the Linearly Regressed Data
   

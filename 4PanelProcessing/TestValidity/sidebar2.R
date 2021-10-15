@@ -1,5 +1,8 @@
 list(
     h2("Raw Data Analysis (Linear Regression)"),
+    em("The information below refers to data populated from the raw cosmed output. 
+       None of the information is from the result of data correction."),
+    br(),
     strong("Intercept: "), textOutput("output4"),
     strong("Slope: "), textOutput("output5"),
     strong("R^2: "), textOutput("output6"),

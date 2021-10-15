@@ -1,17 +1,5 @@
 # UI.R
 shinyUI(navbarPage("UC-Fitness Lab Data Processing Application",
-                   tabPanel("Corrected 4Panel",
-                            sidebarLayout(
-                                sidebarPanel(
-                                    source("patient_info_sidebar.R", local = TRUE)[1] # Reference Sidebar1.R
-                                ),
-                                mainPanel(
-                                    h1("Graph Output"),
-                                    plotOutput("plot3", width = "400", height = "400")
-                                    
-                                )
-                            )
-                   ),
                    
     tabPanel("4-Panel Plot",
         sidebarLayout(
@@ -59,6 +47,19 @@ shinyUI(navbarPage("UC-Fitness Lab Data Processing Application",
                 
             )
         )
+    ),
+    
+    tabPanel("Corrected 4Panel",
+             sidebarLayout(
+                 sidebarPanel(
+                     source("patient_info_sidebar.R", local = TRUE)[1] # Reference Sidebar1.R
+                 ),
+                 mainPanel(
+                     h1("Graph Output"),
+                     plotOutput("plot3", width = "400", height = "400")
+                     
+                 )
+             )
     )
     
     

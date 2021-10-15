@@ -31,11 +31,13 @@ distribution_machine <- function(range_x, range_y, dataset) {
   corrected_data <- ((range_x)*data_slope)+data_intercept
   corrected_data <- as.numeric(corrected_data)
   
-  variability <- corrected_data-range_y
+  variability <- range_y-corrected_data
   
   variability_graph <- ggplot(dataset, aes(x = range_x))+
-    geom_point( aes(y=variability), color = "blue", size = 1) +
-    theme_classic()
+    geom_point( aes(y=variability), color = "blue", size = 1)+
+    theme_pubr()
+  # + theme_classic()
+    # + theme_pubr()
   
   return(variability_graph)
 }
