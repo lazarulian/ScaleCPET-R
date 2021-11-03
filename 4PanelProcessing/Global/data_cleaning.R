@@ -27,10 +27,18 @@ list(
   length_power <- as.numeric(length_power),
   wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ],
   
-  # Corrects Time back to 0 after ramp removal
-  time_correction <- wbb1$t[1],
-  wbb1$t <- (wbb1$t)-time_correction,
+  
+  
+  ## Fixing Time
+  time_analysis <- lm(wbb1$Power ~ wbb1$t, data = wbb1),
+  watts_t_intercept <- summary(time_analysis)$coef[[1]],
+  watts_t_slope <- summary(time_analysis)$coef[[2]],
+  
+  # Dr. Cooper's Actual Time of Commencement
+  corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope,
+  wbb1$t <- (wbb1$t)-corrected_time_differential,
   wbb1$t <- as.numeric(wbb1$t)
+  
 
   
 )

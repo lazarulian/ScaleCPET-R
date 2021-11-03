@@ -11,9 +11,9 @@ list(
         
         # Composition of Four Plots
         
-        p1 <- ggplot(cleaned_data(), aes(x = Watts_5avg))+
-            geom_point( aes(y=VO2_5avg), color= "#D35400", size = 1) +
-            geom_point( aes(y=VCO2_5avg), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
+        p1 <- ggplot(cleaned_data(), aes(x = Power))+
+            geom_point( aes(y=VO2), color= "#D35400", size = 1) +
+            geom_point( aes(y=VCO2), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
             scale_y_continuous("VO2 (L/min)",
                                 # minor_breaks = seq(VO2_range_start, VO2_range_end, VO2_minor_tick),
                                 breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
@@ -27,7 +27,7 @@ list(
                                 breaks = seq(watts_range_start, watts_range_end, watts_minor_tick),
                                 limits=c(watts_range_start, watts_range_end)),
 
-        p2 <- ggplot(cleaned_data(), aes(x=VO2_5avg, y=VCO2_5avg)) + 
+        p2 <- ggplot(cleaned_data(), aes(x=VO2, y=VCO2)) + 
             geom_point(color = "#3498DB", size = 1) + #BLUE COLOR
             #geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = "VO2 (L/min)",
@@ -40,7 +40,7 @@ list(
             theme(aspect.ratio=1) +
             theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text),
         
-        p3<-ggplot(cleaned_data(), aes(x=VCO2_5avg, y=VE_5avg)) + 
+        p3<-ggplot(cleaned_data(), aes(x=VCO2, y=VE)) + 
             geom_point(color = "#239B56", size = 1) + #GREEN COLOR
             #geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = "VCO2 (L/min)",
@@ -54,7 +54,7 @@ list(
             theme(axis.text.x = blue.bold.10.text, axis.text.y = green.bold.10.text),
         
         ##PLOT 4: HR vs VO2
-        p4<-ggplot(cleaned_data(), aes(x=VO2_5avg, y=HR_5avg)) + 
+        p4<-ggplot(cleaned_data(), aes(x=VO2, y=HR)) + 
             geom_point(color = "#7D3C98", size = 1) + #PURPLE COLOR
             geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = "VO2 (L/min)",
