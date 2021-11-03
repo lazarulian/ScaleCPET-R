@@ -13,14 +13,19 @@ list(
   wbb1$VCO2 <- (wbb1$VCO2)/1000,  #CONVERT TO LITERS
   wbb1$VCO2 <- as.numeric(wbb1$VCO2),
   wbb1$t <- (wbb1$t)*86400, # Converts from time format to seconds
-  
-  # wbb1$Power <- zoo::rollmean(wbb1$Power, k = 5, fill = NA),
-  # wbb1$VO2 <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA),
-  # wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
-  # wbb1$VE <- zoo::rollmean(wbb1$VE, k = 5, fill = NA),
-  # wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA),
-  
   wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
+  
+  ## Convert all to Data Values
+  wbb1$Power <- zoo::rollmean(wbb1$Power, k = 5, fill = NA),
+  wbb1$VO2 <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA),
+  wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
+  wbb1$VE <- zoo::rollmean(wbb1$VE, k = 5, fill = NA),
+  wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA),
+
+  ## Calculating the Length for Row Elimination
+  length_power <- length(wbb1$Power),
+  length_power <- as.numeric(length_power),
+  wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ],
   
   # Corrects Time back to 0 after ramp removal
   time_correction <- wbb1$t[1],

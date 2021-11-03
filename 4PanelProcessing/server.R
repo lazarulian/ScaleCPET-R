@@ -34,21 +34,31 @@ shinyServer(function(input, output) {
     }) #Plot1 Output
     
     # Plot Output (ServerSide)
-    output$plot2 <- renderPlot({        
-      source("TestValidity/corrected_work_time.R", local = TRUE)
-      plot_test_validity
-    }) #Plot1 Output
     
     output$plot3 <- renderPlot({
       source("Corrected4Panel/corrected_4panel.R", local = TRUE)[1]
       plot_test
     })
     
+    #============================#
+    # R^2 Value Distributions    #
+    #============================#
+    
+    ## Watts vs. Time
+    
+    output$plot2 <- renderPlot({        
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      linearity_machine(cleaned_data()$t, cleaned_data()$Power, cleaned_data())
+    }) #Plot1 Output
+    
+    
     output$workrate_variability_graph <- renderPlot({
-      source("TestValidity/workrate_variability.R", local = TRUE)[1]
-      workrate_variability_graph
+      source("TestValidity/linearity_machine.R", local = TRUE)[1]
+      distribution_machine(cleaned_data()$t, cleaned_data()$Power, cleaned_data())
     })
     
+    
+    ## VO2
     output$VO2_variability_graph <- renderPlot({
       source("TestValidity/linearity_machine.R", local = TRUE)[1]
       linearity_machine(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data())
@@ -103,6 +113,9 @@ shinyServer(function(input, output) {
       distribution_machine(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data())
     })
     
+    #============================#
+    # Text Outputs for Max Values#
+    #============================#
     
     ## MaxVO2 Text Output
     output$output1 <- renderText({

@@ -1,10 +1,4 @@
 list(
-        Watts_5avg <- zoo::rollmean(cleaned_data()$Power, k = 5, fill = NA),
-        VO2_5avg <- zoo::rollmean(cleaned_data()$VO2, k = 5, fill = NA),
-        VCO2_5avg <- zoo::rollmean(cleaned_data()$VCO2, k = 5, fill = NA),
-        VE_5avg <- zoo::rollmean(cleaned_data()$VE, k = 5, fill = NA),
-        HR_5avg <- zoo::rollmean(cleaned_data()$HR, k = 5, fill = NA),
-        
         source("Raw4PanelPlots/axes_scaling.R", local = TRUE)[1],
 
         # Graphing Color Palette

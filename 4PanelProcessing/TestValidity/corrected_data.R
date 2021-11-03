@@ -17,7 +17,22 @@ list(
   corrected_data$VCO2 <- as.numeric(corrected_data$VCO2),
   corrected_data$t <- (corrected_data$t)*86400,
   
-  # Restructuring Time to Start at T=0
+  
+  ## Eliminating NA Values for Time
+  wbb1$Power <- zoo::rollmean(wbb1$Power, k = 5, fill = NA),
+  wbb1$VO2 <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA),
+  wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
+  wbb1$VE <- zoo::rollmean(wbb1$VE, k = 5, fill = NA),
+  wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA),
+  
+  ## Calculating the Length for Row Elimination
+  length_power <- length(wbb1$Power),
+  length_power <- as.numeric(length_power),
+  wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ],
+  
+  
+  
+  ## Restructuring Time to Start at T=0
   # Subtracting all time values by the first data value in the set
   
   # validity_time_correction <- corrected_data$t[1],

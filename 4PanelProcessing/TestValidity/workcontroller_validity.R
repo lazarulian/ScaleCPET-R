@@ -1,5 +1,7 @@
 list(
-  source("TestValidity/workrate_variability.R", local = TRUE)[1],
+  ## Workrate Variability SD for Test Validity
+  workrate_variability <- corrected_data()$Power-cleaned_data()$Power,
+  workrate_variability_sd <- sd(workrate_variability),
   
   rawtimewatts_regression <- lm(cleaned_data()$Power ~ cleaned_data()$t, data = cleaned_data()),
   rawtimewatts_rsquared <- summary(rawtimewatts_regression)$r.squared,
