@@ -136,9 +136,9 @@ shinyServer(function(input, output) {
     }) #EndRenderText
 
     
-    #============================#
-    # Linear Regression Modeling #
-    #============================#
+    #============================================#
+    # Linear Regression Modeling / Test Validity #
+    #============================================#
     
     output$output4 <- renderText({
       source("TestValidity/workcontroller_validity.R", local = TRUE)[1]
@@ -149,6 +149,13 @@ shinyServer(function(input, output) {
       # Summary Slope
       source("TestValidity/workcontroller_validity.R", local = TRUE)[1]
       rawtimewatts_slope
+      
+    }) #EndRenderText
+    
+    output$effective_ramp <- renderText({
+      # Summary Slope
+      source("TestValidity/workcontroller_validity.R", local = TRUE)[1]
+      effective_ramp
       
     }) #EndRenderText
     

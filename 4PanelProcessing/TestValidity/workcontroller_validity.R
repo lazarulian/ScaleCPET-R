@@ -1,12 +1,17 @@
 list(
-  ## Workrate Variability SD for Test Validity
-  workrate_variability <- corrected_data()$Power-cleaned_data()$Power,
-  workrate_variability_sd <- sd(workrate_variability),
-  
+  source("TestValidity/linearity_machine.R", local = TRUE),
+  ## Watts vs. Time Data Information
   rawtimewatts_regression <- lm(cleaned_data()$Power ~ cleaned_data()$t, data = cleaned_data()),
   rawtimewatts_rsquared <- summary(rawtimewatts_regression)$r.squared,
-  rawtimewatts_slope <- summary(rawtimewatts_regression)$coef[[2]],
+  rawtimewatts_slope <- round(summary(rawtimewatts_regression)$coef[[2]], digits = 4),
   rawtimewatts_intercept <- summary(rawtimewatts_regression)$coef[[1]],
+  effective_ramp <- round(rawtimewatts_slope*60),
+  
+  
+  ## Calculating Standard Deviation Between Corrected Power and Raw Power
+  corrected_watts <- linreg_machine_data(cleaned_data()$t, cleaned_data()$Power, cleaned_data()),
+  workrate_variability <- corrected_watts-cleaned_data()$Power,
+  workrate_variability_sd <- sd(workrate_variability),
   
   if(rawtimewatts_rsquared > 0.9) {
     raw_controller_validity <- "This study can be interpreted confidently because a constant rate of work increase was 

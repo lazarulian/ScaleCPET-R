@@ -1,10 +1,11 @@
 list(
     h2("Raw Data Analysis (Linear Regression)"),
-    em("The information below refers to data populated from the raw cosmed output. 
+    em("The information below refers to data populated from the raw cosmed output of Watts vs. Time. 
        None of the information is from the result of data correction."),
     br(),
     strong("Intercept: "), textOutput("output4"),
     strong("Slope: "), textOutput("output5"),
+    strong("Effective Ramp: "), textOutput("effective_ramp"),
     strong("R^2: "), textOutput("output6"),
     br(),
     
