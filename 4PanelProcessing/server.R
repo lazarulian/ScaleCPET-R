@@ -12,6 +12,8 @@ library(zoo)         ## Rolling Averages
 library(shiny)       ## Shiny
 library(broom)       ## Linear Regression?
 library(lubridate)
+# library(ggpmisc)
+
 
 # Define server 
 shinyServer(function(input, output) {

@@ -10,7 +10,6 @@ list(
         orange.bold.10.text <- element_text(face = "bold", color = "#D35400", size = 10),
         
         # Composition of Four Plots
-        
         p1 <- ggplot(cleaned_data(), aes(x = Power))+
             geom_point( aes(y=VO2), color= "#D35400", size = 1) +
             geom_point( aes(y=VCO2), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
@@ -30,6 +29,9 @@ list(
         p2 <- ggplot(cleaned_data(), aes(x=VO2, y=VCO2)) + 
             geom_point(color = "#3498DB", size = 1) + #BLUE COLOR
             geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
+            # stat_poly_eq(formula = my.formula, 
+            #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+            #            parse = TRUE) +
             scale_x_continuous(name = "VO2 (L/min)",
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
                                limits=c(VO2_range_start, VO2_range_end)) +
