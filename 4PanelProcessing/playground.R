@@ -19,7 +19,7 @@ convert_data1 <- rawdata
 wbb1 <- convert_data1 %>% select(10:37) # The Dataframe that includes all of the key variables required for data manipulation.
 wbb1 <- wbb1[!wbb1$Power < 10,]
 
-poop <- c()
+diamonds <- c()
 
 end_test_machine_brett <- function(data_input) {
   for (i in 1:length(data_input)){

@@ -176,6 +176,11 @@ shinyServer(function(input, output) {
       workrate_variability_validity
     }) #EndRenderText
     
+    output$ramp_duration_validity <- renderText({
+      source("TestValidity/ramp_duration_validity.R", local = TRUE)[1]
+      ramp_duration_validity
+    }) #EndRenderText
+    
     #======================#
     # Patient Demographics
     #======================#

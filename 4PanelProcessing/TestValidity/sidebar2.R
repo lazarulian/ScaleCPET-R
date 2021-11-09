@@ -14,9 +14,7 @@ list(
     br(),
     strong("Work Controller Ramp Test Validity: "), textOutput("workrate_variability_validity"),
     br(),
-    strong("Test Duration Test Validity: "), 
-    br(),
-    print("The ramp phase of this test was less 
-                than 5 minutes and therefore the test cannot be reliably interpreted.")
+    strong("Test Duration Test Validity: "), textOutput("ramp_duration_validity"),
+    br()
     
 )
