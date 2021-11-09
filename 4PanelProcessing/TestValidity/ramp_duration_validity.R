@@ -1,5 +1,5 @@
 # Test Duration Validity
-
+# Finds the test duration in minutes and compares to reference values.
 list(
   end_test <- cleaned_data()$t[length(cleaned_data()$t)],
   test_duration <- end_test/60,

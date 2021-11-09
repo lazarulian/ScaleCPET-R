@@ -15,6 +15,9 @@ list(
     strong("Work Controller Ramp Test Validity: "), textOutput("workrate_variability_validity"),
     br(),
     strong("Test Duration Test Validity: "), textOutput("ramp_duration_validity"),
+    br(),
+    strong("Metabolic Efficiency Validity: "), textOutput("metabolic_efficiency_validity"),
+    br(),
+    strong("Erroneous Heart Rate Variability: "), textOutput("erroneous_hr_validity"),
     br()
-    
 )

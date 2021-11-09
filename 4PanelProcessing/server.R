@@ -181,6 +181,16 @@ shinyServer(function(input, output) {
       ramp_duration_validity
     }) #EndRenderText
     
+    output$metabolic_efficiency_validity <- renderText({
+      source("TestValidity/metabolic_efficiency_validity.R", local = TRUE)[1]
+      metabolic_efficiency_validity
+    }) #EndRenderText
+    
+    output$erroneous_hr_validity <- renderText({
+      source("TestValidity/erroneous_hr.R", local = TRUE)[1]
+      erroneous_hr_validity
+    }) #EndRenderText
+    
     #======================#
     # Patient Demographics
     #======================#
