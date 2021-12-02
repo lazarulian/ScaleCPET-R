@@ -15,7 +15,11 @@ list(
   wbb1$t <- (wbb1$t)*86400, # Converts from time format to seconds
   wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
   
-  ## Convert all to Data Values
+  #========================#
+  # Converting to Rollmean #
+  #========================#
+  # Uses the library zoo to calculate roll means for all of the key variables
+  
   wbb1$Power <- zoo::rollmean(wbb1$Power, k = 5, fill = NA),
   wbb1$VO2 <- zoo::rollmean(wbb1$VO2, k = 5, fill = NA),
   wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
@@ -37,7 +41,9 @@ list(
   # Dr. Cooper's Actual Time of Commencement
   corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope,
   wbb1$t <- (wbb1$t)-corrected_time_differential,
-  wbb1$t <- as.numeric(wbb1$t),
+  wbb1$t <- as.numeric(wbb1$t)
+  
+  
   
   #=======================#
   # End Test Data Removal #
@@ -49,16 +55,16 @@ list(
    # test_end_data <- distribution_machine_data(wbb1$Power, wbb1$VO2, wbb1),
    # source("Global/end_test.R", local = TRUE),
    # end_test_position <- end_test_machine(test_end_data),
-   # wbb1 <- wbb1[-c(end_test_position:length_power), ] 
+   # wbb1 <- wbb1[-c(end_test_position:length_power), ]
   
 
   # #=======================#
   # # End Test Data Removal #
   # #=======================#
   # # Using Dr. Dolezal's Method: RPM based
-  source("Global/end_test.R", local = TRUE),
-  end_test_position_brett <- end_test_machine_brett(wbb1$Revolution),
-  wbb1 <- wbb1[-c(end_test_position_brett:length_power), ]
+  # source("Global/end_test.R", local = TRUE),
+  # end_test_position_brett <- end_test_machine_brett(wbb1$Revolution),
+  # wbb1 <- wbb1[-c(end_test_position_brett:length_power), ]
   
   
 )

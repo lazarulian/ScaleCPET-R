@@ -36,8 +36,9 @@ distribution_machine <- function(range_x, range_y, dataset) {
   variability <- range_y-corrected_data
   
   variability_graph <- ggplot(dataset, aes(x = range_x))+
-    geom_point( aes(y=variability), color = "blue", size = 1)+
-    theme_pubr()
+    geom_point( aes(y=variability), color = "blue", size = 1)
+  # +
+  #   theme_pubr()
   # + theme_classic()
     # + theme_pubr()
   
