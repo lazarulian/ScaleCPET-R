@@ -119,40 +119,41 @@ shinyServer(function(input, output) {
     
     ## MaxVO2 Text Output
     
+    #  output$output1 <- renderText({
+    #    source("Global/max_test.R", local = TRUE)[1]
+    #    max_test2(cleaned_data()$VO2)
+    #  }) #EndRenderText
+    # 
+    #  ## Max Heart Rate Text Output
+    #  output$output2 <- renderText({
+    #    source("Global/max_test.R", local = TRUE)[1]
+    #    max_test2(cleaned_data()$HR)
+    #  }) #EndRenderText
+    # 
+    # ## Max Watts Text Output
+    #  output$output3 <- renderText({
+    #      source("Global/max_test.R", local = TRUE)[1]
+    #      max_test2(cleaned_data()$Power)
+    # }) #EndRenderText
+    
+  ## Max Values Based off of End Test Calculations
+
     output$output1 <- renderText({
-      source("Global/max_test.R", local = TRUE)[1]
-      max_test2(cleaned_data()$VO2)
+      source("DataCalculation/endtest_data_max.R", local = TRUE)[1]
+      end_VO2
     }) #EndRenderText
 
     ## Max Heart Rate Text Output
     output$output2 <- renderText({
-      source("Global/max_test.R", local = TRUE)[1]
-      max_test2(cleaned_data()$HR)
+      source("DataCalculation/endtest_data_max.R", local = TRUE)[1]
+      end_HR
     }) #EndRenderText
 
     ## Max Watts Text Output
     output$output3 <- renderText({
-        source("Global/max_test.R", local = TRUE)[1]
-        max_test2(cleaned_data()$Power)
+      source("DataCalculation/endtest_data_max.R", local = TRUE)[1]
+      end_power
     }) #EndRenderText
-    
-  ## Max Values Based off of End Test Calculations
-    # output$output1 <- renderText({
-    #   source("DataCalculation/endtest_data_max.R", local = TRUE)[1]
-    #   end_VO2
-    # }) #EndRenderText
-    # 
-    # ## Max Heart Rate Text Output
-    # output$output2 <- renderText({
-    #   source("DataCalculation/endtest_data_max.R", local = TRUE)[1]
-    #   end_HR
-    # }) #EndRenderText
-    # 
-    # ## Max Watts Text Output
-    # output$output3 <- renderText({
-    #   source("DataCalculation/endtest_data_max.R", local = TRUE)[1]
-    #   end_power
-    # }) #EndRenderText
 
     
     #============================================#
