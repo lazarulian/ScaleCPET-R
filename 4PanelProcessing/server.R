@@ -12,6 +12,9 @@ library(zoo)         ## Rolling Averages
 library(shiny)       ## Shiny
 library(broom)       ## Linear Regression?
 library(lubridate)
+library(flexdashboard) ## Creates nice dashboards and allows custom HTML tools
+library(rmarkdown)
+
 
 # Define server 
 shinyServer(function(input, output) {
