@@ -86,7 +86,7 @@ shinyUI(dashboardPage(
           textOutput("metabolic_efficiency_validity"),
           br(),
           textOutput("erroneous_hr_validity")
-          ),
+          ), # End Box
       
       box(title = "Physician Comments", status = "warning", solidHeader = TRUE, width = 6,
           textInput("Input Comments", label = "Text Input", value = ""))
