@@ -14,11 +14,14 @@ library(broom)       ## Linear Regression?
 library(lubridate)
 library(flexdashboard) ## Creates nice dashboards and allows custom HTML tools
 library(rmarkdown)
+library(bs4Dash)
 
 
 # Define server 
 shinyServer(function(input, output) {
-    # Data Input (Uploaded File)
+  #============================#
+  # Data Inputs                #
+  #============================#
     cleaned_data <- reactive({
       source("Global/data_cleaning.R", local = TRUE) # Reference data_cleaning.R
       wbb1
@@ -29,19 +32,15 @@ shinyServer(function(input, output) {
       corrected_data
     }) # EndDataReactive
     
+    #============================#
+    # Main Plot Output Files     #
+    #============================#  
     
     # Plot Output (ServerSide)
     output$plot1 <- renderPlot({        
       source("Raw4PanelPlots/raw_plot.R", local = TRUE)
-      plot_grid(plot.a, NULL, plot.b, rel_widths = c(2, -1.2, 2), align = "h", axis = "b", nrow = 2, ncol = 3) # Combines Plots
+      plot_grid(p1, NULL, p2, p3, NULL, p4, align = 'hv', rel_widths = c(3, -.5, 3), nrow = 2, ncol = 3)
     }) #Plot1 Output
-    
-    # Plot Output (ServerSide)
-    
-    output$plot3 <- renderPlot({
-      source("Corrected4Panel/corrected_4panel.R", local = TRUE)[1]
-      plot_test
-    })
     
     #============================#
     # R^2 Value Distributions    #
@@ -244,6 +243,26 @@ shinyServer(function(input, output) {
     output$weight <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
       weight
+    }) #EndRenderText
+    
+    output$id <- renderText({
+      source("Global/demographics_data.R", local = TRUE)[1]
+      id
+    }) #EndRenderText
+    
+    output$bmi <- renderText({
+      source("Global/demographics_data.R", local = TRUE)[1]
+      bmi
+    }) #EndRenderText
+    
+    output$rbmi <- renderText({
+      source("Global/demographics_data.R", local = TRUE)[1]
+      rbmi
+    }) #EndRenderText
+    
+    output$ibw <- renderText({
+      source("Global/demographics_data.R", local = TRUE)[1]
+      ibw
     }) #EndRenderText
     
 })

@@ -1,67 +1,96 @@
-# UI.R
-shinyUI(navbarPage("UC-Fitness Lab Data Processing Application",
-                   
-    tabPanel("4-Panel Plot",
-        sidebarLayout(
-            sidebarPanel(
-                source("sidebar1.R", local = TRUE)[1] # Reference Sidebar1.R
-            ), #EndSidebarPanel
-            
-            # Main Panel with Graph Output
-            mainPanel(
-                h1("Graph Output"),
-                plotOutput("plot1", width = "1300", height = "1300") # Outputs from server-side
-                
-            )#EndMainPanel
-            
-        ) #EndSidebarLayout
-    ), # End Tab Panel
+library(shiny)
+library(shinydashboard)
+
+shinyUI(dashboardPage(
+  dashboardHeader(title = "UCLA CPET Analytics"),
+  
+  ## Sidebar
+  dashboardSidebar(
+    fileInput("file1", "Choose xlsx File", 
+              multiple = FALSE, 
+              accept = c(".xlsx"),) #EndFileInput
+  ),
+  
+  dashboardBody(
     
+    source("user_interface/demographic_csstags.R", local = TRUE)[1],
     
-    tabPanel("Test Validity",
-        sidebarLayout(
-            sidebarPanel(
-                source("TestValidity/sidebar2.R", local = TRUE)[1] # Reference Sidebar1.R
-            ),
-            mainPanel(
-                h3("Watts vs. Time"),
-                plotOutput("plot2", width = "800", height = "400"),
-                plotOutput("workrate_variability_graph", width = "800", height = "400"),
-                h4("VO2 vs. Watts"),
-                plotOutput("VO2_variability_graph", width = "800", height = "400"),
-                plotOutput("VO2_distribution_graph", width = "800", height = "400"),
-                h4("VCO2 vs. Watts"),
-                plotOutput("VCO2_variability_graph", width = "800", height = "400"),
-                plotOutput("VCO2_distribution_graph", width = "800", height = "400"),
-                h4("VCO2 vs. VO2"),
-                plotOutput("VO2VCO2_variability_graph", width = "800", height = "400"),
-                plotOutput("VO2VCO2_distribution_graph", width = "800", height = "400"),
-                h4("VE vs. VCO2"),
-                plotOutput("VCO2VE_variability_graph", width = "800", height = "400"),
-                plotOutput("VCO2VE_distribution_graph", width = "800", height = "400"),
-                h4("HR vs. VO2"),
-                plotOutput("VO2HR_variability_graph", width = "800", height = "400"),
-                plotOutput("VO2HR_distribution_graph", width = "800", height = "400"),
-                
-                
-                
-            )
-        )
-    ),
-    
-    tabPanel("Corrected 4Panel",
-             sidebarLayout(
-                 sidebarPanel(
-                     source("patient_info_sidebar.R", local = TRUE)[1] # Reference Sidebar1.R
-                 ),
-                 mainPanel(
-                     h1("Graph Output"),
-                     plotOutput("plot3", width = "400", height = "400")
-                     
-                 )
-             )
-    )
-    
-    
-    
-)) #End NavBarPage (Shiny UI Template)
+    # ------------------------------------------------------------
+    #   Below is the code that can narrow the boxes potentially
+    # ------------------------------------------------------------
+    # tags$head(tags$style(HTML("div.col-sm-6 {padding:1px}"))),
+    # tags$head(tags$style(HTML(' .box {margin: 5px;}' )))
+    # ------------------------------------------------------------
+    fluidRow(
+      box(title = "Patient Information", status = "primary", width = 3, 
+          strong("ID: ", style="display:inline"), textOutput("id"),
+          br(),
+          strong("Last Name: ", style="display:inline"), textOutput("last_name"),
+          br(),
+          strong("First Name: "),textOutput("first_name")
+          ), # End Box
+      
+      box(title = "Demographics", status = "primary", width = 3,
+          strong("Age: ", style="display:inline"), textOutput("age"),
+          br(),
+          strong("Race: ", style="display:inline"),
+          br(),
+          strong("Sex: ", style="display:inline"), textOutput("sex"),
+          ), # End Box
+      
+      box(title = "Patient Data", status = "primary", width = 3, 
+          strong("Weight: ", style="display:inline"), textOutput("weight"),
+          br(),
+          strong("IBW: ", style="display:inline"), textOutput("ibw"),
+          br(),
+          strong("Height: ", style="display:inline"), textOutput("height"),
+          ), # End Box
+      
+      box(title = "Calculated Patient Data", status = "primary", width = 3,
+          strong("BMI: ", style="display:inline"), textOutput("bmi"),
+          br(),
+          strong("RBMI: ", style="display:inline"), textOutput("rbmi"),
+          br(),
+          strong("Ref FEV1 Nhanes II (L): ", style="display:inline"),
+          ), # End Box
+      
+      #============================#
+      # Box for the Table Values   #
+      #============================# 
+      
+      box(title = "Reference Value Table", status = "primary", solidHeader = TRUE, width = 6,
+          strong("VO2 Max(L/min): "),
+          textOutput("output1"),
+          strong("HR Max (BPM): "), textOutput("output2"),
+          strong("Power Max (Watts): "), textOutput("output3")
+      ), # End Box
+      
+      #============================#
+      # Four Plot Box              #
+      #============================# 
+      box(title = "Cooper's Four Plot Render", status = "primary", solidHeader = TRUE, width = 6,
+          plotOutput("plot1", 
+                     # width = 530, height = 530
+                     # Facing issues when scaling boxes to the right size and
+                     # keeping the plots looking good at all devices
+                     ), 
+          ), # End Box
+      
+      box(title = "Technical Comments", status = "warning", solidHeader = TRUE, width = 6,
+          textOutput("raw_testcontroller_validity"),
+          br(),
+          textOutput("workrate_variability_validity"),
+          br(),
+          textOutput("ramp_duration_validity"),
+          br(),
+          textOutput("metabolic_efficiency_validity"),
+          br(),
+          textOutput("erroneous_hr_validity")
+          ),
+      
+      box(title = "Physician Comments", status = "warning", solidHeader = TRUE, width = 6,
+          textInput("Input Comments", label = "Text Input", value = ""))
+      
+      ) # FluidRow
+  ) # End Dashboard Body
+)) # End Dashboard Page

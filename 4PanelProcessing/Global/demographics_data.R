@@ -18,7 +18,24 @@ list(
   height <- as.numeric(height),
 
   weight <- read_excel(input$file1$datapath, range = "B7", col_names = FALSE),
-  weight <- as.numeric(weight)
+  weight <- as.numeric(weight),
   
+  id <- read_excel(input$file1$datapath, range = "B1", col_names = FALSE),
+  id <- as.numeric(id),
+  
+  bmi <- weight/(height/100)^2,
+  bmi <- as.numeric(bmi),
+  
+  # Ideal Body Weight Calculation
+  if (sex == "Male") {
+    ibw <- 71.6*(height/100)-51.8
+  }
+  else {
+    ibw <- 62.6*(height/100)-45.5
+  },
+  
+  # Reference BMI Calculation
+  rbmi <- ibw/(height/100)^2,
+  rbmi <- as.numeric(rbmi)
 
 )
