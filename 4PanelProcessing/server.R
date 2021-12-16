@@ -13,6 +13,8 @@ library(shiny)       ## Shiny
 library(broom)       ## Linear Regression?
 library(lubridate)
 library(rmarkdown)
+library(shinyscreenshot) # handles the download for the tabularized report
+library(remotes)
 
 # Define server 
 shinyServer(function(input, output) {

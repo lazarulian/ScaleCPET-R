@@ -1,14 +1,23 @@
 library(shiny)
 library(shinydashboard)
+library(remotes)
+library(capture)
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "UCLA CPET Analytics"),
   
   ## Sidebar
   dashboardSidebar(
-    fileInput("file1", "Choose xlsx File", 
-              multiple = FALSE, 
-              accept = c(".xlsx"),) #EndFileInput
+    fileInput("file1", "Choose xlsx File",
+              multiple = FALSE,
+              accept = c(".xlsx"),),#EndFileInput
+    strong(".     ."),
+    capture_pdf(
+            selector = "body",
+            filename = "tabularized_report",
+            scale = 5,
+            icon("camera"), "Download"
+            )
   ),
   
   dashboardBody(
@@ -38,18 +47,35 @@ shinyUI(dashboardPage(
           strong("Sex: ", style="display:inline"), textOutput("sex"),
           ), # End Box
       
+      # box(width = 3, title = "File Input & Output", status = "primary",
+      #     fileInput("file1", "Choose xlsx File", # File Input Mechanism Runs Natively on RStudio
+      #         multiple = FALSE, 
+      #         accept = c(".xlsx"),),
+      #     
+      #     
+      #     # PDF Capturing Mechanism, Relies on JavaScript to work so requires
+      #     # web browswer or other javascript engine.
+      #     
+      #     capture_pdf(
+      #       selector = "body",
+      #       filename = "results",
+      #       scale = 3,
+      #       icon("camera"), "Take screenshot of results (bigger scale)"
+      #       ),
+      #     ), # End Box
+      
       box(title = "Patient Data", status = "primary", width = 3, 
-          strong("Weight: ", style="display:inline"), textOutput("weight"),
+          strong("Weight (kg): ", style="display:inline"), textOutput("weight"),
           br(),
-          strong("IBW: ", style="display:inline"), textOutput("ibw"),
+          strong("IBW (kg): ", style="display:inline"), textOutput("ibw"),
           br(),
-          strong("Height: ", style="display:inline"), textOutput("height"),
+          strong("Height (cm): ", style="display:inline"), textOutput("height"),
           ), # End Box
       
       box(title = "Calculated Patient Data", status = "primary", width = 3,
-          strong("BMI: ", style="display:inline"), textOutput("bmi"),
+          strong("BMI (kg/m^2): ", style="display:inline"), textOutput("bmi"),
           br(),
-          strong("RBMI: ", style="display:inline"), textOutput("rbmi"),
+          strong("RBMI (kg/m^2): ", style="display:inline"), textOutput("rbmi"),
           br(),
           strong("Ref FEV1 Nhanes II (L): ", style="display:inline"),
           ), # End Box
@@ -62,8 +88,8 @@ shinyUI(dashboardPage(
           strong("VO2 Max(L/min): "),
           textOutput("output1"),
           strong("HR Max (BPM): "), textOutput("output2"),
-          strong("Power Max (Watts): "), textOutput("output3")
-      ), # End Box
+          strong("Power Max (Watts): "), textOutput("output3"),
+          ), # end Box
       
       #============================#
       # Four Plot Box              #
@@ -89,7 +115,7 @@ shinyUI(dashboardPage(
           ), # End Box
       
       box(title = "Physician Comments", status = "warning", solidHeader = TRUE, width = 6,
-          textInput("Input Comments", label = "Text Input", value = ""))
+          textAreaInput("caption", "Input Comments: ", "", width = "600"))
       
       ) # FluidRow
   ) # End Dashboard Body
