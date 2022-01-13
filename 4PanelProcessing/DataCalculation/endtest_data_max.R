@@ -11,10 +11,9 @@ list(
   # Creating Max Point Machine #
   #============================# 
   
-  ## This function takes two variables, finds the linear relationship and finds
-   # a maximum value on the y' based off of the value of the x variable. 
-  
  linreg_machine_point_data <- function(range_x, range_y, dataset, value) {
+   ## This function takes two variables, finds the linear relationship and finds
+   # a maximum value on the y' based off of the value of the x variable. 
     data_summary <- lm(range_y ~ range_x, data = dataset)
     data_intercept <- summary(data_summary)$coef[[1]]
     data_slope <- summary(data_summary)$coef[[2]]

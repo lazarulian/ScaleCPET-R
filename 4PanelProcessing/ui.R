@@ -2,6 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(remotes)
 library(capture)
+library(gt)
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "UCLA CPET Analytics"),
@@ -15,7 +16,7 @@ shinyUI(dashboardPage(
     capture_pdf(
             selector = "body",
             filename = "tabularized_report",
-            scale = 5,
+            scale = 4,
             icon("camera"), "Download"
             )
   ),
@@ -85,21 +86,30 @@ shinyUI(dashboardPage(
       #============================# 
       
       box(title = "Reference Value Table", status = "primary", solidHeader = TRUE, width = 6,
-          strong("VO2 Max(L/min): "),
-          textOutput("output1"),
-          strong("HR Max (BPM): "), textOutput("output2"),
-          strong("Power Max (Watts): "), textOutput("output3"),
+          
+          gt_output(outputId = "table1")
+          
+          # strong("VO2 Max(L/min): "),
+          # textOutput("output1"),
+          # strong("HR Max (BPM): "), textOutput("output2"),
+          # strong("Power Max (Watts): "), textOutput("output3"),
           ), # end Box
       
       #============================#
       # Four Plot Box              #
       #============================# 
       box(title = "Cooper's Four Plot Render", status = "primary", solidHeader = TRUE, width = 6,
+          br(),
+          br(),
+          br(),
           plotOutput("plot1", 
                      # width = 530, height = 530
                      # Facing issues when scaling boxes to the right size and
                      # keeping the plots looking good at all devices
                      ), 
+          br(),
+          br(),
+          br()
           ), # End Box
       
       box(title = "Technical Comments", status = "warning", solidHeader = TRUE, width = 6,

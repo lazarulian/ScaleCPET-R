@@ -15,6 +15,7 @@ library(lubridate)
 library(rmarkdown)
 library(shinyscreenshot) # handles the download for the tabularized report
 library(remotes)
+library(shinyloadtest)
 
 # Define server 
 shinyServer(function(input, output) {
@@ -22,13 +23,8 @@ shinyServer(function(input, output) {
   # Data Inputs                #
   #============================#
     cleaned_data <- reactive({
-      source("Global/data_cleaning.R", local = TRUE) # Reference data_cleaning.R
+      source("cosmed/cosmed_data_cleaning.R", local = TRUE) # Reference data_cleaning.R
       wbb1
-    }) # EndDataReactive
-    
-    corrected_data <- reactive({
-      source("TestValidity/corrected_data.R", local = TRUE) # Reference data_cleaning.R
-      corrected_data
     }) # EndDataReactive
     
     #============================#
@@ -40,6 +36,15 @@ shinyServer(function(input, output) {
       source("Raw4PanelPlots/raw_plot.R", local = TRUE)
       plot_grid(p1, NULL, p2, p3, NULL, p4, align = 'hv', rel_widths = c(3, -.5, 3), nrow = 2, ncol = 3)
     }) #Plot1 Output
+    
+    #============================#
+    # Main Table Output          #
+    #============================#
+    
+    output$table1 <- render_gt({
+      source("cosmed/cosmed_gt.R", local = TRUE)[1]
+      table
+    })
     
     #============================#
     # R^2 Value Distributions    #
@@ -117,25 +122,6 @@ shinyServer(function(input, output) {
     #============================#
     # Text Outputs for Max Values#
     #============================#
-    
-    ## MaxVO2 Text Output
-    
-    #  output$output1 <- renderText({
-    #    source("Global/max_test.R", local = TRUE)[1]
-    #    max_test2(cleaned_data()$VO2)
-    #  }) #EndRenderText
-    # 
-    #  ## Max Heart Rate Text Output
-    #  output$output2 <- renderText({
-    #    source("Global/max_test.R", local = TRUE)[1]
-    #    max_test2(cleaned_data()$HR)
-    #  }) #EndRenderText
-    # 
-    # ## Max Watts Text Output
-    #  output$output3 <- renderText({
-    #      source("Global/max_test.R", local = TRUE)[1]
-    #      max_test2(cleaned_data()$Power)
-    # }) #EndRenderText
     
   ## Max Values Based off of End Test Calculations
 
@@ -236,7 +222,7 @@ shinyServer(function(input, output) {
     
     output$height <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
-      height
+      height*100 # In Centimeters
     }) #EndRenderText
     
     output$weight <- renderText({
@@ -251,17 +237,17 @@ shinyServer(function(input, output) {
     
     output$bmi <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
-      bmi
+      getBmi(height, weight)
     }) #EndRenderText
     
     output$rbmi <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
-      rbmi
+      getRbmi(height, sex)
     }) #EndRenderText
     
     output$ibw <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
-      ibw
+      getIbw(height, sex)
     }) #EndRenderText
     
 })

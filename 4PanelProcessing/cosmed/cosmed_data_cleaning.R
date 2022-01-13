@@ -1,3 +1,6 @@
+# Cleans the data and assigns the variable names that are necessary for the rest
+# of the software to interpret.
+
 list(
   req(input$file1), # Requests Data from Input
   
@@ -7,7 +10,7 @@ list(
   colnames(rawdata) <- col_names,
   convert_data1 <- rawdata,
   wbb1 <- convert_data1 %>% select(10:37), # The Dataframe that includes all of the key variables required for data manipulation.
-
+  
   wbb1$VO2 <- (wbb1$VO2)/1000,  #CONVERT TO LITERS
   wbb1$VO2 <- as.numeric(wbb1$VO2), 
   wbb1$VCO2 <- (wbb1$VCO2)/1000,  #CONVERT TO LITERS
@@ -25,12 +28,11 @@ list(
   wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
   wbb1$VE <- zoo::rollmean(wbb1$VE, k = 5, fill = NA),
   wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA),
-
+  
   ## Calculating the Length for Row Elimination
   length_power <- length(wbb1$Power),
   length_power <- as.numeric(length_power),
   wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ],
-  
   
   
   ## Fixing Time
@@ -42,8 +44,7 @@ list(
   corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope,
   wbb1$t <- (wbb1$t)-corrected_time_differential,
   wbb1$t <- as.numeric(wbb1$t)
-  
-  
+
   
   #=======================#
   # End Test Data Removal #

@@ -1,8 +1,7 @@
 # Scaling Options for Graphs
 list(
   source("Global/max_test.R", local = TRUE)[1],
-  source("Global/data_cleaning.R", local = TRUE)[1],
-  watts_max <- max_test2(wbb1$Power),
+  watts_max <- max_test2(cleaned_data()$Power),
   ## All Scaling Options
   
   ## VO2/VCO2 Scaling Options
