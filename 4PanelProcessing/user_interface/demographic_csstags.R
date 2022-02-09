@@ -55,5 +55,22 @@ tags$head(tags$style("
 tags$head(tags$style("
                   #ibw{
                   display:inline
+                  }")),
+
+## CSS nhanes Tag
+tags$head(tags$style("
+                  #nhanes{
+                  display:inline
+                  }")),
+## CSS VECAP
+tags$head(tags$style("
+                  #vecap{
+                  display:inline
+                  }")),
+
+## CSS dateofstudy
+tags$head(tags$style("
+                  #date_of_study{
+                  display:inline
                   }"))
 )

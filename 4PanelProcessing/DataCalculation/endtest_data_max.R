@@ -22,7 +22,7 @@ list(
     corrected_data_point <- as.numeric(corrected_data_point)
     
     return(corrected_data_point)
-  },
+  }
   
   
   #============================#
@@ -30,16 +30,17 @@ list(
   #============================#  
  
 # Calculating Position of End Test Based on RPM 
-end_test_position_brett <- end_test_machine_brett(cleaned_data()$Revolution),
-
-# Calculating Accurate Max Watts Based on End Test 
-t_powerindex <- linreg_machine_data(cleaned_data()$t, cleaned_data()$Power, cleaned_data()),
-end_power <- t_powerindex[end_test_position_brett],
-
-# Calculating Accurate Max VO2 Based on Max Watts 
-end_VO2 <- linreg_machine_point_data(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data(), end_power),
-
-# Calculating Accurate Max HR Based on Max VO2 
-end_HR <- linreg_machine_point_data(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data(), end_VO2)
+# end_test_position_brett <- end_test_machine_brett(cleaned_data()$Revolution),
+# end_test_position_cooper <- end_test_machine_coop(cleaned_data()$VO2),
+# 
+# # Calculating Accurate Max Watts Based on End Test 
+# t_powerindex <- linreg_machine_data(cleaned_data()$t, cleaned_data()$Power, cleaned_data()),
+# end_power <- t_powerindex[end_test_position_cooper],
+# 
+# # Calculating Accurate Max VO2 Based on Max Watts 
+# end_VO2 <- linreg_machine_point_data(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data(), end_power),
+# 
+# # Calculating Accurate Max HR Based on Max VO2 
+# end_HR <- linreg_machine_point_data(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data(), end_VO2)
 
 ) # End List

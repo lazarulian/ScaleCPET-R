@@ -16,6 +16,10 @@ library(rmarkdown)
 library(shinyscreenshot) # handles the download for the tabularized report
 library(remotes)
 library(shinyloadtest)
+library(glue)
+library(stringr)
+library(segmented)
+
 
 # Define server 
 shinyServer(function(input, output) {
@@ -43,7 +47,7 @@ shinyServer(function(input, output) {
     
     output$table1 <- render_gt({
       source("cosmed/cosmed_gt.R", local = TRUE)[1]
-      table
+      gt_confirmed
     })
     
     #============================#
@@ -196,6 +200,18 @@ shinyServer(function(input, output) {
       erroneous_hr_validity
     }) #EndRenderText
     
+    output$nhanes <- renderText({
+      source("Global/demographics_data.R", local = TRUE)[1]
+      source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1]
+      round(get_nhanes(age, sex, height), 2)
+    })
+    
+    output$vecap <- renderText({
+      source("Global/demographics_data.R", local = TRUE)[1]
+      source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1]
+      round(get_nhanes(age, sex, height), 2)*40
+    })
+    
     #======================#
     # Patient Demographics
     #======================#
@@ -248,6 +264,11 @@ shinyServer(function(input, output) {
     output$ibw <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
       getIbw(height, sex)
+    }) #EndRenderText
+    
+    output$date_of_study <- renderText({
+      source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1]
+      date_of_study
     }) #EndRenderText
     
 })

@@ -37,6 +37,29 @@ list(
     return(rbmi)
   },
   
+  get_nhanes <- function (age, sex, height) {
+    ## Returns the reference nhanes III value from the age, sex, and height
+    ## Defaults as caucasian 
+    
+    if (age >= 17 && sex == "female" | sex == "Female") {
+      nhanes <- 0.43333-0.00361*age-0.000194*age^2+1.1496*(height)^2
+    }
+    
+    else if (age == "Female" | age == "female") {
+      nhanes <- -0.871+0.06537*age+1.1496*(height)^2
+    }
+    
+    else if (age == "Male" && age >= 20) {
+      nhanes <- 0.5536-0.01303*age-0.000172*age^2+1.4098*(height)^2
+    }
+    
+    else {
+      nhanes <- -0.7453-0.04106*age+0.004477*(age)^2+1.4098*(height)^2
+    }
+    
+    return(nhanes)
+  },
+  
   source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1]
   
 )

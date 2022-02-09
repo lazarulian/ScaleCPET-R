@@ -16,7 +16,7 @@ shinyUI(dashboardPage(
     capture_pdf(
             selector = "body",
             filename = "tabularized_report",
-            scale = 4,
+            scale = 3,
             icon("camera"), "Download"
             )
   ),
@@ -33,19 +33,23 @@ shinyUI(dashboardPage(
     # ------------------------------------------------------------
     fluidRow(
       box(title = "Patient Information", status = "primary", width = 3, 
-          strong("ID: ", style="display:inline"), textOutput("id"),
-          br(),
           strong("Last Name: ", style="display:inline"), textOutput("last_name"),
           br(),
-          strong("First Name: "),textOutput("first_name")
+          strong("First Name: "),textOutput("first_name"),
+          br(),
+          strong("ID: ", style="display:inline"), textOutput("id"),
+          br(),
+          strong("Date of Study: ", style ="display:inline"),textOutput("date_of_study"),
           ), # End Box
       
       box(title = "Demographics", status = "primary", width = 3,
           strong("Age: ", style="display:inline"), textOutput("age"),
           br(),
-          strong("Race: ", style="display:inline"),
+          strong("Race: ", style="display:inline"), "Unspecified",
           br(),
           strong("Sex: ", style="display:inline"), textOutput("sex"),
+          br(),
+          br()
           ), # End Box
       
       # box(width = 3, title = "File Input & Output", status = "primary",
@@ -68,26 +72,31 @@ shinyUI(dashboardPage(
       box(title = "Patient Data", status = "primary", width = 3, 
           strong("Weight (kg): ", style="display:inline"), textOutput("weight"),
           br(),
-          strong("IBW (kg): ", style="display:inline"), textOutput("ibw"),
+          strong(HTML(paste0("BMI (kg/m", tags$sup("2"), "): ")), style = "display:inline"), textOutput("bmi"),
           br(),
           strong("Height (cm): ", style="display:inline"), textOutput("height"),
+          br(),
+          br()
           ), # End Box
       
       box(title = "Calculated Patient Data", status = "primary", width = 3,
-          strong("BMI (kg/m^2): ", style="display:inline"), textOutput("bmi"),
+          strong("IBW (kg): ", style="display:inline"), textOutput("ibw"),
           br(),
-          strong("RBMI (kg/m^2): ", style="display:inline"), textOutput("rbmi"),
+          strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "): ")), style = "display:inline"), textOutput("rbmi"),
           br(),
-          strong("Ref FEV1 Nhanes II (L): ", style="display:inline"),
+          strong(HTML(paste0("ref FEV",tags$sub("1"), " Nhanes III (L): ")), style = "display:inline"), textOutput("nhanes"),
+          br(),
+          strong(HTML(paste0("VE",tags$sub("cap"), " / MVV (L/min): ")), style = "display:inline"), textOutput("vecap"),
+          br()
+          
           ), # End Box
       
       #============================#
       # Box for the Table Values   #
       #============================# 
       
-      box(title = "Reference Value Table", status = "primary", solidHeader = TRUE, width = 6,
-          
-          gt_output(outputId = "table1")
+      box(title = "Tabular Data", status = "primary", solidHeader = TRUE, width = 6,
+          gt_output(outputId = "table1"),
           
           # strong("VO2 Max(L/min): "),
           # textOutput("output1"),
@@ -98,7 +107,8 @@ shinyUI(dashboardPage(
       #============================#
       # Four Plot Box              #
       #============================# 
-      box(title = "Cooper's Four Plot Render", status = "primary", solidHeader = TRUE, width = 6,
+      box(title = "Graphical Data (Cooper 4-Panel)", status = "primary", solidHeader = TRUE, width = 6,
+          br(),
           br(),
           br(),
           br(),
@@ -107,6 +117,7 @@ shinyUI(dashboardPage(
                      # Facing issues when scaling boxes to the right size and
                      # keeping the plots looking good at all devices
                      ), 
+          br(),
           br(),
           br(),
           br()
@@ -125,7 +136,9 @@ shinyUI(dashboardPage(
           ), # End Box
       
       box(title = "Physician Comments", status = "warning", solidHeader = TRUE, width = 6,
-          textAreaInput("caption", "Input Comments: ", "", width = "600"))
+          textAreaInput("caption", "Input Comments: ", "", width = "600")),
+      
+      box(title = "ReadMe", status = "warning", solidHeader = TRUE, width = 12)
       
       ) # FluidRow
   ) # End Dashboard Body

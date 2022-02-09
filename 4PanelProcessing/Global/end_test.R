@@ -16,6 +16,24 @@ end_test_machine <- function(distribution_input) {
   return(end_test_position)
 }, # End Function
 
+end_test_machine_coop <- function(vo2data) {
+  vo2max <- max(vo2data)
+  for (i in 1:length(vo2data)) {
+    if (vo2data[i] == vo2max) {
+      position_vo2max = i
+    }
+  }
+  vo2data <- vo2data[-c(1:position_vo2max), ]
+  
+  for (i in 1:length(vo2data)) {
+    if (vo2data[i] <= vo2max - .05) {
+      new_pos == i
+    }
+  }
+  
+  return(position_vo2max+new_pos)
+},
+
 
 
 ## Finds the End of the Test Depending on RPM

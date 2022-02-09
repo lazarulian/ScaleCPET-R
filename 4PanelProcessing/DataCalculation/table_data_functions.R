@@ -5,7 +5,7 @@ get_suggested_workrate <- function(vo2_ml, ibw) {
 },
 
 get_refvo2_ml <- function(sex, age) {
-  if (sex == "male") {
+  if (sex == "Male") {
     return(50.02-(0.394*age))
   }
   else {
@@ -22,7 +22,7 @@ get_refwork_max <- function(ibw, vo2_liters, suggested_workrate) {
 },
 
 get_VO2theta <- function(age, sex, height) {
-  if (sex == "male") {
+  if (sex == "Male") {
     return((0.93*height)-(0.0136*age)+0.4121)
   }
   else {
@@ -31,7 +31,7 @@ get_VO2theta <- function(age, sex, height) {
 },
 
 get_lln_vo2 <- function(vo2theta, sex) {
-  if (sex == "male") {
+  if (sex == "Male") {
     return(vo2_theta-0.378)
   }
   else {
@@ -48,7 +48,7 @@ get_chronotropic_male <- function(age, height, weight) {
 },
 
 get_chronotopic_index <-function(sex, chronotropic_male) {
-  if (sex == "male") {
+  if (sex == "Male") {
     return(chronotropic_male)
   }
   else {

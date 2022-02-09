@@ -9,14 +9,18 @@ list(
   rawdata <- data.frame(read_excel(input$file1$datapath, sheet = 1, skip = 3, col_names = FALSE)),
   colnames(rawdata) <- col_names,
   convert_data1 <- rawdata,
-  wbb1 <- convert_data1 %>% select(10:37), # The Dataframe that includes all of the key variables required for data manipulation.
+  wbb1 <- convert_data1 %>% dplyr::select(10:37), # The Dataframe that includes all of the key variables required for data manipulation.
   
-  wbb1$VO2 <- (wbb1$VO2)/1000,  #CONVERT TO LITERS
+  wbb1$VO2 <- (wbb1$VO2),
+  if (wbb1$VO2[1] > 20) {
+    wbb1$VO2 <- wbb1$VO2/1000
+  },
+  # /1000,  #CONVERT TO LITERS
   wbb1$VO2 <- as.numeric(wbb1$VO2), 
   wbb1$VCO2 <- (wbb1$VCO2)/1000,  #CONVERT TO LITERS
   wbb1$VCO2 <- as.numeric(wbb1$VCO2),
   wbb1$t <- (wbb1$t)*86400, # Converts from time format to seconds
-  wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
+  # wbb1<- wbb1[!wbb1$Power < 10,], # Removes Warmup Data
   
   #========================#
   # Converting to Rollmean #
@@ -33,6 +37,7 @@ list(
   length_power <- length(wbb1$Power),
   length_power <- as.numeric(length_power),
   wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ],
+  length_power <- length(wbb1$Power),
   
   
   ## Fixing Time
@@ -43,26 +48,23 @@ list(
   # Dr. Cooper's Actual Time of Commencement
   corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope,
   wbb1$t <- (wbb1$t)-corrected_time_differential,
-  wbb1$t <- as.numeric(wbb1$t)
+  wbb1$t <- as.numeric(wbb1$t),
 
   
   #=======================#
   # End Test Data Removal #
   #=======================#
-  # Using Dr. Coopers Method: Basically it will take 5 consecutive values of 
+  # Using Dr. Coopers Method: Basically it will take 5 consecutive values of
   # -.05 in distribution analysis and end the test at the first position of it.
-
-   # source("TestValidity/linearity_machine.R", local = TRUE),
-   # test_end_data <- distribution_machine_data(wbb1$Power, wbb1$VO2, wbb1),
-   # source("Global/end_test.R", local = TRUE),
-   # end_test_position <- end_test_machine(test_end_data),
-   # wbb1 <- wbb1[-c(end_test_position:length_power), ]
+  source("cosmed/endtest_cosmed.R", local = TRUE)[1],
+  end_test_position <- endtest_cosmed(wbb1$VO2),
+  wbb1 <- wbb1[-c(end_test_position:length(wbb1$VO2)), ]
   
 
   # #=======================#
   # # End Test Data Removal #
   # #=======================#
-  # # Using Dr. Dolezal's Method: RPM based
+  # Using Dr. Dolezal's Method: RPM based
   # source("Global/end_test.R", local = TRUE),
   # end_test_position_brett <- end_test_machine_brett(wbb1$Revolution),
   # wbb1 <- wbb1[-c(end_test_position_brett:length_power), ]

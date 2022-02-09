@@ -2,25 +2,62 @@
 
 list(
   source("cosmed/cosmed_table_data.R", local = TRUE)[1],
+  source("Global/demographics_data.R", local = TRUE)[1],
+  source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1],
   
-  gt_variable_names <- c("ref VO2max (ml/kg/min)", "ref VO,max (L/ min)", 
-                         "ref Wmax (watts)", "Metabolic Efficiency (ml/min/watt)", 
-                         "Muscle RQ", "VO2q (L/min)", "LLN VO2q (L/min)", 
-                         "ref fCmax (/min)", "Chronotropic Index (/L)",
-                         "ref VEmax (L/min)", "Ventilatory Efficiency"),
+  VE <- round((get_nhanes(age, sex, height)*20+20), 0),
+
+  metabolic_efficiency_label <- expression("VO2", beta, " (L/min)"),
+  
+  reference_gt_values <- c(refvo2_ml, refvo2_liters, refwork_max, "0",
+                           "0", vo2_theta, lln_vo2, ref_fcmax, chronotopic_index,
+                           VE,
+                           ventilatory_efficiency),
+  
+  measured_gt_values <- c(vo2_max_ml, vo2_max_liters, power_max, "0",
+                          "0", "0", "0", "0", "0", "0","0"),
+  
+  a<-2,
+  b<-2,
+  c<-"max",
+  e<- "E",
+  f <- "C",
+  
+  ## THE GT TABLE
+  
+  gt_confirmed <- tibble('Variable' = c(glue("VO@{2}~ @{c}~ (ml/kg/min)"), glue("VO@{2}~ @{c}~ (L/min)"), 
+                                 glue("Work Rate @{c}~ (watts)"), "Metabolic Efficiency (ml/min/watt)", 
+                                 "Muscle RQ", glue("VO@{2}~\U03B8 (L/min)"), glue("LLN VO@{2}~\U03B8 (L/min)"), 
+                                 glue("f@{f}~ @{c}~ (/min)"), "Chronotropic Index (/L)",
+                                 glue("V@{e}~ @{c}~ (L/min)"), "Ventilatory Efficiency"),
+                         
+                         `Reference` = reference_gt_values, 
+                         `Measured` = measured_gt_values) %>% 
+    gt() %>%
+    tab_source_note(
+      md(
+        "**Note:** All variable names and interpolations are recorded in the readme section of this software"
+      )
+    ) %>%
+    cols_align(
+      align = "center",
+      columns = Measured)
+      %>%
+    cols_align(
+      align = "center",
+      columns = Reference) 
+  %>%
+    tab_header(
+      title = md("**Key Variables**"))%>%  
+    text_transform(
+      locations = cells_body(),
+      fn = function(x) {
+        str_replace_all(x,
+                        pattern = "@",
+                        replacement = "<sub>") %>% 
+          str_replace_all("~",
+                          "</sub>")}
+    )
   
   
-  
-  x <- data.frame("Variable" = gt_variable_names, 
-                  "Reference Value" = c(refvo2_ml, refvo2_liters, refwork_max, "0", 
-                                        "0", vo2_theta, lln_vo2, ref_fcmax, chronotopic_index, 
-                                        "0", ventilatory_efficiency), 
-                  
-                  "Measured Value" = c(0, end_VO2, end_power, 0, 0, 0, 0, 0, 0, 0, 
-                                       0)),
-  
-  table <- gt(x) %>% tab_header(
-    title = md("**Key Variables**"),
-  )
-  
-)
+) # End List

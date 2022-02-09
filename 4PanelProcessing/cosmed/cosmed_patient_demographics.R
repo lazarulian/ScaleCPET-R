@@ -22,6 +22,9 @@ list(
   weight <- as.numeric(weight),
   
   id <- read_excel(input$file1$datapath, range = "B1", col_names = FALSE),
-  id <- as.numeric(id)
+  id <- as.numeric(id),
+  
+  date_of_study <- read_excel(input$file1$datapath, range = "E1", col_names = FALSE),
+  date_of_study <- toString(date_of_study)
   
 )
