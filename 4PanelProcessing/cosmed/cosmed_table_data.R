@@ -30,6 +30,8 @@ list(
   
   ventilatory_efficiency <- get_ventilatory_efficiency(age),
   
+  measured_metabolicefficiency <- round(get_metabolicefficiency(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data())*1000, 1), 
+  
   
   
   ## Measured Data
@@ -37,6 +39,8 @@ list(
   vo2_max_liters <- round(max(cleaned_data()$VO2), 2),
   vo2_max_liters <- as.numeric(vo2_max_liters),
   vo2_max_ml <- round((vo2_max_liters*1000) / weight, 0),
-  power_max <- round(max(cleaned_data()$Power), 0)
+  power_max <- round(max(cleaned_data()$Power), 0),
+  ve_max <- round(max(cleaned_data()$VE), 0),
+  fc_max <- round(max(cleaned_data()$HR), 0)
   
 )

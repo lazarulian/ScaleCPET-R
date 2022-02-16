@@ -56,6 +56,17 @@ get_chronotopic_index <-function(sex, chronotropic_male) {
   }
 },
 
+get_metabolicefficiency <- function(workrate_data, vo2_data, data_source) {
+  
+  data_summary <- lm(vo2_data~workrate_data, data = data_source)
+  cf <- coef(data_summary)
+  slope <- cf[2]
+  slope <- as.numeric(slope)
+  
+  return (slope)
+  
+},
+
 get_ventilatory_efficiency <- function(age) {
   if (age < 50) {
     return("25-30")

@@ -4,18 +4,19 @@ list(
   source("cosmed/cosmed_table_data.R", local = TRUE)[1],
   source("Global/demographics_data.R", local = TRUE)[1],
   source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1],
+  source("DataCalculation/regression_analysis.R", local = TRUE)[1],
   
   VE <- round((get_nhanes(age, sex, height)*20+20), 0),
 
   metabolic_efficiency_label <- expression("VO2", beta, " (L/min)"),
   
-  reference_gt_values <- c(refvo2_ml, refvo2_liters, refwork_max, "0",
-                           "0", vo2_theta, lln_vo2, ref_fcmax, chronotopic_index,
+  reference_gt_values <- c(refvo2_ml, refvo2_liters, refwork_max, "10.3",
+                           "1", vo2_theta, lln_vo2, ref_fcmax, chronotopic_index,
                            VE,
                            ventilatory_efficiency),
   
-  measured_gt_values <- c(vo2_max_ml, vo2_max_liters, power_max, "0",
-                          "0", "0", "0", "0", "0", "0","0"),
+  measured_gt_values <- c(vo2_max_ml, vo2_max_liters, power_max, measured_metabolicefficiency,
+                          "0", "0", "0", fc_max, "0", ve_max, lowersegment_venteff),
   
   a<-2,
   b<-2,

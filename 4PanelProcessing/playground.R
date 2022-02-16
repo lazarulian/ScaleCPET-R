@@ -84,6 +84,7 @@ seg<- segmented(panel_3, seg.Z=~VCO2_data)
 vco2_theta <- seg$psi
 vco2_theta[2]
 slopes <- slope(seg)
+slopes$VCO2_data[1]
 my.fitted <- fitted(seg)
 my.model <- data.frame(VCO2 = wbb1$VCO2, VE = my.fitted)
 
@@ -101,6 +102,10 @@ p3<-ggplot(wbb1, aes(x=VCO2, y=VE)) +
   # limits=c(VE_range_start, VE_range_end)) +
   theme_classic() +
   theme(aspect.ratio=1) 
+
+data_summary <- lm(wbb1$VO2~wbb1$Power, data = wbb1)
+cf <- coef(data_summary)
+cf[2]
 
 
 p4 <- p3 + geom_line(data = my.model, color = "red")

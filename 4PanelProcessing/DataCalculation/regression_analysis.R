@@ -10,6 +10,7 @@ list(
   vco2_theta <- seg$psi,
   vco2_theta <- vco2_theta[2],
   slopes_vco2ve <- slope(seg),
+  lowersegment_venteff <- round(slopes_vco2ve$VCO2_data[1], 0),
   fitted_vco2ve <- fitted(seg),
   vco2ve_segmented <- data.frame(VCO2 = VCO2_data, VE = fitted_vco2ve)
   
