@@ -32,6 +32,8 @@ list(
   
   measured_metabolicefficiency <- round(get_metabolicefficiency(cleaned_data()$Power, cleaned_data()$VO2, cleaned_data())*1000, 1), 
   
+  measured_chronotropic <- round(get_measured_chronotropic(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data()), 0),
+  
   
   
   ## Measured Data

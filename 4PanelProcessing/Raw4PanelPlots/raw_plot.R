@@ -32,10 +32,6 @@ list(
 
         p2 <- ggplot(cleaned_data(), aes(x=VO2, y=VCO2)) + 
             geom_point(color = "#3498DB", size = 1) + #BLUE COLOR
-            geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
-            # stat_poly_eq(formula = my.formula, 
-            #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
-            #            parse = TRUE) +
             scale_x_continuous(name = expression('VO'[2]*' (L/min)'),
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
                                limits=c(VO2_range_start, VO2_range_end), labels = scaleFUN) +
@@ -43,9 +39,10 @@ list(
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
                                limits=c(VO2_range_start, VO2_range_end)) +
             theme_classic() +
-            theme(aspect.ratio=1)
+            theme(aspect.ratio=1),
             # + theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text)
-        ,
+        
+        p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1),
         
         pVE<-ggplot(cleaned_data(), aes(x=VCO2, y=VE)) +
             geom_point(color = "#239B56", size = 1) + #GREEN COLOR

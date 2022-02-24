@@ -74,6 +74,15 @@ get_ventilatory_efficiency <- function(age) {
   else {
     return("30-35")
   }
+},
+
+get_measured_chronotropic <- function(vo2, hr, data_source) {
+  data_summary <- lm(hr~vo2, data = data_source)
+  cf <- coef(data_summary)
+  slope <- cf[2]
+  slope <- as.numeric(slope)
+  
+  return(slope)
 }
 
 )

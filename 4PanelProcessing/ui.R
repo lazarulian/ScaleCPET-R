@@ -45,7 +45,7 @@ shinyUI(dashboardPage(
       box(title = "Demographics", status = "primary", width = 3,
           strong("Age: ", style="display:inline"), textOutput("age"),
           br(),
-          strong("Race: ", style="display:inline"), "Unspecified",
+          strong("Race: ", style="display:inline"), "Reference",
           br(),
           strong("Sex: ", style="display:inline"), textOutput("sex"),
           br(),
@@ -84,7 +84,7 @@ shinyUI(dashboardPage(
           br(),
           strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "): ")), style = "display:inline"), textOutput("rbmi"),
           br(),
-          strong(HTML(paste0("ref FEV",tags$sub("1"), " Nhanes III (L): ")), style = "display:inline"), textOutput("nhanes"),
+          strong(HTML(paste0("ref FEV",tags$sub("1"), " NHANES III (L): ")), style = "display:inline"), textOutput("nhanes"),
           br(),
           strong(HTML(paste0("VE",tags$sub("cap"), " / MVV (L/min): ")), style = "display:inline"), textOutput("vecap"),
           br()
@@ -95,7 +95,7 @@ shinyUI(dashboardPage(
       # Box for the Table Values   #
       #============================# 
       
-      box(title = "Tabular Data", status = "primary", solidHeader = TRUE, width = 6,
+      box(title = "Tabular Data (Cooper Key Variables)", status = "primary", solidHeader = TRUE, width = 6,
           gt_output(outputId = "table1"),
           
           # strong("VO2 Max(L/min): "),
@@ -110,15 +110,11 @@ shinyUI(dashboardPage(
       box(title = "Graphical Data (Cooper 4-Panel)", status = "primary", solidHeader = TRUE, width = 6,
           br(),
           br(),
-          br(),
-          br(),
           plotOutput("plot1", 
                      # width = 530, height = 530
                      # Facing issues when scaling boxes to the right size and
                      # keeping the plots looking good at all devices
                      ), 
-          br(),
-          br(),
           br(),
           br()
           ), # End Box
