@@ -60,11 +60,11 @@ list(
             # + theme(axis.text.x = blue.bold.10.text, axis.text.y = green.bold.10.text)
         ,
         
-        p3 <- pVE + geom_line(data = vco2ve_segmented, color = "red"),
+        p3 <- pVE + geom_line(data = vco2ve_segmented, color = "red", size=1),
         
         ##PLOT 4: HR vs VO2
         p4<-ggplot(cleaned_data(), aes(x=VO2, y=HR)) + 
-            geom_point(color = "#7D3C98", size = 0.5) + #PURPLE COLOR
+            geom_point(color = "#7D3C98", size = 1) + #PURPLE COLOR
             geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = expression('VO'[2]*' (L/min)'), labels = scaleFUN,
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),

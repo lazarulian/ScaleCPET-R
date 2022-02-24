@@ -2,7 +2,7 @@
 
 list(
   ## Converting Data to Compatible Format
-  source("TestValidity/linearity_machine.R", local = TRUE),
+  # source("TestValidity/linearity_machine.R", local = TRUE),
 
   find_value_series <- function(data_range, data_value) {
     for (i in 1:length(data_range)) {
@@ -28,6 +28,20 @@ list(
     }
     return(the_index)
   }, ## End Function
+  
+  distribution_machine_data <- function(range_x, range_y, dataset) {
+    
+    data_summary <- lm(range_y ~ range_x, data = dataset)
+    data_intercept <- summary(data_summary)$coef[[1]]
+    data_slope <- summary(data_summary)$coef[[2]]
+    
+    corrected_data <- ((range_x)*data_slope)+data_intercept
+    corrected_data <- as.numeric(corrected_data)
+    
+    variability <- corrected_data-range_y
+    
+    return(variability)
+  },
 
   ## Segmented Regression Graph 4
   VE_data <- cleaned_data()$VE,
@@ -46,7 +60,6 @@ list(
 ## Segmented Regression for Graph 2
   
   wbb1 <- cleaned_data(),
-  
   wbb1<- wbb1[!wbb1$VCO2 > vco2_theta,], # Removes Warmup Data
   
   ## Removing the Lower End of the Data
@@ -66,7 +79,7 @@ list(
   # my.seg$psi,
   vo2theta <- round(my.seg$psi[2], 2),
   vo2_slopes <- slope(my.seg),
-  lowersegment_meteff <- round(slopes_vco2ve$VCO2_data[1], 0),
+  lowersegment_meteff <- round(slopes_vco2ve$VCO2_data[2], 0),
   fitted_vo2 <- fitted(my.seg),
   vo2_segmented <- data.frame(VO2 = vo2_2, VCO2 = fitted_vo2)
   

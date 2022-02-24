@@ -18,6 +18,7 @@ library(remotes)
 library(shinyloadtest)
 library(glue)
 library(stringr)
+library(patchwork)
 library(segmented)
 
 
@@ -38,7 +39,8 @@ shinyServer(function(input, output) {
     # Plot Output (ServerSide)
     output$plot1 <- renderPlot({        
       source("Raw4PanelPlots/raw_plot.R", local = TRUE)
-      plot_grid(p1, NULL, p2, p3, NULL, p4, align = 'hv', rel_widths = c(3, -.5, 3), nrow = 2, ncol = 3)
+      # plot_grid(p1, NULL, p2, p3, NULL, p4, align = 'hv', rel_widths = c(3, -.5, 3), nrow = 2, ncol = 3)
+      p1 + p2 + p3 + p4
     }) #Plot1 Output
     
     #============================#
@@ -209,7 +211,7 @@ shinyServer(function(input, output) {
     output$vecap <- renderText({
       source("Global/demographics_data.R", local = TRUE)[1]
       source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1]
-      round(get_nhanes(age, sex, height), 2)*40
+      round(get_nhanes(age, sex, height)*40, 0)
     })
     
     #======================#

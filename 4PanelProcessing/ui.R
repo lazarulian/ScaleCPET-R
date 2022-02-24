@@ -33,21 +33,21 @@ shinyUI(dashboardPage(
     # ------------------------------------------------------------
     fluidRow(
       box(title = "Patient Information", status = "primary", width = 3, 
-          strong("Last Name: ", style="display:inline"), textOutput("last_name"),
+          strong("Last Name:     ", style="display:inline"), textOutput("last_name"),
           br(),
-          strong("First Name: "),textOutput("first_name"),
+          strong("First Name:    "),textOutput("first_name"),
           br(),
-          strong("ID: ", style="display:inline"), textOutput("id"),
+          strong("ID:            ", style="display:inline"), textOutput("id"),
           br(),
           strong("Date of Study: ", style ="display:inline"),textOutput("date_of_study"),
           ), # End Box
       
       box(title = "Demographics", status = "primary", width = 3,
-          strong("Age: ", style="display:inline"), textOutput("age"),
+          strong("Age:           ", style="display:inline"), textOutput("age"),
           br(),
-          strong("Race: ", style="display:inline"), "Reference",
+          strong("Race:          ", style="display:inline"), "Reference",
           br(),
-          strong("Sex: ", style="display:inline"), textOutput("sex"),
+          strong("Sex:           ", style="display:inline"), textOutput("sex"),
           br(),
           br()
           ), # End Box
@@ -70,24 +70,26 @@ shinyUI(dashboardPage(
       #     ), # End Box
       
       box(title = "Patient Data", status = "primary", width = 3, 
-          strong("Weight (kg): ", style="display:inline"), textOutput("weight"),
+          strong("Weight (kg):    ", style="display:inline"), textOutput("weight"),
           br(),
-          strong(HTML(paste0("BMI (kg/m", tags$sup("2"), "): ")), style = "display:inline"), textOutput("bmi"),
+          strong(HTML(paste0("BMI (kg/m", tags$sup("2"), "):   ")), style = "display:inline"), textOutput("bmi"),
           br(),
-          strong("Height (cm): ", style="display:inline"), textOutput("height"),
+          strong("Height (cm):    ", style="display:inline"), textOutput("height"),
           br(),
           br()
           ), # End Box
       
       box(title = "Calculated Patient Data", status = "primary", width = 3,
-          strong("IBW (kg): ", style="display:inline"), textOutput("ibw"),
+          strong("IBW (kg):               ", style="display:inline"), textOutput("ibw"),
           br(),
-          strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "): ")), style = "display:inline"), textOutput("rbmi"),
+          strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "):        ")), style = "display:inline"), textOutput("rbmi"),
           br(),
           strong(HTML(paste0("ref FEV",tags$sub("1"), " NHANES III (L): ")), style = "display:inline"), textOutput("nhanes"),
           br(),
-          strong(HTML(paste0("VE",tags$sub("cap"), " / MVV (L/min): ")), style = "display:inline"), textOutput("vecap"),
           br()
+          # ,
+          # strong(HTML(paste0("VE",tags$sub("cap"), " / MVV (L/min): ")), style = "display:inline"), textOutput("vecap"),
+          # br()
           
           ), # End Box
       
@@ -109,13 +111,11 @@ shinyUI(dashboardPage(
       #============================# 
       box(title = "Graphical Data (Cooper 4-Panel)", status = "primary", solidHeader = TRUE, width = 6,
           br(),
-          br(),
           plotOutput("plot1", 
-                     # width = 530, height = 530
+                     width = 650, height = 650
                      # Facing issues when scaling boxes to the right size and
                      # keeping the plots looking good at all devices
-                     ), 
-          br(),
+                     ),
           br()
           ), # End Box
       

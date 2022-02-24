@@ -14,6 +14,7 @@ library(lubridate)   ## Tidyr
 library(glue)
 library(gt)
 library(stringr)
+library(patchwork)
 library(segmented) ## Segmented Regression Package
 
 distribution_machine_data <- function(range_x, range_y, dataset) {
@@ -92,7 +93,39 @@ wbb1$t <- as.numeric(wbb1$t)
 end_test_position <- endtest_cosmed(wbb1$VO2)
 wbb1 <- wbb1[-c(end_test_position:length(wbb1$VO2)), ]
 
+
+
 p2 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+  # stat_poly_eq(formula = my.formula,
+  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+  #            parse = TRUE) +
+  scale_x_continuous(name = expression('VO2')) +
+  scale_y_continuous(name = expression('VCO2')) +
+  theme_classic() +
+  theme(aspect.ratio=1)
+
+p3 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+  # stat_poly_eq(formula = my.formula,
+  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+  #            parse = TRUE) +
+  scale_x_continuous(name = expression('VO2')) +
+  scale_y_continuous(name = expression('VCO2')) +
+  theme_classic() +
+  theme(aspect.ratio=1)
+
+p4 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+  # stat_poly_eq(formula = my.formula,
+  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+  #            parse = TRUE) +
+  scale_x_continuous(name = expression('VO2')) +
+  scale_y_continuous(name = expression('VCO2')) +
+  theme_classic() +
+  theme(aspect.ratio=1)
+
+p1 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
   # stat_poly_eq(formula = my.formula,
   #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
@@ -171,8 +204,5 @@ vo2_segmented <- data.frame(VO2 = vo2_2, VCO2 = fitted_vo2)
 captain <- paste("VO2 Theta = ", vo2theta)
 p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + labs(caption=captain)
 
-p2
-
-# summary(my.seg)
-
+p1 + p2 + p3 + p4
 
