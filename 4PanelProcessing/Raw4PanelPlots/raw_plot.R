@@ -44,13 +44,14 @@ list(
         
         p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1),
         
+        
         pVE<-ggplot(cleaned_data(), aes(x=VCO2, y=VE)) +
             geom_point(color = "#239B56", size = 1) + #GREEN COLOR
             #geom_smooth(method=lm, se=FALSE, color = "#E74C3C") + #RED COLOR
             scale_x_continuous(name = expression('VCO'[2]*' (L/min)'), labels = scaleFUN,
                                breaks = seq(VO2_range_start, VO2_range_end, by=VO2_minor_tick),
                                limits=c(VO2_range_start, VO2_range_end)) +
-            scale_y_continuous(name = "vE (L/min)",
+            scale_y_continuous(name = "VE (L/min)",
                                breaks = seq(0, 200, 40),
                                limits=c(0, 220)) +
                                # breaks = seq(VE_range_start, VE_range_end, VE_minor_tick),

@@ -11,11 +11,11 @@ list(
   rawHRTime_rsquared <- summary(rawHRTime_regression)$r.squared,
   
   if (rawHRTime_rsquared > 0.8) {
-    erroneous_hr_validity <- "Heart rate variability is normal."
+    erroneous_hr_validity <- "Variability of heart rate is normal."
   }
   
   else {
-    erroneous_hr_validity <- "Excessive heart rate variability has been detected. 
+    erroneous_hr_validity <- "Excessive variability of heart rate has been detected. 
     Please examine the ECG for evidence of cardiac dysrhythmia."
   }
   

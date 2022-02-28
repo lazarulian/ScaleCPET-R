@@ -35,7 +35,7 @@ list(
                          "--"),
   
   measured_gt_values <- c(power_max, measured_metabolicefficiency, vo2_max_ml, vo2_max_liters,
-                          vo2theta, "1.0", fc_max, measured_chronotropic, ve_max, rounded_vco2, lowersegment_venteff),
+                          vo2theta, "1.00", fc_max, measured_chronotropic, ve_max, rounded_vco2, lowersegment_venteff),
   
   a<-2,
   b<-2,
