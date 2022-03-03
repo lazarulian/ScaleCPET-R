@@ -12,8 +12,9 @@ list(
         orange.bold.10.text <- element_text(face = "bold", color = "#D35400", size = 10),
         
         # Composition of Four Plots
-        p1 <- ggplot(cleaned_data(), aes(x = Power))+
+        p1 <- ggplot(cleaned_data(), aes(x = Power, y = VO2))+
             geom_point( aes(y=VO2), color= "#D35400", size = 1) +
+          stat_smooth(method="lm", se=FALSE, color = "black", size = 1) +
             geom_point( aes(y=VCO2), color= "#3498DB", size = 1) + # Divide by 10 to get the same range than the temperature
             scale_y_continuous(expression('VO'[2]*' (L/min)'), 
                                # expand = c(0, 0), This will restore the axes ticks to strictly 0,0
@@ -42,7 +43,8 @@ list(
             theme(aspect.ratio=1),
             # + theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text)
         
-        p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1),
+        p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + 
+          geom_vline(xintercept = vo2theta, color = "black", size=.75),
         
         
         pVE<-ggplot(cleaned_data(), aes(x=VCO2, y=VE)) +
@@ -62,6 +64,7 @@ list(
         ,
         
         p3 <- pVE + geom_line(data = vco2ve_segmented, color = "red", size=1),
+        p3 <- p3 + geom_vline(xintercept = vco2_theta, color = "black", size=.75),
         
         ##PLOT 4: HR vs VO2
         p4<-ggplot(cleaned_data(), aes(x=VO2, y=HR)) + 
