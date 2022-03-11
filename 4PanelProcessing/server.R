@@ -15,7 +15,6 @@ library(lubridate)
 library(rmarkdown)
 library(shinyscreenshot) # handles the download for the tabularized report
 library(remotes)
-library(shinyloadtest)
 library(glue)
 library(stringr)
 library(patchwork)
@@ -39,8 +38,7 @@ shinyServer(function(input, output) {
     # Plot Output (ServerSide)
     output$plot1 <- renderPlot({        
       source("Raw4PanelPlots/raw_plot.R", local = TRUE)
-      # plot_grid(p1, NULL, p2, p3, NULL, p4, align = 'hv', rel_widths = c(3, -.5, 3), nrow = 2, ncol = 3)
-      p1 + p2 + p3 + p4
+      p1 + p2 + p3 + p4 + plot_annotation(tag_levels = 'I')
     }) #Plot1 Output
     
     #============================#
@@ -51,6 +49,18 @@ shinyServer(function(input, output) {
       source("cosmed/cosmed_gt.R", local = TRUE)[1]
       gt_confirmed
     })
+    
+    output$approvalBox <- renderValueBox({
+      valueBox(
+        "60%", "Test-Cases Passed", icon = icon("thumbs-up", lib = "glyphicon"),
+        color = "red"
+      )
+    })
+    
+    # output$table2 <- render_gt({
+    #   source("cosmed/cosmed_gt.R", local = TRUE[1])
+    #   gt_reference
+    # })
     
     #============================#
     # R^2 Value Distributions    #

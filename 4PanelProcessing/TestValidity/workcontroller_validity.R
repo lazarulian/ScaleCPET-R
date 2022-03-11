@@ -14,7 +14,7 @@ list(
   workrate_variability_sd <- sd(workrate_variability),
   
   if(rawtimewatts_rsquared > 0.9) {
-    raw_controller_validity <- "This study can be interpreted confidently because a constant rate of work increase was 
+    raw_controller_validity <- "A constant rate of work increase was 
     maintained during the ramp phase of the test."
   }
   else if (rawtimewatts_rsquared < 0.9 & rawtimewatts_rsquared > 0.8) {
@@ -37,7 +37,7 @@ list(
   }
   
   else {
-    workrate_variability_validity <- "This test can be reliably interpreted because there was normal variability in work control during
+    workrate_variability_validity <- "There was normal variability in work control during
     the ramp."
   }
   

@@ -79,8 +79,5 @@ list(
             theme_classic() +
             theme(aspect.ratio=1) 
             # + theme(axis.text.x = orange.bold.10.text, axis.text.y = purple.bold.10.text)
-        ,
         
-        plot.a<-plot_grid(p1, p3, ncol = 1, align = "v", nrow = 2),
-        plot.b<-plot_grid(p2, p4, ncol = 1, align = "v", nrow = 2)
 )

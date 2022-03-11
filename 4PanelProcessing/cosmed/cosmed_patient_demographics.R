@@ -19,7 +19,7 @@ list(
   height <- as.numeric(height/100),
   
   weight <- read_excel(input$file1$datapath, range = "B7", col_names = FALSE),
-  weight <- as.numeric(weight),
+  weight <- as.numeric(round(weight, 1)),
   
   id <- read_excel(input$file1$datapath, range = "B1", col_names = FALSE),
   id <- as.numeric(id),

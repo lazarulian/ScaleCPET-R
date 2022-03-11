@@ -14,6 +14,7 @@ library(lubridate)   ## Tidyr
 library(glue)
 library(gt)
 library(stringr)
+library(plotly)
 library(patchwork)
 library(segmented) ## Segmented Regression Package
 
@@ -42,18 +43,19 @@ endtest_cosmed <- function(vo2data) {
   return(position_vo2max+2)
 }
 
-col_names <- array(read_excel("/Users/apurvashah/Downloads/Ricardo.xlsx",
+col_names <- array(read_excel("/Users/apurvashah/Downloads/CosmedTests/UCLA-FL-001.xlsx",
                               sheet = 1, n_max = 1, col_names = FALSE))
-rawdata <- data.frame(read_excel("/Users/apurvashah/Downloads/Ricardo.xlsx",
+rawdata <- data.frame(read_excel("/Users/apurvashah/Downloads/CosmedTests/UCLA-FL-001.xlsx",
                                  sheet = 1, skip = 3, col_names = FALSE))
-
 
 colnames(rawdata) <- col_names
 convert_data1 <- rawdata
 wbb1 <- convert_data1 %>% dplyr::select(10:37) # The Dataframe that includes all of the key variables required for data manipulation.
 
 wbb1$VO2 <- (wbb1$VO2)
-# /1000,  #CONVERT TO LITERS
+if (wbb1$VO2[1] > 20) {
+  wbb1$VO2 <- wbb1$VO2/1000
+}
 wbb1$VO2 <- as.numeric(wbb1$VO2)
 wbb1$VCO2 <- (wbb1$VCO2)/1000  #CONVERT TO LITERS
 wbb1$VCO2 <- as.numeric(wbb1$VCO2)
@@ -73,7 +75,7 @@ wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA)
 wbb1$RQ <- zoo::rollmean(wbb1$RQ, k = 5, fill = NA)
 
 
-## Calculating the Length for Row Elimination
+# Calculating the Length for Row Elimination
 length_power <- length(wbb1$Power)
 length_power <- as.numeric(length_power)
 wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ]
@@ -90,50 +92,61 @@ corrected_time_differential <- (0-watts_t_intercept)/watts_t_slope
 wbb1$t <- (wbb1$t)-corrected_time_differential
 wbb1$t <- as.numeric(wbb1$t)
 
+## Checking for More NA Values
+
+for (i in 1:length(wbb1$Power)) {
+  if (is.na(wbb1$Power[i]) == T) {
+    wbb1 <- wbb1[-c(i), ]
+  }
+  else {
+    next
+  }
+}
+
 end_test_position <- endtest_cosmed(wbb1$VO2)
 wbb1 <- wbb1[-c(end_test_position:length(wbb1$VO2)), ]
 
+p2 <- plot_ly(data = wbb1, x = wbb1$VO2, y = wbb1$VCO2)
 
+# p2 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+#   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+#   # stat_poly_eq(formula = my.formula,
+#   #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+#   #            parse = TRUE) +
+#   scale_x_continuous(name = expression('VO2')) +
+#   scale_y_continuous(name = expression('VCO2')) +
+#   theme_classic() +
+#   theme(aspect.ratio=1)
 
-p2 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
-  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
-  # stat_poly_eq(formula = my.formula,
-  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-  #            parse = TRUE) +
-  scale_x_continuous(name = expression('VO2')) +
-  scale_y_continuous(name = expression('VCO2')) +
-  theme_classic() +
-  theme(aspect.ratio=1)
-
-p3 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
-  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
-  # stat_poly_eq(formula = my.formula,
-  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-  #            parse = TRUE) +
-  scale_x_continuous(name = expression('VO2')) +
-  scale_y_continuous(name = expression('VCO2')) +
-  theme_classic() +
-  theme(aspect.ratio=1)
-
-p4 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
-  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
-  # stat_poly_eq(formula = my.formula,
-  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-  #            parse = TRUE) +
-  scale_x_continuous(name = expression('VO2')) +
-  scale_y_continuous(name = expression('VCO2')) +
-  theme_classic() +
-  theme(aspect.ratio=1)
-
-p1 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
-  geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
-  # stat_poly_eq(formula = my.formula,
-  #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
-  #            parse = TRUE) +
-  scale_x_continuous(name = expression('VO2')) +
-  scale_y_continuous(name = expression('VCO2')) +
-  theme_classic() +
-  theme(aspect.ratio=1)
+# p3 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+#   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+#   # stat_poly_eq(formula = my.formula,
+#   #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+#   #            parse = TRUE) +
+#   scale_x_continuous(name = expression('VO2')) +
+#   scale_y_continuous(name = expression('VCO2')) +
+#   theme_classic() +
+#   theme(aspect.ratio=1)
+# 
+# p4 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+#   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+#   # stat_poly_eq(formula = my.formula,
+#   #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+#   #            parse = TRUE) +
+#   scale_x_continuous(name = expression('VO2')) +
+#   scale_y_continuous(name = expression('VCO2')) +
+#   theme_classic() +
+#   theme(aspect.ratio=1)
+# 
+# p1 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
+#   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
+#   # stat_poly_eq(formula = my.formula,
+#   #            aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+#   #            parse = TRUE) +
+#   scale_x_continuous(name = expression('VO2')) +
+#   scale_y_continuous(name = expression('VCO2')) +
+#   theme_classic() +
+#   theme(aspect.ratio=1)
 
 
 find_value_series <- function(data_range, data_value) {
@@ -171,7 +184,8 @@ vco2_theta <- seg$psi
 # vco2_theta
 vco2_theta <- vco2_theta[2]
 slopes_vco2ve <- slope(seg)
-lowersegment_venteff <- round(slopes_vco2ve$VCO2_data[1], 0)
+slopes_vco2ve
+lowersegment_venteff <- round(slopes_vco2ve$VCO2_data[2], 0)
 fitted_vco2ve <- fitted(seg)
 vco2ve_segmented <- data.frame(VCO2 = VCO2_data, VE = fitted_vco2ve)
 
@@ -195,14 +209,17 @@ my.seg <- segmented(panel_2, seg.Z = ~ vo2_2)
 # my.seg$psi
 vo2theta <- round(my.seg$psi[2], 2)
 vo2_slopes <- slope(my.seg)
-lowersegment_meteff <- round(slopes_vco2ve$VCO2_data[1], 0)
+my.seg$psi
+lowersegment_meteff <- round(vo2_slopes$vo2_2[2], 1)
+lowersegment_meteff
 fitted_vo2 <- fitted(my.seg)
 vo2_segmented <- data.frame(VO2 = vo2_2, VCO2 = fitted_vo2)
-
-
+lm(vo2_segmented)$coefficients[2]
 # plot(vo2_segmented)
 captain <- paste("VO2 Theta = ", vo2theta)
-p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + labs(caption=captain)
+# p3 <- plot_ly(data = vo2_segmented, x = vo2_segmented$VO2, y =vo2_segmented$VCO2, color = "red")
+# p3
 
-p1 + p2 + p3 + p4
+# p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + labs(caption=captain)
+# p1 + p2 + p3 + p4
 

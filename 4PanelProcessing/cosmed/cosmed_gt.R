@@ -25,7 +25,7 @@ list(
   
   
   reference_gt_values <- c(refwork_max, "10.3", refvo2_ml, refvo2_liters,
-                            new_string, "1.00", ref_fcmax, chronotopic_index,
+                            new_string, metabolic_efficiency, ref_fcmax, chronotopic_index,
                            ve_vars, "--",
                            ventilatory_efficiency),
   
@@ -73,7 +73,7 @@ list(
     ) %>%
     tab_source_note(
       md(
-        "**Note:** All variable names and interpolations are recorded in the readme section of this software"
+        "**Note:** All abbreviations and explanations are recorded in the codebook section of this software"
       )
     ) %>%
     cols_align(

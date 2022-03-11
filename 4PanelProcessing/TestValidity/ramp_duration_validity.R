@@ -10,7 +10,7 @@ list(
   }
   
   else if (test_duration > 5 & test_duration <15) { ramp_duration_validity <- 
-  "The ramp phase of this test was optimal and can be reliably interpreted."
+  "The duration of the ramp phase of this test was optimal."
   }
   
   else {

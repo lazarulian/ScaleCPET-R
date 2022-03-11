@@ -21,8 +21,7 @@ list(
   # metabolic_efficiency_validity is the textOutput for validity
   
   if (CPowerVO2_slope < 13 & CPowerVO2_slope > 8) {
-    metabolic_efficiency_validity <- "This test can be reliably interpreted because 
-    the ramp increase in work was  accompanied by and appropriate 
+    metabolic_efficiency_validity <- "The ramp increase in work was  accompanied by and appropriate 
     increase on oxygen uptake."
   } # End If
   

@@ -40,6 +40,16 @@ list(
   wbb1 <- wbb1[-c(1,2, length_power, length_power-1), ],
   length_power <- length(wbb1$Power),
   
+  ## Calculating for More NA Values
+  for (i in 1:length(wbb1$Power)) {
+    if (is.na(wbb1$Power[i]) == T) {
+      wbb1 <- wbb1[-c(i), ]
+    }
+    else {
+      next
+    }
+  },
+  
   
   ## Fixing Time
   time_analysis <- lm(wbb1$Power ~ wbb1$t, data = wbb1),

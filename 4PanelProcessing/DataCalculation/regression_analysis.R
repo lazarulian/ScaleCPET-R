@@ -81,6 +81,7 @@ list(
   vo2_slopes <- slope(my.seg),
   lowersegment_meteff <- round(slopes_vco2ve$VCO2_data[2], 0),
   fitted_vo2 <- fitted(my.seg),
-  vo2_segmented <- data.frame(VO2 = vo2_2, VCO2 = fitted_vo2)
-  
+  vo2_segmented <- data.frame(VO2 = vo2_2, VCO2 = fitted_vo2),
+  metabolic_efficiency<- round(lm(vo2_segmented)$coefficients[2], 2)
+
 )
