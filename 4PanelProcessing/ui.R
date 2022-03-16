@@ -32,7 +32,7 @@ shinyUI(dashboardPage(
     # tags$head(tags$style(HTML(' .box {margin: 5px;}' )))
     # ------------------------------------------------------------
     fluidRow(
-      box(title = "Patient Information", status = "primary",solidHeader = TRUE, width = 3,
+      box(title = "Patient Information", status = "primary", width = 3,
           strong("Last Name:     ", style="display:inline"), textOutput("last_name"),
           br(),
           strong("First Name:    "),textOutput("first_name"),
@@ -42,7 +42,7 @@ shinyUI(dashboardPage(
           strong("Date of Study: ", style ="display:inline"),textOutput("date_of_study"),
           ), # End Box
       
-      box(title = "Demographics", status = "primary",solidHeader = TRUE, width = 3,
+      box(title = "Demographics", status = "primary", width = 3,
           strong("Age:           ", style="display:inline"), textOutput("age"),
           br(),
           strong("Race:          ", style="display:inline"), "Reference",
@@ -69,7 +69,7 @@ shinyUI(dashboardPage(
       #       ),
       #     ), # End Box
       
-      box(title = "Patient Data", status = "primary",solidHeader = TRUE, width = 3, 
+      box(title = "Patient Data", status = "primary", width = 3, 
           strong("Weight (kg):    ", style="display:inline"), textOutput("weight"),
           br(),
           strong(HTML(paste0("BMI (kg/m", tags$sup("2"), "):   ")), style = "display:inline"), textOutput("bmi"),
@@ -79,7 +79,7 @@ shinyUI(dashboardPage(
           br()
           ), # End Box
       
-      box(title = "Calculated Patient Data", status = "primary",solidHeader = TRUE, width = 3,
+      box(title = "Calculated Patient Data", status = "primary", width = 3,
           strong("IBW (kg):               ", style="display:inline"), textOutput("ibw"),
           br(),
           strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "):        ")), style = "display:inline"), textOutput("rbmi"),
@@ -119,7 +119,7 @@ shinyUI(dashboardPage(
       #============================#
       # Four Plot Box              #
       #============================# 
-      box(title = "Graphical Data (Cooper 4-Panel)", status = "primary", solidHeader = TRUE, width = 6,
+      box(title = "Graphical Data (Cooper 4-Panel)", status = "primary", width = 6,
           br(),
           plotOutput("plot1", 
                      width = 700, height = 700
@@ -138,12 +138,15 @@ shinyUI(dashboardPage(
           br(),
           textOutput("metabolic_efficiency_validity"),
           br(),
-          textOutput("erroneous_hr_validity")
+          textOutput("erroneous_hr_validity"),
+          br(),
+          textOutput("vco2theta_validity")
           ), # End Box
       
       box(title = "Physician Interpretation", status = "warning", solidHeader = TRUE, width = 6,
-          textAreaInput("caption", "Input Comments: ", "", width = "1200", height = "180")),
-      valueBoxOutput("approvalBox", width = 6)
+          textAreaInput("caption", "Input Comments: ", "", width = "1200", height = "200")),
+      valueBoxOutput("approvalBox", width = 3),
+      valueBoxOutput("failureBox", width = 3)
       ) # FluidRow
   ) # End Dashboard Body
 )) # End Dashboard Page

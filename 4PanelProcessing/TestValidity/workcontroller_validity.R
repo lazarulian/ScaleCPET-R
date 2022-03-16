@@ -16,29 +16,41 @@ list(
   if(rawtimewatts_rsquared > 0.9) {
     raw_controller_validity <- "A constant rate of work increase was 
     maintained during the ramp phase of the test."
+    workcontroller_pass <- 1
+    workcontroller_fail <- 0 
   }
   else if (rawtimewatts_rsquared < 0.9 & rawtimewatts_rsquared > 0.8) {
     raw_controller_validity <- "This study must be interpreted with caution because a constant rate of work increase was not
     maintained during the ramp phase of the test."
+    workcontroller_pass <- 0
+    workcontroller_fail <- 1
   }
   else {
     raw_controller_validity <- "This study cannot be reliably interpreted because a constant rate of work increase was not maintained
   during the ramp phase of the test."
+    workcontroller_pass <- 0
+    workcontroller_fail <- 1
   },
   
   if(workrate_variability_sd < 10 & workrate_variability_sd > 5) {
     workrate_variability_validity <- "This test must be interpreted with caution because there was significant variability in work control
       during the ramp."
+    workvar_pass <- 0
+    workvar_fail <- 1
   }
   
   else if (workrate_variability_sd > 10) {
     workrate_variability_validity <- "This test cannot be reliably interpreted because there was excessive variability in work control during
     the ramp."
+    workvar_pass <- 0
+    workvar_fail <- 1
   }
   
   else {
     workrate_variability_validity <- "There was normal variability in work control during
     the ramp."
+    workvar_pass <- 1
+    workvar_fail <- 0 
   }
   
 )

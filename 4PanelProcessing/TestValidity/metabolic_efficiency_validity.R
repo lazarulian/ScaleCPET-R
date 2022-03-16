@@ -21,8 +21,10 @@ list(
   # metabolic_efficiency_validity is the textOutput for validity
   
   if (CPowerVO2_slope < 13 & CPowerVO2_slope > 8) {
-    metabolic_efficiency_validity <- "The ramp increase in work was  accompanied by and appropriate 
+    metabolic_efficiency_validity <- "The ramp increase in work was accompanied by and appropriate 
     increase on oxygen uptake."
+    meteff_pass <- 1
+    meteff_fail <- 0
   } # End If
   
   else {
@@ -30,6 +32,8 @@ list(
     "This test cannot be reliably interpreted because the
     ramp increase in work was not accompanied by and appropriate
     increase on oxygen uptake."
+    meteff_pass <- 0
+    meteff_fail <- 1
   } # End Else
   
 ) # End List

@@ -184,7 +184,7 @@ vco2_theta <- seg$psi
 # vco2_theta
 vco2_theta <- vco2_theta[2]
 slopes_vco2ve <- slope(seg)
-slopes_vco2ve
+slopes_vco2ve$VCO2_data[1]
 lowersegment_venteff <- round(slopes_vco2ve$VCO2_data[2], 0)
 fitted_vco2ve <- fitted(seg)
 vco2ve_segmented <- data.frame(VCO2 = VCO2_data, VE = fitted_vco2ve)

@@ -50,10 +50,19 @@ shinyServer(function(input, output) {
       gt_confirmed
     })
     
-    output$approvalBox <- renderValueBox({
+    output$failureBox <- renderValueBox({
+      source("TestValidity/test_cases.R", local = TRUE)[1]
       valueBox(
-        "60%", "Test-Cases Passed", icon = icon("thumbs-up", lib = "glyphicon"),
+        failed, "Test-Cases Failed", icon = icon("thumbs-down", lib = "glyphicon"),
         color = "red"
+      )
+    })
+    
+    output$approvalBox <- renderValueBox({
+      source("TestValidity/test_cases.R", local = TRUE)[1]
+      valueBox(
+        passed, "Test-Cases Passed", icon = icon("thumbs-up", lib = "glyphicon"),
+        color = "green"
       )
     })
     
@@ -190,6 +199,11 @@ shinyServer(function(input, output) {
     output$raw_testcontroller_validity <- renderText({
       source("TestValidity/workcontroller_validity.R", local = TRUE)[1]
       raw_controller_validity
+    }) #EndRenderText
+    
+    output$vco2theta_validity <- renderText({
+      source("TestValidity/vco2theta_validity.R", local = TRUE)[1]
+      vco2theta_validity
     }) #EndRenderText
     
     output$workrate_variability_validity <- renderText({

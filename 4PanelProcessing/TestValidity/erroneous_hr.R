@@ -12,11 +12,15 @@ list(
   
   if (rawHRTime_rsquared > 0.8) {
     erroneous_hr_validity <- "Variability of heart rate is normal."
+    erroneous_fail <- 0
+    erroneous_pass <- 1
   }
   
   else {
     erroneous_hr_validity <- "Excessive variability of heart rate has been detected. 
     Please examine the ECG for evidence of cardiac dysrhythmia."
+    erroneous_fail <- 1
+    erroneous_pass <- 0
   }
   
 )
