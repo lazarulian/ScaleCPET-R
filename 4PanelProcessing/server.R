@@ -51,6 +51,15 @@ shinyServer(function(input, output) {
       gt_confirmed
     })
     
+    output$codebook <- render_gt({
+      source("global/axt_codebook.R", local = TRUE)[1]
+      gt_axtcodebook
+    })
+    
+    #============================#
+    #    Test Case Validity      #
+    #============================#
+    
     output$failureBox <- renderValueBox({
       source("TestValidity/test_cases.R", local = TRUE)[1]
       valueBox(

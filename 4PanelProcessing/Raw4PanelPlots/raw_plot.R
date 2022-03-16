@@ -44,7 +44,7 @@ list(
             # + theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text)
         
         p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + 
-          geom_vline(xintercept = vo2theta, color = "black", size=.75),
+          geom_vline(xintercept = vo2theta, color = "black", size=.75) + annotate("text", x = vo2theta, y = 1, label = "Some text"),
         
         
         pVE<-ggplot(cleaned_data(), aes(x=VCO2, y=VE)) +

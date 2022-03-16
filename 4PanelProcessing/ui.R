@@ -113,21 +113,26 @@ shinyUI(dashboardPage(
                  br(),
                  br(),
                  gt_output(outputId = "table1"),),
-        tabPanel("Codebook", "Tab content 2")
+        tabPanel("Codebook", status = "primary",
+                 gt_output(outputId = "codebook"),)
       ),
       
       #============================#
       # Four Plot Box              #
       #============================# 
-      box(title = "Graphical Data (Cooper 4-Panel)", status = "primary", width = 6,
+      tabBox(title = "Graphical Data (Cooper 4-Panel)", width = 6,
+          id = "tabset2",
+          tabPanel("Primary Four Plot", status = "primary", solidHeader = TRUE,
           br(),
           plotOutput("plot1", 
                      width = 700, height = 700
                      # Facing issues when scaling boxes to the right size and
                      # keeping the plots looking good at all devices
                      ),
-          br()
-          ), # End Box
+          br(),),
+          tabPanel("Secondary Four Plot", status = "primary", solidHeader = TRUE,
+            br(),
+          )), # End Box
       
       box(title = "Technical Comments", status = "warning", solidHeader = TRUE, width = 6,
           textOutput("raw_testcontroller_validity"),

@@ -1,35 +1,15 @@
-## Test Environment for GT Tables
-library(haven)       ## Allows for reading other file formats.
-library(tidyverse)   ## Contains multiple packages that are essential to R. (GGplot2, ForCats, Purrr, Tibble, dplyr, stringr, readr, tidyr)
-library(ggpubr)      ## Publication ready R designs
-library(rstatix)     ## Conducts basic statistical testing 
-library(arsenal)     ## Large scale statistical summaries.
-library(car)         ## Regression Grammar
-library(ggplot2)     ## Grammar of Graphics
-library(readxl)      ## Reads Excel Files
-library(cowplot)     ## Aligns Plot
-library(zoo)         ## Rolling Averages
-library(shiny)       ## Shiny
-library(broom)       ## Linear Regression?
-library(lubridate)
-library(rmarkdown)
-library(shinyscreenshot) # handles the download for the tabularized report
-library(remotes)
-library(glue)
-library(gt)
-library(stringr)
-library(patchwork)
-library(segmented)
+## AXT Codebook Global
+## Outputs the codebook for the variables in the AXT report that is generated.
+list(
+# Variable Declarations That Help with TextTransformation
+a<-2,
+b<-2,
+c<-"max",
+e<- "E",
+f <- "C",
+g <- "cap",
 
-
-
-a<-2
-b<-2
-c<-"max"
-e<- "E"
-f <- "C"
-g <- "cap"
-
+## Explanations to be Passed into GT
 axt_explanations <- c("Maximum work rate achieved (Panel 1)",
                       glue("Slope of the relationship between VO@{2}~ and work rate (Panel 1)"), 
                       "Maximum oxygen uptake measured (Panels 1 and 3)",
@@ -40,11 +20,11 @@ axt_explanations <- c("Maximum work rate achieved (Panel 1)",
                       glue("Slope of the relationship between f@{f}~ and VO@{2}~ (Panel 3)"), 
                       "Maximum ventilation achieved (Panel 4)",
                       glue("Inflection in the relationship between V@{e}~ and VCO@{2}~ (Panel 4)"), 
-                      glue("Lower slope of the relationship between VCO@{2}~ and VO@{2}~ (Panel 4)"))
+                      glue("Lower slope of the relationship between VCO@{2}~ and VO@{2}~ (Panel 4)")),
 
 ## THE GT TABLE
 
-gt_confirmed <- tibble('Variable' = c(glue("Work Rate @{c}~ (watts)"), "Metabolic Efficiency (ml/min/watt)", 
+gt_axtcodebook <- tibble('Variable' = c(glue("Work Rate @{c}~ (watts)"), "Metabolic Efficiency (ml/min/watt)", 
                                       glue("VO@{2}~ @{c}~ (ml/kg/min)"), glue("VO@{2}~ @{c}~ (L/min)"), 
                                       glue("VO@{2}~\U03B8,  LLN (L/min)"), "Muscle RQ",
                                       glue("f@{f}~ @{c}~ (/min)"), "Chronotropic Index (/L)",
@@ -103,6 +83,4 @@ gt_confirmed <- tibble('Variable' = c(glue("Work Rate @{c}~ (watts)"), "Metaboli
         str_replace_all("~",
                         "</sub>")}
   )
-
-gt_confirmed
-
+)
