@@ -38,7 +38,8 @@ shinyServer(function(input, output) {
     # Plot Output (ServerSide)
     output$plot1 <- renderPlot({        
       source("Raw4PanelPlots/raw_plot.R", local = TRUE)
-      p1 + p2 + p3 + p4 + plot_annotation(tag_levels = 'I')
+      p1 + p2 + p3 + p4 + plot_layout(tag_level = 'new') +
+      plot_annotation(tag_levels = list(c('I', 'II', "IV", "III")))
     }) #Plot1 Output
     
     #============================#

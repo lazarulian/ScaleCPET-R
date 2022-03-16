@@ -55,6 +55,15 @@ list(
                          `Reference` = reference_gt_values, 
                          `Measured` = measured_gt_values, `Percent` = percent_gt_values) %>% 
     gt() %>%
+  # Style header font
+    gt::tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = list(
+      cells_column_labels(gt::everything())
+    )
+    )%>%
     tab_row_group(
       label = md("**Ventilatory Response**"),
       rows = 9:11
