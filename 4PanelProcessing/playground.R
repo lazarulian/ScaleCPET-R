@@ -32,6 +32,18 @@ distribution_machine_data <- function(range_x, range_y, dataset) {
   return(variability)
 }
 
+linreg_machine_data <- function(range_x, range_y, dataset) {
+  
+  data_summary <- lm(range_y ~ range_x, data = dataset)
+  data_intercept <- summary(data_summary)$coef[[1]]
+  data_slope <- summary(data_summary)$coef[[2]]
+  
+  corrected_data <- ((range_x)*data_slope)+data_intercept
+  corrected_data <- as.numeric(corrected_data)
+  
+  return(corrected_data)
+}
+
 endtest_cosmed <- function(vo2data) {
   ## Finds the position of the end of the cosmed test
   vo2max <- max(vo2data)
@@ -217,9 +229,8 @@ vo2_segmented <- data.frame(VO2 = vo2_2, VCO2 = fitted_vo2)
 lm(vo2_segmented)$coefficients[2]
 # plot(vo2_segmented)
 captain <- paste("VO2 Theta = ", vo2theta)
-# p3 <- plot_ly(data = vo2_segmented, x = vo2_segmented$VO2, y =vo2_segmented$VCO2, color = "red")
-# p3
 
-# p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + labs(caption=captain)
-# p1 + p2 + p3 + p4
+vo2max_data <- linreg_machine_data(wbb1$Power, wbb1$VO2, wbb1)
+rar <- max(vo2max_data)
+rar <- round(rar, 2)
 

@@ -23,8 +23,6 @@ list(
   percent_fc <- paste(round((fc_max / ref_fcmax)*100, 0),"%"),
   percent_ve <- paste(round((ve_max / VECAP)*100, 0),"%"),
   
-  
-  
   reference_gt_values <- c(refwork_max, "10.3", refvo2_ml, refvo2_liters,
                             new_string, "1.00", ref_fcmax, chronotopic_index,
                            ve_vars, "--",

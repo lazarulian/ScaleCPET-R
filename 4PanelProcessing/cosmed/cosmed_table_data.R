@@ -5,6 +5,7 @@ list(
   source("cosmed/cosmed_patient_demographics.R", local = TRUE)[1],
   source("DataCalculation/table_data_functions.R", local = TRUE)[1],
   source("DataCalculation/endtest_data_max.R", local = TRUE)[1],
+  source("TestValidity/linearity_machine.R", local = TRUE)[1],
   
   
   ## Calculated Data
@@ -37,9 +38,14 @@ list(
   
   
   ## Measured Data
-  
-  vo2_max_liters <- round(max(cleaned_data()$VO2), 2),
+  vo2_data <- cleaned_data()$VO2,
+  p_data <- cleaned_data()$Power,
+  dummy_dataframe <- data.frame(power = p_data, vo2 = vo2_data),
+  vo2_max_data <- linreg_machine_data(dummy_dataframe$power, dummy_dataframe$vo2, dummy_dataframe),
+  vo2_max_liters <- max(vo2_max_data),
+  vo2_max_liters <- round(vo2_max_liters, 2),
   vo2_max_liters <- as.numeric(vo2_max_liters),
+  
   vo2_max_ml <- round((vo2_max_liters*1000) / weight, 0),
   power_max <- round(max(cleaned_data()$Power), 0),
   ve_max <- round(max(cleaned_data()$VE), 0),

@@ -183,8 +183,8 @@ shinyUI(dashboardPage(skin = "blue",
       
       box(title = "Physician Interpretation", status = "warning", solidHeader = TRUE, width = 6,
           textAreaInput("caption", "Input Comments: ", "", width = "1200", height = "200")),
-      valueBoxOutput("approvalBox", width = 2),
-      valueBoxOutput("failureBox", width = 2)
+      valueBoxOutput("approvalBox", width = 3),
+      valueBoxOutput("failureBox", width = 3)
       ) # FluidRow
   ) # End Dashboard Body
 )) # End Dashboard Page
