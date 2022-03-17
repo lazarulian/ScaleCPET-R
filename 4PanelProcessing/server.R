@@ -1,5 +1,6 @@
 # Server.R
 library(shiny)
+library(shinydashboard)
 library(haven)       ## Allows for reading other file formats.
 library(tidyverse)   ## Contains multiple packages that are essential to R. (GGplot2, ForCats, Purrr, Tibble, dplyr, stringr, readr, tidyr)
 library(ggpubr)      ## Publication ready R designs
@@ -14,6 +15,9 @@ library(shiny)       ## Shiny
 library(broom)       ## Linear Regression?
 library(lubridate)
 library(rmarkdown)
+library(remotes)
+library(capture)
+library(gt)
 library(shinyscreenshot) # handles the download for the tabularized report
 library(remotes)
 library(glue)
