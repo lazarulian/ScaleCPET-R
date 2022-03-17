@@ -83,7 +83,7 @@ list(
     ) %>%
     tab_source_note(
       md(
-        "**Note:** All abbreviations and explanations are recorded in the codebook section of this software"
+        "**Note:** All abbreviations and explanations are recorded in the codebook"
       )
     ) %>%
     cols_align(
