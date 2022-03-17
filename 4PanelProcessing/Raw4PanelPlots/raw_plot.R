@@ -23,6 +23,7 @@ list(
                                 limits=c(VO2_range_start, VO2_range_end), labels = scaleFUN,
                                 sec.axis = dup_axis(~ . , name=expression('VCO'[2]*' (L/min)'))) +
             # theme_bw() + 
+            annotate("text", x = 0.1, y = (min(cleaned_data()$VCO2)-0.1), label = "S1", color = "black", fontface = "bold") +
             theme_classic() + # Classic Does not allow for minor_gridlines to work.
             # theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             theme(aspect.ratio=1) +
@@ -43,8 +44,12 @@ list(
             theme(aspect.ratio=1),
             # + theme(axis.text.x = orange.bold.10.text, axis.text.y = blue.bold.10.text)
         
-        p2 <- p2 + geom_line(data = vo2_segmented, color = "red", size=1) + 
-          geom_vline(xintercept = vo2theta, color = "black", size=.75) + annotate("text", x = vo2theta, y = 1, label = "Some text"),
+        p2 <- p2 + geom_line(data = vo2_segmented, color = "black", size=1) + 
+          geom_vline(xintercept = vo2theta, color = "black", size=.75, show.legend = TRUE) +
+          # annotate("segment", x = vo2theta, xend = vo2theta, y = 0, yend = max(cleaned_data()$VCO2), 
+          # color = "black") + ## Would not go to the bottom of the axes
+          annotate("text", x = (min(cleaned_data()$VO2)+0.3), y = (min(cleaned_data()$VCO2)-0.2), label = "S2", color = "black", fontface = "bold") +
+          annotate("text", x = vo2theta+0.5, y = 0.1, label = expression('VO'[2]*' \U03B8')),
         
         
         pVE<-ggplot(cleaned_data(), aes(x=VCO2, y=VE)) +
@@ -59,6 +64,11 @@ list(
                                # breaks = seq(VE_range_start, VE_range_end, VE_minor_tick),
                                # limits=c(VE_range_start, VE_range_end)) +
             theme_classic() +
+            geom_vline(xintercept = vco2_theta, color = "black", size=.75) +
+            annotate("text", x = vco2_theta+0.5, y = 0.1, label = expression('VCO'[2]*' \U03B8')) +
+          annotate("text", x = 0.1, y = (max(cleaned_data()$VE)-10), label = expression('V'['E max']* ' ')) +
+          annotate("text", x = (min(cleaned_data()$VCO2)+0.3), y = (min(cleaned_data()$VE)-10), label = "S4", color = "red", fontface = "bold") +
+            geom_hline(yintercept = max(cleaned_data()$VE), color = "black", size =.75) +
             theme(aspect.ratio=1)
             # + theme(axis.text.x = blue.bold.10.text, axis.text.y = green.bold.10.text)
         ,

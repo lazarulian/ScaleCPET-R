@@ -24,6 +24,7 @@ list(
   percent_ve <- paste(round((ve_max / VECAP)*100, 0),"%"),
   
   
+  
   reference_gt_values <- c(refwork_max, "10.3", refvo2_ml, refvo2_liters,
                             new_string, "1.00", ref_fcmax, chronotopic_index,
                            ve_vars, "--",
@@ -35,7 +36,7 @@ list(
                          "--"),
   
   measured_gt_values <- c(power_max, measured_metabolicefficiency, vo2_max_ml, vo2_max_liters,
-                          vo2theta, metabolic_efficiency, fc_max, measured_chronotropic, ve_max, rounded_vco2, lowersegment_venteff),
+                          vo2theta, new_var_rounded, fc_max, measured_chronotropic, ve_max, rounded_vco2, lowersegment_venteff),
   
   a<-2,
   b<-2,
