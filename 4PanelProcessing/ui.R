@@ -25,7 +25,7 @@ library(stringr)
 library(patchwork)
 library(segmented)
 
-shinyUI(dashboardPage(
+shinyUI(dashboardPage(skin = "blue",
   dashboardHeader(title = "UCLA CPET Analytics"),
   
   ## Sidebar
@@ -43,6 +43,17 @@ shinyUI(dashboardPage(
   ),
   
   dashboardBody(
+    # tags$head (tags$style(HTML('
+    #   .box-header h3 {
+    #     font-family: "Georgia", Times, "Times New Roman", serif;
+    #     font-size: 12px;
+    #   }
+    # '))),
+    tags$head (tags$style(HTML('
+      .box-header h3.box-title {
+        font-size: 20px;
+      }
+    '))),
     
     source("user_interface/demographic_csstags.R", local = TRUE)[1],
     tags$style("#last_name { white-space:pre; }"),
@@ -53,7 +64,7 @@ shinyUI(dashboardPage(
     # tags$head(tags$style(HTML(' .box {margin: 5px;}' )))
     # ------------------------------------------------------------
     fluidRow(
-      box(title = "Patient Information", status = "primary", width = 3,
+      box(title = "Patient Information", status = "primary",solidHeader = TRUE, width = 3, 
           strong("Last Name:     ", style="display:inline"), textOutput("last_name"),
           br(),
           strong("First Name:    "),textOutput("first_name"),
@@ -63,7 +74,7 @@ shinyUI(dashboardPage(
           strong("Date of Study: ", style ="display:inline"),textOutput("date_of_study"),
           ), # End Box
       
-      box(title = "Demographics", status = "primary", width = 3,
+      box(title = "Demographics", status = "primary",solidHeader = TRUE, width = 3,
           strong("Age:           ", style="display:inline"), textOutput("age"),
           br(),
           strong("Race:          ", style="display:inline"), "Reference",
@@ -90,7 +101,7 @@ shinyUI(dashboardPage(
       #       ),
       #     ), # End Box
       
-      box(title = "Patient Data", status = "primary", width = 3, 
+      box(title = "Patient Data", status = "primary",solidHeader = TRUE, width = 3, 
           strong("Weight (kg):    ", style="display:inline"), textOutput("weight"),
           br(),
           strong(HTML(paste0("BMI (kg/m", tags$sup("2"), "):   ")), style = "display:inline"), textOutput("bmi"),
@@ -100,7 +111,7 @@ shinyUI(dashboardPage(
           br()
           ), # End Box
       
-      box(title = "Calculated Patient Data", status = "primary", width = 3,
+      box(title = "Calculated Patient Data", status = "primary",solidHeader = TRUE, width = 3,
           strong("IBW (kg):               ", style="display:inline"), textOutput("ibw"),
           br(),
           strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "):        ")), style = "display:inline"), textOutput("rbmi"),
@@ -127,33 +138,34 @@ shinyUI(dashboardPage(
       #     # strong("Power Max (Watts): "), textOutput("output3"),
       #     ), # end Box
       tabBox(
-        title = "Tabular Data (Cooper Key Variables)", width = 6,
+        title = "Tabular Data (Cooper Key Variables)", side = "right", width = 6,
+        selected = "Tabular Data",
         # The id lets us use input$tabset1 on the server to find the current tab
         id = "tabset1",
+        tabPanel("Codebook", status = "primary",
+                 gt_output(outputId = "codebook"),),
         tabPanel("Tabular Data", status = "primary", solidHeader = TRUE,
                  br(),
                  br(),
-                 gt_output(outputId = "table1"),),
-        tabPanel("Codebook", status = "primary",
-                 gt_output(outputId = "codebook"),)
+                 gt_output(outputId = "table1"),)
       ),
       
       #============================#
       # Four Plot Box              #
       #============================# 
-      tabBox(title = "Graphical Data (Cooper 4-Panel)", width = 6,
-          id = "tabset2",
-          tabPanel("Primary Four Plot", status = "primary", solidHeader = TRUE,
-          br(),
-          plotOutput("plot1", 
-                     width = 700, height = 700
-                     # Facing issues when scaling boxes to the right size and
-                     # keeping the plots looking good at all devices
-                     ),
-          br(),),
+      tabBox(title = "Graphical Data (Cooper 4-Panel)", side = "right", width = 6,
+          id = "tabset2", selected = "Primary Four Plot",
           tabPanel("Secondary Four Plot", status = "primary", solidHeader = TRUE,
             br(),
-          )), # End Box
+          ), tabPanel("Primary Four Plot", status = "primary", solidHeader = TRUE,
+                      br(),
+                      plotOutput("plot1", 
+                                 width = 700, height = 700
+                                 # Facing issues when scaling boxes to the right size and
+                                 # keeping the plots looking good at all devices
+                      ),
+                      br(),)
+          ), # End Box
       
       box(title = "Technical Comments", status = "warning", solidHeader = TRUE, width = 6,
           textOutput("raw_testcontroller_validity"),
@@ -171,8 +183,8 @@ shinyUI(dashboardPage(
       
       box(title = "Physician Interpretation", status = "warning", solidHeader = TRUE, width = 6,
           textAreaInput("caption", "Input Comments: ", "", width = "1200", height = "200")),
-      valueBoxOutput("approvalBox", width = 3),
-      valueBoxOutput("failureBox", width = 3)
+      valueBoxOutput("approvalBox", width = 2),
+      valueBoxOutput("failureBox", width = 2)
       ) # FluidRow
   ) # End Dashboard Body
 )) # End Dashboard Page

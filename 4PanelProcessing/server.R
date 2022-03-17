@@ -68,7 +68,7 @@ shinyServer(function(input, output) {
     output$failureBox <- renderValueBox({
       source("TestValidity/test_cases.R", local = TRUE)[1]
       valueBox(
-        failed, "Test-Cases Failed", icon = icon("thumbs-down", lib = "glyphicon"),
+        failed, "Quality-Criteria Failed", icon = icon("thumbs-down", lib = "glyphicon"),
         color = "red"
       )
     })
@@ -76,7 +76,7 @@ shinyServer(function(input, output) {
     output$approvalBox <- renderValueBox({
       source("TestValidity/test_cases.R", local = TRUE)[1]
       valueBox(
-        passed, "Test-Cases Passed", icon = icon("thumbs-up", lib = "glyphicon"),
+        passed, "Quality-Criteria Passed", icon = icon("thumbs-up", lib = "glyphicon"),
         color = "green"
       )
     })
