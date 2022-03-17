@@ -1,4 +1,5 @@
 # Server.R
+library(shiny)
 library(haven)       ## Allows for reading other file formats.
 library(tidyverse)   ## Contains multiple packages that are essential to R. (GGplot2, ForCats, Purrr, Tibble, dplyr, stringr, readr, tidyr)
 library(ggpubr)      ## Publication ready R designs
