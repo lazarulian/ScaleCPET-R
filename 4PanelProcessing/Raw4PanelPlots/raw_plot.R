@@ -1,5 +1,6 @@
 list(
         source("Raw4PanelPlots/axes_scaling.R", local = TRUE)[1],
+        source("cosmed/cosmed_table_data.R", local = TRUE)[1],
         source("DataCalculation/regression_analysis.R", local = TRUE)[1],
 
         # Graphing Color Palette
@@ -25,7 +26,7 @@ list(
             # theme_bw() + 
             annotate("text", x = 0.1, y = (min(cleaned_data()$VCO2)-0.1), label = "S1", color = "black", fontface = "bold") +
             # annotate("text", x = max(cleaned_data()$Power) + -35, y = 0.1, label = expression('Work Rate'['max']*'')) +
-            annotate("text", x = 20, y = max(cleaned_data()$VO2)+0.3, label = expression('VO'[2][' max']* '')) +
+            annotate("text", x = 20, y = vo2_max_liters+0.3, label = expression('VO'[2][' max']* '')) +
             theme_classic() + # Classic Does not allow for minor_gridlines to work.
             # theme(axis.text.y.left = orange.bold.10.text, axis.text.y.right = blue.bold.10.text) +
             theme(aspect.ratio=1) +
@@ -35,7 +36,7 @@ list(
                                 limits=c(watts_range_start, watts_range_end)),
         
         p1 <- p1 +  geom_vline(xintercept = max(cleaned_data()$Power), color = "grey", size=.75) +
-          geom_hline(yintercept = max(cleaned_data()$VO2), color = "grey", size = 0.75) +
+          geom_hline(yintercept = vo2_max_liters, color = "grey", size = 0.75) +
           annotate("text", x = max(cleaned_data()$Power) + -35, y = 0.1, label = expression('Work Rate'['max']*'')),
 
         p2 <- ggplot(cleaned_data(), aes(x=VO2, y=VCO2)) + 
@@ -95,8 +96,8 @@ list(
             theme_classic() +
             theme(aspect.ratio=1), 
         
-        p4 <- p4 + geom_vline(xintercept = max(cleaned_data()$VO2), color = "grey", size = 0.75) +
-          annotate("text", x = max(cleaned_data()$VO2)+0.3, y = 10, label = expression('VO'[2][' max']* '')) +
+        p4 <- p4 + geom_vline(xintercept = vo2_max_liters, color = "grey", size = 0.75) +
+          annotate("text", x = vo2_max_liters+0.3, y = 10, label = expression('VO'[2][' max']* '')) +
           geom_hline(yintercept = max(cleaned_data()$HR), color = "grey", size = 0.75) +
           annotate("text", x = 0.3, y = max(cleaned_data()$HR)+10, label = expression('f'['c'][' max']* '')) +
           annotate("text", x = (min(cleaned_data()$VO2)-0.2), y = (min(cleaned_data()$HR)-0.10), label = "S3", color = "red", fontface = "bold")
