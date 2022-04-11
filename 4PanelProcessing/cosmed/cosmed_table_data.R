@@ -17,7 +17,9 @@ list(
   
   suggested_workrate <- round(get_suggested_workrate(refvo2_ml, ibw), 0),
   
-  refwork_max <- round(get_refwork_max(ibw, refvo2_liters, suggested_workrate), 0),
+  # refwork_max <- round(get_refwork_max(ibw, refvo2_liters, suggested_workrate), 0),
+  refwork_max <- round(get_refwork_max(ibw, refvo2_liters), 0),
+  
   
   vo2_theta <- round(get_VO2theta(age, sex, height), 2),
   
