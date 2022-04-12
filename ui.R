@@ -1,25 +1,16 @@
-# UI.R
 library(shiny)
 library(shinydashboard)
-library(haven)       ## Allows for reading other file formats.
-library(tidyverse)   ## Contains multiple packages that are essential to R. (GGplot2, ForCats, Purrr, Tibble, dplyr, stringr, readr, tidyr)
+library(tidyverse)   ## Contains multiple packages that are essential to R.
 library(ggpubr)      ## Publication ready R designs
-library(rstatix)     ## Conducts basic statistical testing 
-library(arsenal)     ## Large scale statistical summaries.
 library(car)         ## Regression Grammar
 library(ggplot2)     ## Grammar of Graphics
 library(readxl)      ## Reads Excel Files
-library(cowplot)     ## Aligns Plot
 library(zoo)         ## Rolling Averages
-library(shiny)       ## Shiny
-library(broom)       ## Linear Regression?
-library(lubridate)
 library(rmarkdown)
 library(remotes)
-library(capture)
+# library(capture)
 library(gt)
-library(shinyscreenshot) # handles the download for the tabularized report
-library(remotes)
+# library(shinyscreenshot) # handles the download for the tabularized report
 library(glue)
 library(stringr)
 library(patchwork)
@@ -33,13 +24,13 @@ shinyUI(dashboardPage(skin = "blue",
     fileInput("file1", "Choose xlsx File",
               multiple = FALSE,
               accept = c(".xlsx"),),#EndFileInput
-    strong(".     ."),
-    capture_pdf(
-            selector = "body",
-            filename = "tabularized_report",
-            scale = 3,
-            icon("camera"), "Download"
-            )
+    strong(".     .")
+    # capture_pdf(
+    #         selector = "body",
+    #         filename = "tabularized_report",
+    #         scale = 3,
+    #         icon("camera"), "Download"
+    #         )
   ),
   
   dashboardBody(

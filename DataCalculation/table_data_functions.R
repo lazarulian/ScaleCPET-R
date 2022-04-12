@@ -17,8 +17,13 @@ get_refvo2_liters <- function(refvo2_ml, ibw) {
   return((refvo2_ml*ibw)/1000)
 },
 
-get_refwork_max <- function(ibw, vo2_liters, suggested_workrate) {
-  return((ibw*0.7)+((vo2_liters*1000)/10.3)+((suggested_workrate*30)/60))
+# get_refwork_max <- function(ibw, vo2_liters, suggested_workrate) {
+#   return((ibw*0.7)+((vo2_liters*1000)/10.3)+((suggested_workrate*30)/60))
+# },
+
+## Updated Work Max Calculation
+get_refwork_max <- function(ibw, vo2_liters) {
+  return(((vo2_liters*1000)-(ibw*7))/10.3)
 },
 
 get_VO2theta <- function(age, sex, height) {
