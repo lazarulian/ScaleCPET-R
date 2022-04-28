@@ -9,9 +9,9 @@ library(readxl)      ## Reads Excel Files
 library(zoo)         ## Rolling Averages
 library(rmarkdown)
 library(remotes)
-# library(capture)
+library(capture)
 library(gt)
-# library(shinyscreenshot) # handles the download for the tabularized report
+library(shinyscreenshot) # handles the download for the tabularized report
 library(glue)
 library(stringr)
 library(patchwork)
