@@ -17,7 +17,6 @@ library(stringr)
 library(patchwork)
 library(segmented)
 
-
 # Define server 
 shinyServer(function(input, output) {
   #============================#

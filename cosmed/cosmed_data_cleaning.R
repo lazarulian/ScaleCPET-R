@@ -3,14 +3,15 @@
 
 list(
   req(input$file1), # Requests Data from Input
-  
+
   # Reads Excel File Input / Cleans Raw Data
   col_names <- array(read_excel(input$file1$datapath, sheet = 1, n_max = 1, col_names = FALSE)),
   rawdata <- data.frame(read_excel(input$file1$datapath, sheet = 1, skip = 3, col_names = FALSE)),
   colnames(rawdata) <- col_names,
   convert_data1 <- rawdata,
   wbb1 <- convert_data1 %>% dplyr::select(10:37), # The Dataframe that includes all of the key variables required for data manipulation.
-  
+
+
   wbb1$VO2 <- (wbb1$VO2),
   if (wbb1$VO2[1] > 20) {
     wbb1$VO2 <- wbb1$VO2/1000

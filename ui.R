@@ -16,22 +16,17 @@ library(stringr)
 library(patchwork)
 library(segmented)
 
+
 shinyUI(dashboardPage(skin = "blue",
   dashboardHeader(title = "UCLA CPET Analytics"),
   
   ## Sidebar
   dashboardSidebar(
-    fileInput("file1", "Choose xlsx File",
-              multiple = FALSE,
-              accept = c(".xlsx"),),#EndFileInput
-    strong(".     ."),
-    capture_pdf(
-            selector = "body",
-            filename = "tabularized_report",
-            scale = 3,
-            icon("camera"), "Download"
-            )
-  ),
+    source("ui_sidebar.R", local = TRUE)[1],
+    strong("..")
+    ),
+  
+
   
   dashboardBody(
     # tags$head (tags$style(HTML('
