@@ -7,6 +7,7 @@ library(ggplot2)     ## Grammar of Graphics
 library(readxl)      ## Reads Excel Files
 library(zoo)         ## Rolling Averages
 library(rmarkdown)
+library(cowplot) # used in lin machine
 library(remotes)
 library(capture)
 library(gt)

@@ -9,6 +9,7 @@ library(readxl)      ## Reads Excel Files
 library(zoo)         ## Rolling Averages
 library(rmarkdown)
 library(remotes)
+library(cowplot) # used in lin machine
 library(capture)
 library(gt)
 library(shinyscreenshot) # handles the download for the tabularized report

@@ -3,6 +3,39 @@
 
 list(
   req(input$file1), # Requests Data from Input
+  
+  last_name <- read_excel(input$file1$datapath, range = "B2", col_names = FALSE),
+  last_name <- toString(last_name),
+  
+  first_name <- read_excel(input$file1$datapath, range = "B3", col_names = FALSE),
+  first_name <- toString(first_name),
+  
+  sex <- read_excel(input$file1$datapath, range = "B4", col_names = FALSE),
+  sex <- toString(sex),
+  
+  age <- read_excel(input$file1$datapath, range = "B5", col_names = FALSE),
+  age <- as.numeric(age),
+  
+  height <- read_excel(input$file1$datapath, range = "B6", col_names = FALSE),
+  height <- as.numeric(height/100),
+  
+  weight <- read_excel(input$file1$datapath, range = "B7", col_names = FALSE),
+  weight <- as.numeric(round(weight, 1)),
+  
+
+  # if (is.na(read_excel(input$file1$datapath, range = "B1", col_names = FALSE)))
+  # {
+  #   id <- "N/A"
+  # }
+  # 
+  # else {
+  #   id <- read_excel(input$file1$datapath, range = "B1", col_names = FALSE)
+  # },
+  
+  id <- "N/A",
+  
+  date_of_study <- read_excel(input$file1$datapath, range = "E1", col_names = FALSE),
+  date_of_study <- toString(date_of_study),
 
   # Reads Excel File Input / Cleans Raw Data
   col_names <- array(read_excel(input$file1$datapath, sheet = 1, n_max = 1, col_names = FALSE)),
@@ -70,7 +103,15 @@ list(
   # -.05 in distribution analysis and end the test at the first position of it.
   source("cosmed/endtest_cosmed.R", local = TRUE)[1],
   end_test_position <- endtest_cosmed(wbb1$VO2),
-  wbb1 <- wbb1[-c(end_test_position:length(wbb1$VO2)), ]
+  wbb1 <- wbb1[-c(end_test_position:length(wbb1$VO2)), ],
   
+  wbb1$last_name <- last_name,
+  wbb1$first_name <- first_name,
+  wbb1$sex <- sex,
+  wbb1$age <- age,
+  wbb1$height <- height,
+  wbb1$weight <- weight,
+  wbb1$id <- id,
+  wbb1$date_of_study <- date_of_study
   
 )
