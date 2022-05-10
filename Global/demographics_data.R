@@ -41,15 +41,15 @@ list(
     ## Returns the reference nhanes III value from the age, sex, and height
     ## Defaults as caucasian 
     
-    if (age >= 17 && sex == "female" | sex == "Female") {
+    if (age >= 17 && sex == "female" | sex == "Female" | sex == "F" | sex == "f") {
       nhanes <- 0.43333-0.00361*age-0.000194*age^2+1.1496*(height)^2
     }
     
-    else if (age == "Female" | age == "female") {
+    else if (sex == "Female" | sex == "female") {
       nhanes <- -0.871+0.06537*age+1.1496*(height)^2
     }
     
-    else if (age == "Male" && age >= 20) {
+    else if (sex == "Male" | sex == "male" | sex == "m" && age >= 20) {
       nhanes <- 0.5536-0.01303*age-0.000172*age^2+1.4098*(height)^2
     }
     

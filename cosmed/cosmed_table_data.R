@@ -38,19 +38,24 @@ list(
   measured_chronotropic <- round(get_measured_chronotropic(cleaned_data()$VO2, cleaned_data()$HR, cleaned_data()), 0),
   
   
-  
   ## Measured Data
-  vo2_data <- cleaned_data()$VO2,
-  p_data <- cleaned_data()$Power,
-  dummy_dataframe <- data.frame(power = p_data, vo2 = vo2_data),
-  vo2_max_data <- linreg_machine_data(dummy_dataframe$power, dummy_dataframe$vo2, dummy_dataframe),
-  vo2_max_liters <- max(vo2_max_data),
+  why_power <- cleaned_data()$Power,
+  why_end <- cleaned_data()$end_test,
+  why_vo2 <- cleaned_data()$VO2,
+  why_vco2 <- cleaned_data()$VCO2,
+  why_HR <- cleaned_data()$HR,
+  why_VE <- cleaned_data()$VE,
+  why_t <- cleaned_data()$t,
+    
+  wbb1 <- data.frame("t" = why_t, "Power" = why_power, "end_test" = why_end, "VO2" = why_vo2, "VE" = why_VE, "HR" = why_HR, "VCO2" = why_vco2),
+  power_max <- regression_max(wbb1$t, wbb1$Power, wbb1, wbb1$end_test[1]),
+  power_max <- round(power_max, 0),
+  vo2_max_liters <- regression_max(wbb1$Power, wbb1$VO2,  wbb1, power_max),
   vo2_max_liters <- round(vo2_max_liters, 2),
   vo2_max_liters <- as.numeric(vo2_max_liters),
-  
   vo2_max_ml <- round((vo2_max_liters*1000) / weight, 0),
-  power_max <- round(max(cleaned_data()$Power), 0),
-  ve_max <- round(max(cleaned_data()$VE), 0),
-  fc_max <- round(max(cleaned_data()$HR), 0)
-  
+  vco2_max_liters <- regression_max(wbb1$Power, wbb1$VCO2,  wbb1, power_max),
+  ve_max <- round(max(wbb1$VE), 0),
+  fc_max <- round(regression_max(wbb1$VO2, wbb1$HR, wbb1,  vo2_max_liters), 0)
+
 )

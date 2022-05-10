@@ -22,16 +22,6 @@ list(
   weight <- read_excel(input$file1$datapath, range = "B7", col_names = FALSE),
   weight <- as.numeric(round(weight, 1)),
   
-
-  # if (is.na(read_excel(input$file1$datapath, range = "B1", col_names = FALSE)))
-  # {
-  #   id <- "N/A"
-  # }
-  # 
-  # else {
-  #   id <- read_excel(input$file1$datapath, range = "B1", col_names = FALSE)
-  # },
-  
   id <- "N/A",
   
   date_of_study <- read_excel(input$file1$datapath, range = "E1", col_names = FALSE),
@@ -112,6 +102,7 @@ list(
   wbb1$height <- height,
   wbb1$weight <- weight,
   wbb1$id <- id,
-  wbb1$date_of_study <- date_of_study
+  wbb1$date_of_study <- date_of_study,
+  wbb1$end_test <- max(wbb1$t)
   
 )

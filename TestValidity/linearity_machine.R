@@ -2,7 +2,7 @@ list(
   
   ## Function to Graph the Raw and Corrected Data for Each Variable
   linearity_machine <- function(range_x, range_y, dataset) {
-  source("Raw4PanelPlots/axes_scaling.R", local = TRUE)[1]
+  # source("Raw4PanelPlots/axes_scaling.R", local = TRUE)[1]
   data_summary <- lm(range_y ~ range_x, data = dataset)
   data_intercept <- summary(data_summary)$coef[[1]]
   data_slope <- summary(data_summary)$coef[[2]]
@@ -69,6 +69,18 @@ linreg_machine_data <- function(range_x, range_y, dataset) {
   data_slope <- summary(data_summary)$coef[[2]]
   
   corrected_data <- ((range_x)*data_slope)+data_intercept
+  corrected_data <- as.numeric(corrected_data)
+  
+  return(corrected_data)
+},
+
+regression_max <- function(range_x, range_y, dataset, max_value) {
+  
+  data_summary <- lm(range_y ~ range_x, data = dataset)
+  data_intercept <- summary(data_summary)$coef[[1]]
+  data_slope <- summary(data_summary)$coef[[2]]
+  
+  corrected_data <- ((max_value)*data_slope)+data_intercept
   corrected_data <- as.numeric(corrected_data)
   
   return(corrected_data)

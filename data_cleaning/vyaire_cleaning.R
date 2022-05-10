@@ -1,49 +1,26 @@
 # Vyaire.R
-
-# Vyaire Data Cleaning.R
 list (
-  library(shiny),
-  library(shinydashboard),
-  library(tidyverse),  ## Contains multiple packages that are essential to R. (GGplot2, ForCats, Purrr, Tibble, dplyr, stringr, readr, tidyr)
-  library(ggpubr),     ## Publication ready R designs
-  library(car),         ## Regression Grammar
-  library(ggplot2),     ## Grammar of Graphics
-  library(readxl),      ## Reads Excel Files
-  library(zoo),         ## Rolling Averages
-  library(rmarkdown),
-  library(remotes),
-  library(capture),
-  library(gt),
-  library(lubridate), # time handling R
-  library(shinyscreenshot), # handles the download for the tabularized report
-  library(glue),
-  library(stringr),
-  library(cowplot), #used in linearity machine
-  library(patchwork),
-  library(segmented),
+  req(input$file1), # Requests Data from Input
   
-  source("TestValidity/linearity_machine.R", local = TRUE[1]),
-  
-  
-  last_name <- read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", range = "B1", col_names = FALSE),
+  last_name <- read_excel(input$file1$datapath, range = "B1", col_names = FALSE),
   last_name <- toString(last_name),
   
-  first_name <- read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", range = "D1", col_names = FALSE),
+  first_name <- read_excel(input$file1$datapath, range = "D1", col_names = FALSE),
   first_name <- toString(first_name),
   
-  sex <- read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", range = "B2", col_names = FALSE),
+  sex <- read_excel(input$file1$datapath, range = "B2", col_names = FALSE),
   sex <- toString(sex),
   
-  age <- read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", range = "B4", col_names = FALSE),
+  age <- read_excel(input$file1$datapath, range = "B4", col_names = FALSE),
   age <- gsub("[^0-9.]", "", age),
   age <- as.numeric(age),
   
-  height <- read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", range = "B3", col_names = FALSE),
+  height <- read_excel(input$file1$datapath, range = "B3", col_names = FALSE),
   height <- gsub("[^0-9.]", "", height),
   height <- as.numeric(height),
   height <- as.numeric(height/100),
   
-  weight <- read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", range = "D3", col_names = FALSE),
+  weight <- read_excel(input$file1$datapath, range = "D3", col_names = FALSE),
   weight <- gsub("[^0-9.]", "", weight),
   weight <- as.numeric(weight),
   weight <- as.numeric(round(weight, 1)),
@@ -53,14 +30,14 @@ list (
   date_of_study <- "N/A",
   
   
-  col_names <- array(read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", sheet = 1, skip = 21, n_max = 1, col_names = FALSE)),
-  rawdata <- data.frame(read_excel("/Users/apurvashah/Downloads/labscoopewants/Vyaire CPET Data Excel File (RM).xlsx", sheet = 1, skip = 24, col_names = FALSE)),
+  col_names <- array(read_excel(input$file1$datapath, sheet = 1, skip = 21, n_max = 1, col_names = FALSE)),
+  rawdata <- data.frame(read_excel(input$file1$datapath, sheet = 1, skip = 24, col_names = FALSE)),
   colnames(rawdata) <- col_names,
   convert_data1 <- rawdata,
   wbb1 <- convert_data1 %>% dplyr::select(1:10), # The Dataframe that includes all of the key variables required for data manipulation.
   
   ## Rename the ColNames
-  colnames(wbb1) <- c('t',"Power","HR", "VE", "VTEX", "BRFEV", "VO2", "VCO2", "RER", "VO2kg"),
+  colnames(wbb1) <- c('t',"Power","HR", "VE", "VTEX", "BRFEV", "VO2", "VCO2", "RQ", "VO2kg"),
   
   
   ## Clean Data for Blank Spaces / negative numbers
@@ -77,7 +54,7 @@ list (
   wbb1$BRFEV <- as.numeric(wbb1$BRFEV),
   wbb1$VO2 <- as.numeric(wbb1$VO2),
   wbb1$VCO2 <- as.numeric(wbb1$VCO2),
-  wbb1$RER <- as.numeric(wbb1$RER),
+  wbb1$RQ <- as.numeric(wbb1$RQ),
   wbb1$VO2kg <- as.numeric(wbb1$VO2kg),
   wbb1$HR <- as.numeric(wbb1$HR),
   
@@ -100,20 +77,22 @@ list (
   wbb1$VCO2 <- zoo::rollmean(wbb1$VCO2, k = 5, fill = NA),
   wbb1$VE <- zoo::rollmean(wbb1$VE, k = 5, fill = NA),
   wbb1$HR <- zoo::rollmean(wbb1$HR, k = 5, fill = NA),
+  wbb1$RQ <- zoo::rollmean(wbb1$RQ, k = 5, fill = NA),
+  
   
   wbb1 <- wbb1[rowSums(is.na(wbb1)) == 0,], # Remove na after rollmean
   
+  source("TestValidity/linearity_machine.R", local = TRUE[1]),
   # linearity_machine(wbb1$t, wbb1$Power, wbb1)
   value <- distribution_machine_data(wbb1$t, wbb1$Power, wbb1),
-  
-  
+
   max_deviation <- which.max(value), # calculates the 3 points after the falling distribution
   if (max_deviation+3 < length(value))
   {
     new_val <- max_deviation+3
     wbb1 <- wbb1[-c(new_val:length(wbb1$VO2)), ]
   },
-  
+
   
   ## Fixing Time
   time_analysis <- lm(wbb1$Power ~ wbb1$t, data = wbb1),
@@ -125,6 +104,8 @@ list (
   wbb1$t <- (wbb1$t)-corrected_time_differential,
   wbb1$t <- as.numeric(wbb1$t),
   
+  id <- "N/A",
+  
   wbb1$last_name <- last_name,
   wbb1$first_name <- first_name,
   wbb1$sex <- sex,
@@ -132,8 +113,9 @@ list (
   wbb1$height <- height,
   wbb1$weight <- weight,
   wbb1$id <- id,
-  wbb1$date_of_study <- date_of_study
+  wbb1$date_of_study <- date_of_study,
+  wbb1$end_test <- wbb1$t[max_deviation],
   
-  
+  wbb1
 )
 

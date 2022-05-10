@@ -19,28 +19,32 @@ library(segmented)
 
 
 shinyUI(dashboardPage(skin = "blue",
-  dashboardHeader(title = "UCLA CPET Analytics"),
-  
+  dashboardHeader(title = "UCLA Enhanced CPET Analytics", titleWidth = 400),
   ## Sidebar
-  dashboardSidebar(
-    source("ui_sidebar.R", local = TRUE)[1],
-    strong("..")
-    ),
-  
-
+  dashboardSidebar(collapsed = TRUE),
   
   dashboardBody(
-    # tags$head (tags$style(HTML('
-    #   .box-header h3 {
-    #     font-family: "Georgia", Times, "Times New Roman", serif;
-    #     font-size: 12px;
-    #   }
-    # '))),
+    tags$head(tags$style(HTML('
+      .main-header .logo {
+        font-family: Helvetica, sans-serif;
+        font-style: normal;
+        font-size: 20px;
+      }
+    '))),
     tags$head (tags$style(HTML('
       .box-header h3.box-title {
         font-size: 20px;
       }
     '))),
+    
+    # dashboardBody(
+    #   tags$head (tags$style(HTML('
+    #   .box box-primary {
+    #     style="width: 18rem;"
+    #   }
+    # '))),
+    
+    
     
     source("user_interface/demographic_csstags.R", local = TRUE)[1],
     tags$style("#last_name { white-space:pre; }"),
@@ -48,17 +52,18 @@ shinyUI(dashboardPage(skin = "blue",
     #   Below is the code that can narrow the boxes potentially
     # ------------------------------------------------------------
     # tags$head(tags$style(HTML("div.col-sm-6 {padding:1px}"))),
-    # tags$head(tags$style(HTML(' .box {margin: 5px;}' )))
+    # tags$head(tags$style(HTML(' .box {margin: 5px;}' ))),
     # ------------------------------------------------------------
     fluidRow(
-      box(title = "Patient Information", status = "primary",solidHeader = TRUE, width = 3, 
+      box(title = "Patient Information", status = "primary",solidHeader = TRUE, width = 3,
           strong("Last Name:     ", style="display:inline"), textOutput("last_name"),
           br(),
           strong("First Name:    "),textOutput("first_name"),
           br(),
-          strong("ID:            ", style="display:inline"), textOutput("id"),
-          br(),
+          # strong("ID:            ", style="display:inline"), textOutput("id"),
+          # br(),
           strong("Date of Study: ", style ="display:inline"),textOutput("date_of_study"),
+          br(),
           ), # End Box
       
       box(title = "Demographics", status = "primary",solidHeader = TRUE, width = 3,
@@ -68,25 +73,7 @@ shinyUI(dashboardPage(skin = "blue",
           br(),
           strong("Sex:           ", style="display:inline"), textOutput("sex"),
           br(),
-          br()
           ), # End Box
-      
-      # box(width = 3, title = "File Input & Output", status = "primary",
-      #     fileInput("file1", "Choose xlsx File", # File Input Mechanism Runs Natively on RStudio
-      #         multiple = FALSE, 
-      #         accept = c(".xlsx"),),
-      #     
-      #     
-      #     # PDF Capturing Mechanism, Relies on JavaScript to work so requires
-      #     # web browswer or other javascript engine.
-      #     
-      #     capture_pdf(
-      #       selector = "body",
-      #       filename = "results",
-      #       scale = 3,
-      #       icon("camera"), "Take screenshot of results (bigger scale)"
-      #       ),
-      #     ), # End Box
       
       box(title = "Patient Data", status = "primary",solidHeader = TRUE, width = 3, 
           strong("Weight (kg):    ", style="display:inline"), textOutput("weight"),
@@ -94,7 +81,6 @@ shinyUI(dashboardPage(skin = "blue",
           strong(HTML(paste0("BMI (kg/m", tags$sup("2"), "):   ")), style = "display:inline"), textOutput("bmi"),
           br(),
           strong("Height (cm):    ", style="display:inline"), textOutput("height"),
-          br(),
           br()
           ), # End Box
       
@@ -104,17 +90,17 @@ shinyUI(dashboardPage(skin = "blue",
           strong(HTML(paste0("ref BMI (kg/m", tags$sup("2"), "):        ")), style = "display:inline"), textOutput("rbmi"),
           br(),
           strong(HTML(paste0("ref FEV",tags$sub("1"), " NHANES III (L): ")), style = "display:inline"), textOutput("nhanes"),
-          br(),
           br()
           # ,
           # strong(HTML(paste0("VE",tags$sub("cap"), " / MVV (L/min): ")), style = "display:inline"), textOutput("vecap"),
           # br()
           
           ), # End Box
-      
+    ), # end fluid row
       #============================#
       # Box for the Table Values   #
       #============================# 
+    fluidRow(
       
       # box(title = "Tabular Data (Cooper Key Variables)", status = "primary", solidHeader = TRUE, width = 6,
       #     # gt_output(outputId = "table1"),
@@ -153,8 +139,10 @@ shinyUI(dashboardPage(skin = "blue",
                       ),
                       br(),)
           ), # End Box
-      
+    ),
+      fluidRow(
       box(title = "Technical Comments", status = "warning", solidHeader = TRUE, width = 6,
+          style="position:relative;width:100%;height:0;padding-bottom:30%;",
           textOutput("raw_testcontroller_validity"),
           br(),
           textOutput("workrate_variability_validity"),
@@ -167,11 +155,26 @@ shinyUI(dashboardPage(skin = "blue",
           br(),
           textOutput("vco2theta_validity")
           ), # End Box
-      
       box(title = "Physician Interpretation", status = "warning", solidHeader = TRUE, width = 6,
+          style="position:relative;width:100%;height:0;padding-bottom:30%;",
           textAreaInput("caption", "Input Comments: ", "", width = "1200", height = "200")),
+      ), # end fluid row
+      fluidRow(
       valueBoxOutput("approvalBox", width = 3),
-      valueBoxOutput("failureBox", width = 3)
+      valueBoxOutput("failureBox", width = 3),
+      box(width = 6, title = "File Input & Output", status = "primary", solidHeader = TRUE,
+          fileInput("file1", "Choose xlsx File", # File Input Mechanism Runs Natively on RStudio
+                    multiple = FALSE,
+                    accept = c(".xlsx"),),
+          # PDF Capturing Mechanism, Relies on JavaScript to work so requires
+          # web browswer or other javascript engine.
+          capture_pdf(
+            selector = "body",
+            filename = "results",
+            scale = 3,
+            icon("camera"), "Take screenshot of results (bigger scale)"
+          ),
+      ) # End Box
       ) # FluidRow
   ) # End Dashboard Body
 )) # End Dashboard Page

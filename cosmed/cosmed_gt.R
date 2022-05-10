@@ -16,6 +16,8 @@ list(
   new_string <- paste(vo2_theta, lln_vo2, sep=",  "),
   ve_vars <- paste(VE, VECAP, sep=",  "),
   
+  fc_string <- paste(ref_fcmax, ref_fcmax-16, sep = ", "),
+  
   ## Percent Value Calculations
   percent_work <- paste(round((power_max / refwork_max)*100, 0),"%"),
   percent_vo2_l <- paste(round((vo2_max_liters / refvo2_liters)*100, 0),"%"),
@@ -24,7 +26,7 @@ list(
   percent_ve <- paste(round((ve_max / VECAP)*100, 0),"%"),
   
   reference_gt_values <- c(refwork_max, "10.3", refvo2_ml, refvo2_liters,
-                            new_string, "1.00", ref_fcmax, chronotopic_index,
+                            new_string, "1.00", fc_string, chronotopic_index,
                            ve_vars, "--",
                            ventilatory_efficiency),
   
@@ -48,7 +50,7 @@ list(
   gt_confirmed <- tibble('Variable' = c(glue("Work Rate @{c}~ (watts)"), "Metabolic Efficiency (ml/min/watt)", 
                          glue("VO@{2}~ @{c}~ (ml/kg/min)"), glue("VO@{2}~ @{c}~ (L/min)"), 
                                   glue("VO@{2}~\U03B8,  LLN (L/min)"), "Muscle RQ",
-                                 glue("f@{f}~ @{c}~ (/min)"), "Chronotropic Index (/L)",
+                                 glue("f@{f}~ @{c}~, LLN (/min)"), "Chronotropic Index (/L)",
                                  glue("V@{e}~ @{c}~, V@{e}~ @{g}~ (L/min)"), glue("VCO@{2}~\U03B8 (L/min)"), "Ventilatory Efficiency"),
                          
                          `Reference` = reference_gt_values, 
