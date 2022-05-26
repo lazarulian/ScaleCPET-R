@@ -165,7 +165,7 @@ shinyUI(dashboardPage(skin = "blue",
       box(width = 6, title = "File Input & Output", status = "primary", solidHeader = TRUE,
           fileInput("file1", "Choose xlsx File", # File Input Mechanism Runs Natively on RStudio
                     multiple = FALSE,
-                    accept = c(".xlsx"),),
+                    accept = c(".xlsx", ".xls", ".csv"),),
           # PDF Capturing Mechanism, Relies on JavaScript to work so requires
           # web browswer or other javascript engine.
           capture_pdf(

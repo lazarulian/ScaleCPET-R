@@ -78,7 +78,11 @@ regression_max <- function(range_x, range_y, dataset, max_value) {
   
   data_summary <- lm(range_y ~ range_x, data = dataset)
   data_intercept <- summary(data_summary)$coef[[1]]
+  print(paste("Intercept is: ", data_intercept))
   data_slope <- summary(data_summary)$coef[[2]]
+  print(paste("Slope is: ", data_intercept, sep = ""))
+  
+  print(paste("Date is ", data_slope, "*", max_value, "+", data_intercept, sep = ""))
   
   corrected_data <- ((max_value)*data_slope)+data_intercept
   corrected_data <- as.numeric(corrected_data)
