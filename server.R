@@ -24,9 +24,9 @@ shinyServer(function(input, output) {
   # Data Inputs                #
   #============================#
     cleaned_data <- reactive({
-      source("cosmed/cosmed_data_cleaning.R", local = TRUE) # Reference data_cleaning.R
+      # source("cosmed/cosmed_data_cleaning.R", local = TRUE) # Reference data_cleaning.R
       # source("data_cleaning/vyaire_cleaning.R", local = TRUE)
-      # source("data_cleaning/mg_cleaning.R", local = TRUE)
+      source("data_cleaning/mg_cleaning.R", local = TRUE)
       wbb1
     }) # EndDataReactive
     

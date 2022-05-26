@@ -15,7 +15,7 @@ list (
   
   age <- read_excel(input$file1$datapath, range = "K5", col_names = FALSE),
   age <- as.numeric(age),
-  age <- round(age * -1.1*10^-7, 0),
+  # age <- round(age * -1.1*10^-7, 0),
   
   height <- read_excel(input$file1$datapath, range = "K3", col_names = FALSE),
   height <- gsub("[^0-9.]", "", height),
@@ -49,7 +49,9 @@ list (
   
   ## Convert Data to Standard
   # Restructuring as Numeric
-  wbb1$t <- as.numeric(substr(wbb1$t, 1, 2))*60 + as.numeric(substr(wbb1$t, 4, 5)), #removes character notation
+  # wbb1$t <- as.numeric(substr(wbb1$t, 1, 2))*60 + as.numeric(substr(wbb1$t, 4, 5)), #removes character notation
+  wbb1$t <- as.numeric(wbb1$t),
+  wbb1$t <- (wbb1$t)*1440,
   wbb1$Power <- as.numeric(wbb1$Power),
   wbb1$VE <- as.numeric(wbb1$VE),
   wbb1$VO2 <- as.numeric(wbb1$VO2),
