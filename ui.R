@@ -9,9 +9,9 @@ library(zoo)         ## Rolling Averages
 library(rmarkdown)
 library(cowplot) # used in lin machine
 library(remotes)
-# library(capture)
+library(capture)
 library(gt)
-# library(shinyscreenshot) # handles the download for the tabularized report
+library(shinyscreenshot) # handles the download for the tabularized report
 library(glue)
 library(stringr)
 library(patchwork)
@@ -168,12 +168,12 @@ shinyUI(dashboardPage(skin = "blue",
                     accept = c(".xlsx", ".xls", ".csv"),),
           # PDF Capturing Mechanism, Relies on JavaScript to work so requires
           # web browswer or other javascript engine.
-          # capture_pdf(
-          #   selector = "body",
-          #   filename = "results",
-          #   scale = 3,
-          #   icon("camera"), "Take screenshot of results (bigger scale)"
-          # ),
+          capture_pdf(
+            selector = "body",
+            filename = "results",
+            scale = 3,
+            icon("camera"), "Take screenshot of results (bigger scale)"
+          )
       ) # End Box
       ) # FluidRow
   ) # End Dashboard Body
