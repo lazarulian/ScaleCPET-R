@@ -9,7 +9,6 @@ library(zoo)         ## Rolling Averages
 library(rmarkdown)
 library(cowplot) # used in lin machine
 library(remotes)
-library(capture)
 library(gt)
 library(shinyscreenshot) # handles the download for the tabularized report
 library(glue)
