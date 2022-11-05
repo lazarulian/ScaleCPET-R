@@ -10,7 +10,7 @@ library(rmarkdown)
 library(cowplot) # used in lin machine
 library(remotes)
 library(gt)
-library(shinyscreenshot) # handles the download for the tabularized report
+# library(shinyscreenshot) # handles the download for the tabularized report
 library(glue)
 library(stringr)
 library(patchwork)
