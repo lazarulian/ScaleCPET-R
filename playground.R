@@ -55,9 +55,9 @@ endtest_cosmed <- function(vo2data) {
   return(position_vo2max+2)
 }
 
-col_names <- array(read_excel("/Users/apurvashah/Downloads/CosmedTests/UCLA-FL-001.xlsx",
+col_names <- array(read_excel("/Users/apurvashah/Downloads/20221209 test subject (CPET BxB)_20221209120317.xlsx",
                               sheet = 1, n_max = 1, col_names = FALSE))
-rawdata <- data.frame(read_excel("/Users/apurvashah/Downloads/CosmedTests/UCLA-FL-001.xlsx",
+rawdata <- data.frame(read_excel("/Users/apurvashah/Downloads/20221209 test subject (CPET BxB)_20221209120317.xlsx",
                                  sheet = 1, skip = 3, col_names = FALSE))
 
 colnames(rawdata) <- col_names
@@ -139,7 +139,7 @@ p2 <- plot_ly(data = wbb1, x = wbb1$VO2, y = wbb1$VCO2)
 #   scale_y_continuous(name = expression('VCO2')) +
 #   theme_classic() +
 #   theme(aspect.ratio=1)
-# 
+#
 # p4 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
 #   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
 #   # stat_poly_eq(formula = my.formula,
@@ -149,7 +149,7 @@ p2 <- plot_ly(data = wbb1, x = wbb1$VO2, y = wbb1$VCO2)
 #   scale_y_continuous(name = expression('VCO2')) +
 #   theme_classic() +
 #   theme(aspect.ratio=1)
-# 
+#
 # p1 <- ggplot(wbb1, aes(x=VO2, y=VCO2)) +
 #   geom_point(color = "#3498DB", size = 1) + #BLUE COLOR + #RED COLOR
 #   # stat_poly_eq(formula = my.formula,
